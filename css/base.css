@@ -167,7 +167,7 @@ html {
 }
 
 #contact {
-  position: fixed;
+  position: absolute;
   color: #4b539b;
   font-size: 20px;
   transition: all 0.5s ease; /* 平滑移动效果 */
