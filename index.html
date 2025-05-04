@@ -449,6 +449,10 @@
 
     // 文字爆炸效果
     explodingText();
+
+   // 跳动文字效果
+    JumpText();
+    
     // 鼠标擦除效果
     drawImage();
 
@@ -527,11 +531,7 @@
           document.getElementById("contact").style.zIndex = 5;
           document.getElementById("text").style.zIndex = 5;
           document.querySelector(".moving-car-img").style.display = "block";
-          
-            // 跳动文字效果
-            JumpText();
-          
-          
+   
           // 初始触发
           birdGif();
           if (carTimer) {
