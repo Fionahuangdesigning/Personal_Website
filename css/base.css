@@ -25,13 +25,14 @@ html {
   /* overflow-y: auto;  */
   /* 初始隐藏滚动条 */
   background-color: #fff;
-  font-family: helvetica;
+  font-family: Ace-Regular;
+  line-height: 1.2;
 }
 
 /* 网站内容 */
 #content {
   width: 100%;
-  height: 120vh;
+  height: 100vh;
   text-align: center;
   display: flex;
   flex-direction: column;
