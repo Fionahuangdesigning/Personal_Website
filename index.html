@@ -117,7 +117,7 @@
     <div class="tooltip" id="tooltip"></div>
   </div>
   <!-- Canvas 用于绘制图片和擦除 -->
-  <canvas id="canvas"></canvas>
+ <canvas id="canvas"></canvas>
   <div id="contact" onclick="openContact()">Reach Me!</div>
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
@@ -316,9 +316,9 @@
             // 擦除超过 50% 时隐藏
             // canvas.classList.add("hidden");
             // document.body.style.overflow = "auto"; // 恢复滚动
-  //here*****
-              document.getElementById("contact").style.zIndex = 5;
-              document.getElementById("text").style.zIndex = 5;
+
+            document.getElementById("contact").style.zIndex = 5;
+            document.getElementById("text").style.zIndex = 5;
             // // 初始触发
             // if (carTimer) {
             //   clearInterval(carTimer);
@@ -450,8 +450,9 @@
     // 文字爆炸效果
     explodingText();
 
-  
-    
+    // 跳动文字效果
+    JumpText();
+
     // 鼠标擦除效果
     drawImage();
 
@@ -522,7 +523,6 @@
       }, 600);
     }
 
-    //here****
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -532,8 +532,8 @@
           document.getElementById("text").style.zIndex = 5;
           document.querySelector(".moving-car-img").style.display = "block";
 
-           // 跳动文字效果
-    JumpText();
+          // 跳动文字效果
+          JumpText();
           // 初始触发
           birdGif();
           if (carTimer) {
@@ -548,7 +548,6 @@
       }
     );
 
-//here****
     const target = document.querySelector(".project1_1"); // 目标元素
     observer.observe(target);
     window.addEventListener("mousemove", mouseTrailEffect);
