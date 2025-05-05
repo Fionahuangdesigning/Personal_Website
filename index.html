@@ -317,8 +317,8 @@
             // canvas.classList.add("hidden");
             // document.body.style.overflow = "auto"; // 恢复滚动
   //here*****
-              document.getElementById("contact").style.zIndex = 11;
-              document.getElementById("text").style.zIndex = 11;
+              document.getElementById("contact").style.zIndex = 5;
+              document.getElementById("text").style.zIndex = 5;
             // // 初始触发
             // if (carTimer) {
             //   clearInterval(carTimer);
@@ -523,34 +523,34 @@
     }
 
     //here****
-    // const observer = new IntersectionObserver(
-    //   ([entry]) => {
-    //     if (entry.isIntersecting) {
-    //       console.log("元素出现一半啦 ✅");
-    //       canvas.classList.add("hidden");
-    //       document.getElementById("contact").style.zIndex = 5;
-    //       document.getElementById("text").style.zIndex = 5;
-    //       document.querySelector(".moving-car-img").style.display = "block";
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          console.log("元素出现一半啦 ✅");
+          canvas.classList.add("hidden");
+          document.getElementById("contact").style.zIndex = 5;
+          document.getElementById("text").style.zIndex = 5;
+          document.querySelector(".moving-car-img").style.display = "block";
 
-    //        // 跳动文字效果
-    // JumpText();
-    //       // 初始触发
-    //       birdGif();
-    //       if (carTimer) {
-    //         clearInterval(carTimer);
-    //       }
-    //       // 每隔 10 秒触发一次
-    //       carTimer = setInterval(birdGif, 5 * 1000);
-    //     }
-    //   },
-    //   {
-    //     threshold: 0.5, // 元素显示 50% 时触发
-    //   }
-    // );
+           // 跳动文字效果
+    JumpText();
+          // 初始触发
+          birdGif();
+          if (carTimer) {
+            clearInterval(carTimer);
+          }
+          // 每隔 10 秒触发一次
+          carTimer = setInterval(birdGif, 5 * 1000);
+        }
+      },
+      {
+        threshold: 0.5, // 元素显示 50% 时触发
+      }
+    );
 
 //here****
-    //const target = document.querySelector(".project1_1"); // 目标元素
-    //observer.observe(target);
+    const target = document.querySelector(".project1_1"); // 目标元素
+    observer.observe(target);
     window.addEventListener("mousemove", mouseTrailEffect);
     window.addEventListener("scroll", () => {
       console.log(window.scrollY);
