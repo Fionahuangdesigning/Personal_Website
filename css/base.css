@@ -21,10 +21,14 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
+  /* overflow-x: hidden; */
+  /* overflow-y: auto;  */
+  /* 初始隐藏滚动条 */
   background-color: #fff;
   font-family: Ace-Regular;
 }
 
+/* 网站内容 */
 #content {
   width: 100%;
   height: 100vh;
@@ -51,7 +55,6 @@ html {
 
 #content .title {
   font-size: 64px;
-  line-height: 84px;
   font-weight: bold;
   font-family: "Ace-Bold";
 }
@@ -62,11 +65,14 @@ html {
 }
 
 .char {
-  transition: all 0.7s ease;
+  transition: all 0.7s ease; /* 动画过渡 */
   position: relative;
   margin-right: 10px;
 }
 
+.fontAR {
+  font-family: "Ace-Regular";
+}
 .char:last-child {
   margin-right: 0;
 }
@@ -76,18 +82,12 @@ html {
     translateX(calc(var(--offset-x) * 100px));
 }
 
-.fontAR {
-  font-family: "Ace-Regular";
-}
-
 .font32 {
-  font-size: 32px;
-  line-height: 52px;
+  font-size: 32px; /*change*/
 }
 
 .font20 {
-  font-size: 20px;
-  line-height: 40px;
+  font-size: 20px;  /*change*/
 }
 
 .black {
@@ -106,22 +106,24 @@ html {
   display: flex;
 }
 
+/* Canvas 遮罩 */
 #canvas {
   position: fixed;
   top: 0;
   left: 0;
   transition: all 0.5s ease;
-  z-index: 1;
+  z-index: 1; /* Canvas 在上层 */
 }
 
 .hidden {
-  display: none;
+  display: none; /* 隐藏 Canvas */
 }
 
 .trail {
   position: absolute;
   width: 25px;
   height: 25px;
+  /* background: red; */
   border-radius: 50%;
   pointer-events: none;
   opacity: 0.7;
@@ -130,8 +132,8 @@ html {
 }
 
 .rainbow-rectangle {
-  width: 100%;
-  height: 40px;
+  width: 100%; /* 宽度可以调整 */
+  height: 40px; /* 高度可以调整 */
   background: linear-gradient(
     to right,
     #ff0000 0%,
@@ -151,11 +153,13 @@ html {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* 文字容器 */
 .scroll-container {
   display: inline-block;
   white-space: nowrap;
 }
 
+/* 单条文字样式 */
 .scroll-text {
   display: inline-block;
   line-height: 40px;
@@ -166,8 +170,8 @@ html {
   position: absolute;
   color: #4b539b;
   font-size: 20px;
-  transition: all 0.5s ease;
-  user-select: none;
+  transition: all 0.5s ease; /* 平滑移动效果 */
+  user-select: none; /* 防止文字被选中 */
   z-index: -1;
   left: -100%;
   cursor: pointer;
@@ -195,6 +199,7 @@ html {
 
 .show-wrap {
   width: 100%;
+  /* height: 100%; */
   background-color: #000;
   font-size: 15px;
   font-family: "Ace-Regular";
@@ -206,7 +211,10 @@ html {
 
 .show-wrap img {
   width: 100%;
+  /* height: 100%; */
+  /* object-fit: cover; */
   display: block;
+  /* padding-top: 20px; */
 }
 
 .project1 .flex img:nth-child(1),
@@ -218,6 +226,8 @@ html {
 .project1 .flex img:nth-child(2) {
   width: 34%;
   padding-top: 0;
+  /* height: 675px; */
+  /* object-fit: contain; */
 }
 
 .page-foot {
@@ -246,6 +256,7 @@ html {
   padding: 6px 12px;
   border-radius: 2px;
   pointer-events: none;
+  /* transition: opacity 0.2s ease; */
   white-space: nowrap;
   opacity: 0;
   z-index: 9999;
@@ -271,7 +282,7 @@ html {
     left: 100vw;
   }
   100% {
-    left: -200px;
+    left: -200px; /* 图片宽度 + 一点缓冲 */
   }
 }
 
@@ -280,7 +291,7 @@ html {
     left: -350px;
   }
   100% {
-    left: 100vw;
+    left: 100vw; /* 图片宽度 + 一点缓冲 */
   }
 }
 
@@ -292,18 +303,17 @@ html {
   display: none;
   z-index: 10;
   cursor: pointer;
-  animation: moveRight 10s linear infinite;
+  animation: moveRight 10s linear  infinite;
 }
 
 .hand-img {
-  height: 630px;
+  height: 630px; /* 可调大小 */
   width: 100vw;
   position: absolute;
   left: 0;
   bottom: 0;
 }
-
-a {
+a{
   color: #fff;
   text-decoration: none;
 }
