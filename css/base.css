@@ -27,19 +27,31 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ===== HERO STAGE (fixed proportions, scaled) ===== */
+.hero-stage {
+  position: relative;
+  width: 1440px;        /* design width */
+  height: 800px;        /* design height */
+  transform-origin: top center;
+  margin: 70px auto 0;  /* space below rainbow bar */
+  transform: scale(
+    calc(
+      min(100vw / 1440, 100vh / 800)
+    )
+  );
+}
+
+/* hero content fills the stage */
 #content {
   width: 100%;
-  height: 100vh;
-  max-width: 1200px;      /* optional: tweak this */
-  margin: 0 auto;         /* center horizontally */
+  height: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 6vw 40px; /* top + side padding */
+  padding: 0 120px;
   box-sizing: border-box;
 }
-
 
 .text-wrap {
   position: relative;
@@ -54,9 +66,10 @@ html {
   text-align: center;
 }
 
+/* responsive title size */
 #content .title {
-  font-size: clamp(40px, 5vw, 64px);   /* scales with width */
-  line-height: 1.15;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1.15625;
   font-weight: bold;
   font-family: "Ace-Bold";
 }
@@ -85,13 +98,14 @@ html {
   font-family: "Ace-Regular";
 }
 
+/* responsive body sizes */
 .font32 {
-  font-size: clamp(18px, 2.4vw, 32px); /* scales with width */
-  line-height: 1.3;
+  font-size: clamp(18px, 2.4vw, 32px);
+  line-height: 1.3125;
 }
 
 .font20 {
-  font-size: clamp(14px, 1.5vw, 20px); /* scales with width */
+  font-size: clamp(14px, 1.5vw, 20px);
   line-height: 1.5;
 }
 
@@ -312,9 +326,10 @@ a {
   color: #fff;
   text-decoration: none;
 }
+
 /* ================== CHATBOT ================== */
 #chatbot {
-  position: fixed;
+  position: absolute;      /* now relative to .hero-stage */
   bottom: 40px;
   left: 40px;
   width: 260px;
@@ -330,18 +345,17 @@ a {
 }
 
 #chatbot-avatar {
-  width: 130%;        /* same width as the whole chatbot area */
+  width: 100%;
   height: auto;
   margin-bottom: 6px;
   image-rendering: auto;
   display: block;
 }
 
-
 /* input + button in one row */
 #chatbot-input-wrap {
   display: flex;
-  width: 130%;
+  width: 100%;
   align-items: center;
 }
 
