@@ -123,7 +123,7 @@
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
   <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
-  <!-- Images are in ./img/chatbot/ folder (you can change paths if needed) -->
+  <!-- Make sure the image folder ./img/chatbot/ exists and files are there -->
   <div id="chatbot">
     <img
       id="chatbot-avatar"
@@ -330,7 +330,6 @@
         if (isDrawing) {
           eraseCount += 1000; // 粗略估计擦除的像素量
           if (eraseCount > totalPixels * 0.1) {
-            // 擦除超过一定比例后把下面元素放到前面
             document.getElementById("contact").style.zIndex = 5;
             document.getElementById("text").style.zIndex = 5;
           }
@@ -407,7 +406,6 @@
         project.addEventListener("mouseleave", () => {
           tooltip.style.opacity = "0";
           tooltip.style.transform = "scale(0.8)";
-          // tooltip.style.transition = "all 0.3s ease";
         });
       });
     }
@@ -417,8 +415,6 @@
       // 随机高度 (避免超出视口)
       const maxHeight = (window.innerHeight - 300) * 0.3;
       let randomTop = Math.floor(Math.random() * maxHeight);
-
-      // console.log(randomTop, window.innerHeight);
 
       birdGif.style.top = `${randomTop}px`;
       birdGif.style.display = "block";
@@ -567,7 +563,6 @@
     const chatbotAvatar = document.getElementById("chatbot-avatar");
     const chatbotInput = document.getElementById("chatbot-input");
 
-    // Image files for each state (you can change folder/filenames)
     const chatbotImages = {
       idle: "./img/chatbot/chatbot_idle.png",        // default
       animal: "./img/chatbot/chatbot_animal.png",    // favorite animal
@@ -592,7 +587,6 @@
 
           const question = q.toLowerCase();
 
-          // four specific question types
           if (question.includes("animal")) {
             showChatbotState("animal");
           } else if (question.includes("food")) {
@@ -602,7 +596,6 @@
           } else if (question.includes("skill")) {
             showChatbotState("skills");
           } else {
-            // anything else = secret
             showChatbotState("secret");
           }
         }
