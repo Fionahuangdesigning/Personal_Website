@@ -122,23 +122,24 @@
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
-  <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
-  <!-- Make sure the image folder ./img/chatbot/ exists and files are there -->
+    <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
   <div id="chatbot">
-<img
-  id="chatbot-avatar"
-  src="./img/chatbot_idle.gif"
-  alt="Chatbot illustration"
-/>
-
-
-    <input
-      id="chatbot-input"
-      type="text"
-      placeholder="Ask her a question…"
-      autocomplete="off"
+    <img
+      id="chatbot-avatar"
+      src="./img/chatbot_idle.gif"
+      alt="Chatbot illustration"
     />
+    <div id="chatbot-input-wrap">
+      <input
+        id="chatbot-input"
+        type="text"
+        placeholder="Ask her a question…"
+        autocomplete="off"
+      />
+      <button id="chatbot-send" type="button">Send</button>
+    </div>
   </div>
+
 
   <script>
     setTimeout(() => {
