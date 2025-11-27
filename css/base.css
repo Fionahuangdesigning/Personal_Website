@@ -326,7 +326,7 @@ a {
 }
 
 #chatbot-avatar {
-  width: 100%;        /* same width as the whole chatbot area */
+  width: 130%;        /* same width as the whole chatbot area */
   height: auto;
   margin-bottom: 6px;
   image-rendering: auto;
@@ -337,7 +337,7 @@ a {
 /* input + button in one row */
 #chatbot-input-wrap {
   display: flex;
-  width: 100%;
+  width: 130%;
   align-items: center;
 }
 
