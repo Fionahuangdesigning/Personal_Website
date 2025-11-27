@@ -311,8 +311,8 @@ a {
 /* ================== CHATBOT ================== */
 #chatbot {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 40px;
+  left: 40px;
   width: 260px;
   z-index: 1000000;
   display: flex;
@@ -363,7 +363,7 @@ a {
   padding: 6px 12px;
   border: 1px solid #000000;
   border-radius: 0 999px 999px 0;
-  font-size: 12px;
+  font-size: 16px;
   font-family: Ace-Regular;
   background: #ffffff;
   cursor: pointer;
