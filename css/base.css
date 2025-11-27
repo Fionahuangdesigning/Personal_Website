@@ -27,19 +27,14 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== HERO CONTENT ===== */
 #content {
   width: 100%;
-  max-width: 1200px;
-  min-height: calc(100vh - 80px); /* 40px bar + 40px breathing space */
-  margin: 80px auto 0;            /* push below rainbow bar */
-  padding: 40px 8vw 80px;
-  box-sizing: border-box;
+  height: 100vh;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  padding-top: 40px;
 }
 
 .text-wrap {
@@ -55,9 +50,8 @@ html {
   text-align: center;
 }
 
-/* responsive title size */
 #content .title {
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: 64px;
   line-height: 1.15625;
   font-weight: bold;
   font-family: "Ace-Bold";
@@ -87,14 +81,13 @@ html {
   font-family: "Ace-Regular";
 }
 
-/* responsive body sizes */
 .font32 {
-  font-size: clamp(18px, 2.4vw, 32px);
+  font-size: 32px;
   line-height: 1.3125;
 }
 
 .font20 {
-  font-size: clamp(14px, 1.5vw, 20px);
+  font-size: 20px;
   line-height: 1.5;
 }
 
@@ -322,29 +315,30 @@ a {
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 2;
+  z-index: 0;   /* behind the illustration on top*/
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   font-family: Ace-Regular;
-  background: transparent;
-  border: none;
+  background: transparent;   /* no white box */
+  border: none;              /* no black frame */
   padding: 0;
   box-sizing: border-box;
 }
 
 #chatbot-avatar {
-  width: 100%;
+  width: 130%;        /* same width as the whole chatbot area */
   height: auto;
   margin-bottom: 6px;
   image-rendering: auto;
   display: block;
 }
 
+
 /* input + button in one row */
 #chatbot-input-wrap {
   display: flex;
-  width: 100%;
+  width: 130%;
   align-items: center;
 }
 
