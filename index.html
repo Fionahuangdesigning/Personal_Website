@@ -125,11 +125,13 @@
   <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
   <!-- Make sure the image folder ./img/chatbot/ exists and files are there -->
   <div id="chatbot">
-    <img
-      id="chatbot-avatar"
-      src="./img/chatbot/chatbot_idle.png"
-      alt="Chatbot illustration"
-    />
+<img
+  id="chatbot-avatar"
+  src="./img/chatbot_idle.gif"
+  alt="Chatbot illustration"
+/>
+
+
     <input
       id="chatbot-input"
       type="text"
@@ -566,14 +568,14 @@
     const chatbotImages = {
       idle: "./img/chatbot/chatbot_idle.gif",        // default
       const chatbotImages = {
-  idle: "./img/fiona_idle.gif",
-  animal: "./img/fiona_animal.png",
-  food: "./img/fiona_food.png",
-  color: "./img/fiona_color.png",
-  skills: "./img/fiona_skills.png",
-  secret: "./img/fiona_secret.png",
+  idle: "./img/chatbot_idle.gif",       // default
+  animal: "./img/chatbot_animal.png",   // favorite animal
+  food: "./img/chatbot_food.png",       // favorite food
+  color: "./img/chatbot_color.png",     // favorite color
+  skills: "./img/chatbot_skills.png",   // skills
+  secret: "./img/chatbot_secret.png",   // "it's her secret"
 };
-    // “it's her secret”
+
     };
 
     function showChatbotState(type) {
