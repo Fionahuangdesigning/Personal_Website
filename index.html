@@ -31,6 +31,8 @@
   </div>
   <!-- 网站内容 -->
   <div class="content-wrap">
+  <!-- NEW wrapper -->
+  <div class="hero-stage">
     <div id="content">
       <div class="title">Fiona Huang</div>
       <div class="font32 text-wrap">
@@ -64,6 +66,25 @@
         <div>Explore more by scrolling</div>
       </div>
     </div>
+<!-- move chatbot INSIDE hero-stage -->
+    <div id="chatbot">
+      <img
+        id="chatbot-avatar"
+        src="./img/chatbot_idle.gif"
+        alt="Chatbot illustration"
+      />
+      <div id="chatbot-input-wrap">
+        <input
+          id="chatbot-input"
+          type="text"
+          placeholder="Ask her a question…"
+          autocomplete="off"
+        />
+        <button id="chatbot-send" type="button">Send</button>
+      </div>
+    </div>
+  </div>
+    
     <div class="show-wrap">
       <div class="project-item project1">
         <img src="./img/project/project1/project1_1.png" alt="" class="project1_1" />
@@ -122,23 +143,7 @@
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
-    <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
-  <div id="chatbot">
-    <img
-      id="chatbot-avatar"
-      src="./img/chatbot_idle.gif"
-      alt="Chatbot illustration"
-    />
-    <div id="chatbot-input-wrap">
-      <input
-        id="chatbot-input"
-        type="text"
-        placeholder="Ask her a question…"
-        autocomplete="off"
-      />
-      <button id="chatbot-send" type="button">Send</button>
-    </div>
-  </div>
+   
 
 
     <script>
