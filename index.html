@@ -529,24 +529,37 @@
     });
 
     // ================== CHATBOT LOGIC (image-only) ==================
-    const chatbotAvatar = document.getElementById("chatbot-avatar");
-    const chatbotInput = document.getElementById("chatbot-input");
-    const chatbotSend = document.getElementById("chatbot-send");
+const chatbotAvatar = document.getElementById("chatbot-avatar");
+const chatbotInput = document.getElementById("chatbot-input");
+const chatbotSend = document.getElementById("chatbot-send");
 
-    const chatbotImages = {
-      idle: "./img/chatbot_idle.gif",       // default
-      animal: "./img/chatbot_animal.png",   // favorite animal
-      food: "./img/chatbot_food.png",       // favorite food
-      color: "./img/chatbot_color.png",     // favorite color
-      skills: "./img/chatbot_skills.png",   // skills
-      secret: "./img/chatbot_secret.png",   // "it's her secret"
-    };
+const chatbotImages = {
+  idle: "./img/chatbot_idle.gif",       // default
+  animal: "./img/chatbot_animal.png",   // favorite animal
+  food: "./img/chatbot_food.png",       // favorite food
+  color: "./img/chatbot_color.png",     // favorite color
+  skills: "./img/chatbot_skills.png",   // skills
+  secret: "./img/chatbot_secret.png",   // "it's her secret"
+};
 
-    function showChatbotState(type) {
-      if (!chatbotAvatar) return;
-      const src = chatbotImages[type] || chatbotImages.idle;
-      chatbotAvatar.src = src;
+let chatbotResetTimer = null;
+
+function showChatbotState(type) {
+  if (!chatbotAvatar) return;
+  const src = chatbotImages[type] || chatbotImages.idle;
+  chatbotAvatar.src = src;
+
+  // after any non-idle answer, go back to idle in 5s
+  if (type !== "idle") {
+    if (chatbotResetTimer) {
+      clearTimeout(chatbotResetTimer);
     }
+    chatbotResetTimer = setTimeout(() => {
+      showChatbotState("idle");
+    }, 5000);
+  }
+}
+
 
     function handleChatbotQuestion() {
       if (!chatbotInput) return;
