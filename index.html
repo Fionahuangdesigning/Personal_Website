@@ -141,11 +141,11 @@
   </div>
 
 
-  <script>
+    <script>
     setTimeout(() => {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'  // 平滑滚动
+        behavior: "smooth", // 平滑滚动
       });
     }, 100);
     let eraseCount = 0;
@@ -214,7 +214,7 @@
       }
 
       // 鼠标进入时停止跳动
-      contact.addEventListener("mouseenter", event => {
+      contact.addEventListener("mouseenter", (event) => {
         isJumping = false;
         cancelAnimationFrame(animationFrame); // 停止动画
       });
@@ -256,21 +256,23 @@
       const chars = document.querySelectorAll(".char");
 
       // 随机设置偏移和旋转的函数
-      function setRandomProperties(char, value) {
-        char.style.setProperty("--offset-x", (Math.random() * 2 - 1) * 1.5); // 随机左右偏移 -1.5 到 1.5
+      function setRandomProperties(char) {
+        char.style.setProperty(
+          "--offset-x",
+          (Math.random() * 2 - 1) * 1.5
+        ); // 随机左右偏移 -1.5 到 1.5
         char.style.setProperty("--random-y", getRandomY()); // 随机向上移动距离 0.2 到 1
       }
 
       // 鼠标悬停事件
-      textContainer.addEventListener("mouseenter", event => {
+      textContainer.addEventListener("mouseenter", (event) => {
         event.stopPropagation(); // 防止事件冒泡到父元素
         if (addTimer) {
           clearTimeout(addTimer);
         }
 
         addTimer = setTimeout(() => {
-          console.log("mouseleave,鼠标进入了");
-          chars.forEach(char => {
+          chars.forEach((char) => {
             // 每次悬停时重新随机设置位置
             setRandomProperties(char);
             char.classList.add("explode");
@@ -279,15 +281,14 @@
       });
 
       // 鼠标离开后重置效果
-      textContainer.addEventListener("mouseleave", event => {
+      textContainer.addEventListener("mouseleave", (event) => {
         event.stopPropagation(); // 防止事件冒泡到父元素
 
         if (removeTimer) {
           clearTimeout(removeTimer);
         }
         removeTimer = setTimeout(() => {
-          console.log("mouseleave,鼠标离开了");
-          chars.forEach(char => {
+          chars.forEach((char) => {
             char.classList.remove("explode");
           });
         }, 200);
@@ -324,11 +325,10 @@
         // 设置擦除效果
         ctx.globalCompositeOperation = "destination-out"; // 擦除模式
         ctx.beginPath();
-        ctx.arc(x, y, 80, 0, Math.PI * 2, false); // 圆形橡皮擦，大小为 20
+        ctx.arc(x, y, 80, 0, Math.PI * 2, false); // 圆形橡皮擦
         ctx.fill();
         ctx.globalCompositeOperation = "source-over"; // 恢复默认模式
 
-        // 可选：检测擦除完成
         const totalPixels = canvas.width * canvas.height;
         if (isDrawing) {
           eraseCount += 1000; // 粗略估计擦除的像素量
@@ -357,7 +357,6 @@
         position -= speed;
         container.style.transform = `translateX(${position}px)`;
 
-        // 当第一个文字完全移出容器时，重置位置
         const firstText = container.querySelector(".scroll-text");
         const textWidth =
           firstText.offsetWidth +
@@ -371,10 +370,8 @@
         animationFrameId = requestAnimationFrame(scroll);
       }
 
-      // 开始动画
       scroll();
 
-      // 鼠标悬停暂停，移开继续
       container.addEventListener("mouseenter", () => {
         cancelAnimationFrame(animationFrameId);
       });
@@ -388,24 +385,21 @@
       let projectList = document.querySelectorAll(".project-item");
       let tooltip = document.getElementById("tooltip");
       projectList.forEach((project, index) => {
-        // 鼠标进入项目时显示提示框
-        project.addEventListener("mouseenter", event => {
+        project.addEventListener("mouseenter", (event) => {
           tooltip.style.left = event.clientX + 10 + "px";
           tooltip.style.top = event.clientY + 20 + "px";
           tooltip.style.opacity = "1";
           tooltip.style.transform = "scale(1)";
           tooltip.style.zIndex = "10";
           tooltip.innerHTML = `
-                    <div class="tooltip-title black">${tooltipList[index].title}</div>
-                    <div class="tooltip-sub-title gray">${tooltipList[index].subTitle}</div>
-                `;
+            <div class="tooltip-title black">${tooltipList[index].title}</div>
+            <div class="tooltip-sub-title gray">${tooltipList[index].subTitle}</div>
+          `;
         });
-        // 鼠标移动时更新提示框位置
-        project.addEventListener("mousemove", event => {
+        project.addEventListener("mousemove", (event) => {
           tooltip.style.left = event.clientX + 10 + "px";
           tooltip.style.top = event.clientY + 20 + "px";
         });
-        // 鼠标离开项目时隐藏提示框
         project.addEventListener("mouseleave", () => {
           tooltip.style.opacity = "0";
           tooltip.style.transform = "scale(0.8)";
@@ -415,7 +409,6 @@
 
     function birdGif() {
       const birdGif = document.querySelector(".moving-bird-img");
-      // 随机高度 (避免超出视口)
       const maxHeight = (window.innerHeight - 300) * 0.3;
       let randomTop = Math.floor(Math.random() * maxHeight);
 
@@ -426,13 +419,11 @@
         window.open("https://www.instagram.com/fifionana_aa/", "_blank");
       };
 
-      // 触发重绘以重新启动动画
       void birdGif.offsetWidth;
       birdGif.style.animation = "moveLeft 5s linear forwards";
       document.body.appendChild(birdGif);
     }
 
-    // 判断是否为移动设备
     function isMobileOrTablet() {
       const ua = navigator.userAgent.toLowerCase();
 
@@ -449,30 +440,18 @@
       document.documentElement.style.display = "none";
     }
 
-    // 文字爆炸效果
     explodingText();
-
-    // 跳动文字效果
     JumpText();
-
-    // 鼠标擦除效果
     drawImage();
-
-    // 文字滚动效果
     scrollText();
-
     tooltip();
 
-    // 生成避开 0.4-0.6 区间的随机值的函数
     function getRandomY() {
       let value;
-      // 50% 概率选择区间
       if (Math.random() < 0.5) {
-        // 0 到 0.25 区间
-        value = Math.random() * 0.25; // 生成 0 到 0.25
+        value = Math.random() * 0.25; // 0 到 0.25
       } else {
-        // 0.7 到 1 区间
-        value = Math.random() * 0.3 + 0.7; // 生成 0.7 到 1
+        value = Math.random() * 0.3 + 0.7; // 0.7 到 1
       }
       return value;
     }
@@ -484,38 +463,30 @@
       );
     }
 
-    // 鼠标轨迹实现
     function mouseTrailEffect(event) {
-      // 获取body元素
       const body = document.body;
 
-      // 存储轨迹点的数组
       let trails = [];
-      // 创建新的轨迹点
       let imgEl = document.createElement("img");
-      imgEl.src = "./img/cursor.png"; // 替换为你的图片地址
+      imgEl.src = "./img/cursor.png";
 
       imgEl.className = "trail";
       imgEl.style.left = event.pageX + "px";
       imgEl.style.top = event.pageY + "px";
 
-      // 添加到页面
       body.appendChild(imgEl);
       trails.push(imgEl);
 
-      // 限制轨迹点数量（例如最多20个）
       if (trails.length > 20) {
         let oldDot = trails.shift();
         oldDot.remove();
       }
 
-      // 逐渐淡出效果
       setTimeout(() => {
         imgEl.style.opacity = "0";
         imgEl.style.transform = "scale(0.5)";
       }, 150);
 
-      // 完全移除
       setTimeout(() => {
         imgEl.remove();
         let index = trails.indexOf(imgEl);
@@ -528,33 +499,28 @@
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          console.log("元素出现一半啦 ✅");
           canvas.classList.add("hidden");
           document.getElementById("contact").style.zIndex = 5;
           document.getElementById("text").style.zIndex = 5;
           document.querySelector(".moving-car-img").style.display = "block";
 
-          // 跳动文字效果
           JumpText();
-          // 初始触发
           birdGif();
           if (carTimer) {
             clearInterval(carTimer);
           }
-          // 每隔 10 秒触发一次
           carTimer = setInterval(birdGif, 5 * 1000);
         }
       },
       {
-        threshold: 0.5, // 元素显示 50% 时触发
+        threshold: 0.5,
       }
     );
 
-    const target = document.querySelector(".project1_1"); // 目标元素
+    const target = document.querySelector(".project1_1");
     observer.observe(target);
     window.addEventListener("mousemove", mouseTrailEffect);
     window.addEventListener("scroll", () => {
-      console.log(window.scrollY);
       if (window.scrollY < 500) {
         document.querySelector(".moving-car-img").style.display = "none";
         document.querySelector(".moving-bird-img").style.display = "none";
@@ -563,60 +529,59 @@
     });
 
     // ================== CHATBOT LOGIC (image-only) ==================
-const chatbotAvatar = document.getElementById("chatbot-avatar");
-const chatbotInput = document.getElementById("chatbot-input");
-const chatbotSend = document.getElementById("chatbot-send");
+    const chatbotAvatar = document.getElementById("chatbot-avatar");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotSend = document.getElementById("chatbot-send");
 
-const chatbotImages = {
-  idle: "./img/chatbot_idle.gif",       // default
-  animal: "./img/chatbot_animal.png",   // favorite animal
-  food: "./img/chatbot_food.png",       // favorite food
-  color: "./img/chatbot_color.png",     // favorite color
-  skills: "./img/chatbot_skills.png",   // skills
-  secret: "./img/chatbot_secret.png",   // "it's her secret"
-};
+    const chatbotImages = {
+      idle: "./img/chatbot_idle.gif",       // default
+      animal: "./img/chatbot_animal.png",   // favorite animal
+      food: "./img/chatbot_food.png",       // favorite food
+      color: "./img/chatbot_color.png",     // favorite color
+      skills: "./img/chatbot_skills.png",   // skills
+      secret: "./img/chatbot_secret.png",   // "it's her secret"
+    };
 
-function showChatbotState(type) {
-  if (!chatbotAvatar) return;
-  const src = chatbotImages[type] || chatbotImages.idle;
-  chatbotAvatar.src = src;
-}
-
-function handleChatbotQuestion() {
-  if (!chatbotInput) return;
-  const q = chatbotInput.value.trim();
-  if (!q) return;
-  chatbotInput.value = "";
-
-  const question = q.toLowerCase();
-
-  if (question.includes("animal")) {
-    showChatbotState("animal");
-  } else if (question.includes("food")) {
-    showChatbotState("food");
-  } else if (question.includes("color") || question.includes("colour")) {
-    showChatbotState("color");
-  } else if (question.includes("skill")) {
-    showChatbotState("skills");
-  } else {
-    showChatbotState("secret");
-  }
-}
-
-if (chatbotInput) {
-  chatbotInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      handleChatbotQuestion();
+    function showChatbotState(type) {
+      if (!chatbotAvatar) return;
+      const src = chatbotImages[type] || chatbotImages.idle;
+      chatbotAvatar.src = src;
     }
-  });
-}
 
-if (chatbotSend) {
-  chatbotSend.addEventListener("click", handleChatbotQuestion);
-}
+    function handleChatbotQuestion() {
+      if (!chatbotInput) return;
+      const q = chatbotInput.value.trim();
+      if (!q) return;
+      chatbotInput.value = "";
 
+      const question = q.toLowerCase();
+
+      if (question.includes("animal")) {
+        showChatbotState("animal");
+      } else if (question.includes("food")) {
+        showChatbotState("food");
+      } else if (question.includes("color") || question.includes("colour")) {
+        showChatbotState("color");
+      } else if (question.includes("skill")) {
+        showChatbotState("skills");
+      } else {
+        showChatbotState("secret");
+      }
+    }
+
+    if (chatbotInput) {
+      chatbotInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          handleChatbotQuestion();
+        }
+      });
+    }
+
+    if (chatbotSend) {
+      chatbotSend.addEventListener("click", handleChatbotQuestion);
     }
   </script>
+
 </body>
 
 </html>
