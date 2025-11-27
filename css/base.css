@@ -326,12 +326,13 @@ a {
 }
 
 #chatbot-avatar {
-  width: 160px;
+  width: 100%;        /* same width as the whole chatbot area */
   height: auto;
   margin-bottom: 6px;
   image-rendering: auto;
   display: block;
 }
+
 
 /* input + button in one row */
 #chatbot-input-wrap {
