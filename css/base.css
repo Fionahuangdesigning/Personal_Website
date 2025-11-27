@@ -308,3 +308,37 @@ a {
   color: #fff;
   text-decoration: none;
 }
+/* ================== CHATBOT ================== */
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 220px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Ace-Regular;
+}
+
+#chatbot-avatar {
+  width: 160px;
+  height: auto;
+  margin-bottom: 8px;
+  image-rendering: auto;
+}
+
+#chatbot-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #000000;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  background: #ffffff;
+}
+
+#chatbot-input:focus {
+  border-width: 2px;
+}
+
