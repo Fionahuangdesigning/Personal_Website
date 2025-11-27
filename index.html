@@ -563,12 +563,11 @@
     });
 
     // ================== CHATBOT LOGIC (image-only) ==================
-    const chatbotAvatar = document.getElementById("chatbot-avatar");
-    const chatbotInput = document.getElementById("chatbot-input");
+const chatbotAvatar = document.getElementById("chatbot-avatar");
+const chatbotInput = document.getElementById("chatbot-input");
+const chatbotSend = document.getElementById("chatbot-send");
 
-    const chatbotImages = {
-      idle: "./img/chatbot/chatbot_idle.gif",        // default
-      const chatbotImages = {
+const chatbotImages = {
   idle: "./img/chatbot_idle.gif",       // default
   animal: "./img/chatbot_animal.png",   // favorite animal
   food: "./img/chatbot_food.png",       // favorite food
@@ -577,36 +576,45 @@
   secret: "./img/chatbot_secret.png",   // "it's her secret"
 };
 
-    };
+function showChatbotState(type) {
+  if (!chatbotAvatar) return;
+  const src = chatbotImages[type] || chatbotImages.idle;
+  chatbotAvatar.src = src;
+}
 
-    function showChatbotState(type) {
-      if (!chatbotAvatar) return;
-      const src = chatbotImages[type] || chatbotImages.idle;
-      chatbotAvatar.src = src;
+function handleChatbotQuestion() {
+  if (!chatbotInput) return;
+  const q = chatbotInput.value.trim();
+  if (!q) return;
+  chatbotInput.value = "";
+
+  const question = q.toLowerCase();
+
+  if (question.includes("animal")) {
+    showChatbotState("animal");
+  } else if (question.includes("food")) {
+    showChatbotState("food");
+  } else if (question.includes("color") || question.includes("colour")) {
+    showChatbotState("color");
+  } else if (question.includes("skill")) {
+    showChatbotState("skills");
+  } else {
+    showChatbotState("secret");
+  }
+}
+
+if (chatbotInput) {
+  chatbotInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      handleChatbotQuestion();
     }
+  });
+}
 
-    if (chatbotInput) {
-      chatbotInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          const q = this.value.trim();
-          if (!q) return;
-          this.value = "";
+if (chatbotSend) {
+  chatbotSend.addEventListener("click", handleChatbotQuestion);
+}
 
-          const question = q.toLowerCase();
-
-          if (question.includes("animal")) {
-            showChatbotState("animal");
-          } else if (question.includes("food")) {
-            showChatbotState("food");
-          } else if (question.includes("color") || question.includes("colour")) {
-            showChatbotState("color");
-          } else if (question.includes("skill")) {
-            showChatbotState("skills");
-          } else {
-            showChatbotState("secret");
-          }
-        }
-      });
     }
   </script>
 </body>
