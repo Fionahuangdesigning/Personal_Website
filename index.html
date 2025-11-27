@@ -117,10 +117,27 @@
     <div class="tooltip" id="tooltip"></div>
   </div>
   <!-- Canvas 用于绘制图片和擦除 -->
- <canvas id="canvas"></canvas>
+  <canvas id="canvas"></canvas>
   <div id="contact" onclick="openContact()">Reach Me!</div>
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
+
+  <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
+  <!-- Images are in ./img/chatbot/ folder (you can change paths if needed) -->
+  <div id="chatbot">
+    <img
+      id="chatbot-avatar"
+      src="./img/chatbot/chatbot_idle.png"
+      alt="Chatbot illustration"
+    />
+    <input
+      id="chatbot-input"
+      type="text"
+      placeholder="Ask her a question…"
+      autocomplete="off"
+    />
+  </div>
+
   <script>
     setTimeout(() => {
       window.scrollTo({
@@ -313,19 +330,9 @@
         if (isDrawing) {
           eraseCount += 1000; // 粗略估计擦除的像素量
           if (eraseCount > totalPixels * 0.1) {
-            // 擦除超过 50% 时隐藏
-            // canvas.classList.add("hidden");
-            // document.body.style.overflow = "auto"; // 恢复滚动
-
+            // 擦除超过一定比例后把下面元素放到前面
             document.getElementById("contact").style.zIndex = 5;
             document.getElementById("text").style.zIndex = 5;
-            // // 初始触发
-            // if (carTimer) {
-            //   clearInterval(carTimer);
-            //   birdGif();
-            // }
-            // // 每隔 10 秒触发一次
-            // carTimer = setInterval(birdGif, 10000);
           }
         }
       }
@@ -413,10 +420,6 @@
 
       // console.log(randomTop, window.innerHeight);
 
-      // 重置样式
-      // if (randomTop < (window.innerHeight - 200)) {
-      //   randomTop = window.innerHeight - 200;
-      // }
       birdGif.style.top = `${randomTop}px`;
       birdGif.style.display = "block";
       birdGif.style.animation = "none";
@@ -559,6 +562,52 @@
         clearInterval(carTimer);
       }
     });
+
+    // ================== CHATBOT LOGIC (image-only) ==================
+    const chatbotAvatar = document.getElementById("chatbot-avatar");
+    const chatbotInput = document.getElementById("chatbot-input");
+
+    // Image files for each state (you can change folder/filenames)
+    const chatbotImages = {
+      idle: "./img/chatbot/chatbot_idle.png",        // default
+      animal: "./img/chatbot/chatbot_animal.png",    // favorite animal
+      food: "./img/chatbot/chatbot_food.png",        // favorite food
+      color: "./img/chatbot/chatbot_color.png",      // favorite color
+      skills: "./img/chatbot/chatbot_skills.png",    // skills
+      secret: "./img/chatbot/chatbot_secret.png",    // “it's her secret”
+    };
+
+    function showChatbotState(type) {
+      if (!chatbotAvatar) return;
+      const src = chatbotImages[type] || chatbotImages.idle;
+      chatbotAvatar.src = src;
+    }
+
+    if (chatbotInput) {
+      chatbotInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          const q = this.value.trim();
+          if (!q) return;
+          this.value = "";
+
+          const question = q.toLowerCase();
+
+          // four specific question types
+          if (question.includes("animal")) {
+            showChatbotState("animal");
+          } else if (question.includes("food")) {
+            showChatbotState("food");
+          } else if (question.includes("color") || question.includes("colour")) {
+            showChatbotState("color");
+          } else if (question.includes("skill")) {
+            showChatbotState("skills");
+          } else {
+            // anything else = secret
+            showChatbotState("secret");
+          }
+        }
+      });
+    }
   </script>
 </body>
 
