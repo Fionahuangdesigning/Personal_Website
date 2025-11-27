@@ -27,30 +27,19 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== HERO STAGE (fixed proportions, scaled) ===== */
-.hero-stage {
-  position: relative;
-  width: 1440px;        /* design width */
-  height: 800px;        /* design height */
-  transform-origin: top center;
-  margin: 70px auto 0;  /* space below rainbow bar */
-  transform: scale(
-    calc(
-      min(100vw / 1440, 100vh / 800)
-    )
-  );
-}
-
-/* hero content fills the stage */
+/* ===== HERO CONTENT ===== */
 #content {
   width: 100%;
-  height: 100%;
+  max-width: 1200px;
+  min-height: calc(100vh - 80px); /* 40px bar + 40px breathing space */
+  margin: 80px auto 0;            /* push below rainbow bar */
+  padding: 40px 8vw 80px;
+  box-sizing: border-box;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 120px;
-  box-sizing: border-box;
+  align-items: center;
 }
 
 .text-wrap {
@@ -329,17 +318,17 @@ a {
 
 /* ================== CHATBOT ================== */
 #chatbot {
-  position: absolute;      /* now relative to .hero-stage */
+  position: fixed;
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 0;   /* behind the illustration on top*/
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   font-family: Ace-Regular;
-  background: transparent;   /* no white box */
-  border: none;              /* no black frame */
+  background: transparent;
+  border: none;
   padding: 0;
   box-sizing: border-box;
 }
