@@ -350,13 +350,14 @@ a {
 #chatbot-input-wrap {
   display: flex;
   width: 130%;
-  align-items: center;
+  align-items: stretch;   /* ensures both elements match height */
 }
 
 /* rounded input */
 #chatbot-input {
   flex: 1;
   padding: 6px 10px;
+  height: 38px;                          /*  force fixed height */
   border: 1px solid #000000;
   border-right: none;
   border-radius: 999px 0 0 999px;
@@ -373,7 +374,8 @@ a {
 
 /* send button */
 #chatbot-send {
-  padding: 6px 12px;
+  height: 38px;                          /* force same height */
+  padding: 0 16px;                       /* vertical padding removed */
   border: 1px solid #000000;
   border-radius: 0 999px 999px 0;
   font-size: 16px;
