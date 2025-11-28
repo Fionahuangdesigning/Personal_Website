@@ -34,16 +34,17 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
- /* original spacing */
   padding-top: 40px;
 
-.hero-inner {
-  display: inline-block;              /* so scaling is neat */
+  /* shrink */
   transform: scale(0.8);
-  -webkit-transform: scale(0.8);      /* Safari/WebKit */
+  -webkit-transform: scale(0.8);
+
   transform-origin: top center;
   -webkit-transform-origin: top center;
-  margin-top: 60px;                   /* move the whole block down ~60px */
+
+  /* move down */
+  margin-top: 100px;
 }
 
 
