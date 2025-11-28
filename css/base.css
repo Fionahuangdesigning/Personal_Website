@@ -307,9 +307,10 @@ html {
   animation: moveRight 10s linear infinite;  /*speed*/
 }
 
+/*here */
 .hand-img {
-  height: 630px;
-  width: 100vw;
+  height: 600px;
+  width: 70vw;
   position: absolute;
   left: 0;
   bottom: 0;
