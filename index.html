@@ -30,50 +30,46 @@
     </div>
 
     <!-- 网站内容 -->
-<!-- 网站内容 -->
-<div class="content-wrap">
-  <div id="content">
-    <div class="title">Fiona Huang</div>
+    <div class="content-wrap">
+      <div id="content">
+        <div class="title">Fiona Huang</div>
 
-    <div class="font32 text-wrap">
-      <div id="text" class="text-container">
-        Specialist in design & graphic experiments.
+        <div class="font32 text-wrap">
+          <div id="text" class="text-container">
+            Specialist in design & graphic experiments.
+          </div>
+          <div>Born in Taiwan. Remade in New York.</div>
+          <div>A doctor to cure bad graphics & boring ideas.</div>
+        </div>
+
+        <div class="font20 fontAR">
+          <div>
+            <div>Flourishing at:</div>
+            <div>Pentagram</div>
+            <div>School of Visual Arts</div>
+            <div>Type@Cooper</div>
+            <div>New York University</div>
+          </div>
+
+          <div class="mg20">Always training her left hand.</div>
+
+          <div>
+            <div>Love animals</div>
+            <div>Love traveling</div>
+            <div>Love giving</div>
+            <div>Love chocolate</div>
+            <div>Love R&B</div>
+            <div>Love sharing</div>
+          </div>
+
+          <div class="mg20">
+            <div>Her design is fun,</div>
+            <div>so is her life</div>
+          </div>
+
+          <div>Explore more by scrolling</div>
+        </div>
       </div>
-      <div>Born in Taiwan. Remade in New York.</div>
-      <div>A doctor to cure bad graphics & boring ideas.</div>
-    </div>
-
-    <div class="font20 fontAR">
-      <div>
-        <div>Flourishing at:</div>
-        <div>Pentagram</div>
-        <div>School of Visual Arts</div>
-        <div>Type@Cooper</div>
-        <div>New York University</div>
-      </div>
-
-      <div class="mg20">Always training her left hand.</div>
-
-      <div>
-        <div>Love animals</div>
-        <div>Love traveling</div>
-        <div>Love giving</div>
-        <div>Love chocolate</div>
-        <div>Love R&B</div>
-        <div>Love sharing</div>
-      </div>
-
-      <div class="mg20">
-        <div>Her design is fun,</div>
-        <div>so is her life</div>
-      </div>
-
-      <div>Explore more by scrolling</div>
-    </div>
-  </div>
-</div>
-
-
 
       <div class="show-wrap">
         <div class="project-item project1">
@@ -183,6 +179,9 @@
     />
     <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
+    <!-- 📏 Invisible zone that must be erased to unlock chatbot -->
+    <div id="chatbot-unlock-zone"></div>
+
     <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
     <div id="chatbot">
       <img
@@ -221,6 +220,8 @@
       const windowHeight = window.innerHeight;
 
       const canvas = document.getElementById("canvas");
+      const unlockZone = document.getElementById("chatbot-unlock-zone");
+      let chatbotUnlocked = false;
 
       // 文字的宽高（用于避免文字超出屏幕）
       let textWidth, textHeight;
@@ -398,6 +399,50 @@
               document.getElementById("text").style.zIndex = 5;
             }
           }
+
+          // 🔍 每次擦除时检查聊天机器人区域是否被擦掉足够多
+          checkChatbotErase(ctx);
+        }
+
+        // 检查聊天机器人解锁区域是否被擦除
+        function checkChatbotErase(ctx) {
+          if (chatbotUnlocked || !unlockZone) return;
+
+          const zoneRect = unlockZone.getBoundingClientRect();
+          const canvasRect = canvas.getBoundingClientRect();
+
+          const sx = zoneRect.left - canvasRect.left;
+          const sy = zoneRect.top - canvasRect.top;
+          const sw = zoneRect.width;
+          const sh = zoneRect.height;
+
+          if (sw <= 0 || sh <= 0) return;
+
+          // 防止越界
+          const safeW = Math.min(sw, canvas.width - sx);
+          const safeH = Math.min(sh, canvas.height - sy);
+          if (safeW <= 0 || safeH <= 0) return;
+
+          const imgData = ctx.getImageData(sx, sy, safeW, safeH);
+          const data = imgData.data;
+          let erasedPixels = 0;
+
+          for (let i = 3; i < data.length; i += 4) {
+            if (data[i] === 0) erasedPixels++;
+          }
+
+          const total = data.length / 4;
+          const ratio = erasedPixels / total;
+
+          if (ratio > 0.4) {
+            chatbotUnlocked = true;
+
+            const chatbot = document.getElementById("chatbot");
+            if (chatbot) chatbot.classList.add("active");
+
+            if (chatbotInput) chatbotInput.disabled = false;
+            if (chatbotSend) chatbotSend.disabled = false;
+          }
         }
 
         // 调整窗口大小时重置 Canvas
@@ -501,12 +546,6 @@
         document.documentElement.style.display = "none";
       }
 
-      explodingText();
-      JumpText();
-      drawImage();
-      scrollText();
-      tooltip();
-
       function getRandomY() {
         let value;
         if (Math.random() < 0.5) {
@@ -605,6 +644,10 @@
 
       let chatbotResetTimer = null;
 
+      // start disabled until unlocked by erasing
+      if (chatbotInput) chatbotInput.disabled = true;
+      if (chatbotSend) chatbotSend.disabled = true;
+
       function showChatbotState(type) {
         if (!chatbotAvatar) return;
         const src = chatbotImages[type] || chatbotImages.idle;
@@ -622,7 +665,7 @@
       }
 
       function handleChatbotQuestion() {
-        if (!chatbotInput) return;
+        if (!chatbotInput || chatbotInput.disabled) return;
         const q = chatbotInput.value.trim();
         if (!q) return;
         chatbotInput.value = "";
@@ -653,6 +696,13 @@
       if (chatbotSend) {
         chatbotSend.addEventListener("click", handleChatbotQuestion);
       }
+
+      // 🔚 after everything is defined, start the animations
+      explodingText();
+      JumpText();
+      drawImage();
+      scrollText();
+      tooltip();
     </script>
   </body>
 </html>
