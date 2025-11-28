@@ -260,7 +260,7 @@ html {
 .moving-bird-img {
   position: fixed;
   top: 0;
-  width: 300px;
+  width: 180px;   /* size */
   height: auto;
   cursor: pointer;
   display: none;
@@ -288,7 +288,7 @@ html {
 .moving-car-img {
   position: fixed;
   bottom: -65px;
-  height: 400px;
+  height: 290px;   /* size */
   left: -350px;
   display: none;
   z-index: 10;
