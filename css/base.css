@@ -47,7 +47,6 @@ html {
   margin-top: 100px;
 }
 
-
 .text-wrap {
   position: relative;
   padding: 40px 0;
@@ -321,6 +320,17 @@ a {
   text-decoration: none;
 }
 
+/* 🔓 CHATBOT UNLOCK ZONE (matches chatbot area) */
+#chatbot-unlock-zone {
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  width: 260px;
+  height: 200px;
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* ================== CHATBOT ================== */
 #chatbot {
   position: fixed;
@@ -345,7 +355,6 @@ a {
   image-rendering: auto;
   display: block;
 }
-
 
 /* input + button in one row */
 #chatbot-input-wrap {
@@ -388,4 +397,18 @@ a {
 
 #chatbot-send:hover {
   background: #f0f0f0;
+}
+
+/* 🔒 disabled look before illustration is erased */
+#chatbot input,
+#chatbot button {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* 🔓 active once unlocked */
+#chatbot.active input,
+#chatbot.active button {
+  opacity: 1;
+  pointer-events: auto;
 }
