@@ -658,9 +658,12 @@
         color: "./img/chatbot_color.png", // favorite color
         skills: "./img/chatbot_skills.png", // skills
         secret: "./img/chatbot_secret.png", // "it's her secret"
+        resume: "./img/chatbot_resume.png", //resume, linked url
       };
 
       let chatbotResetTimer = null;
+      let currentChatbotState = "idle";
+
 
       // start disabled until unlocked by erasing
       if (chatbotInput) chatbotInput.disabled = true;
@@ -682,26 +685,47 @@
         }
       }
 
-      function handleChatbotQuestion() {
-        if (!chatbotInput || chatbotInput.disabled) return;
-        const q = chatbotInput.value.trim();
-        if (!q) return;
-        chatbotInput.value = "";
+  function handleChatbotQuestion() {
+  if (!chatbotInput) return;
+  const q = chatbotInput.value.trim();
+  if (!q) return;
+  chatbotInput.value = "";
 
-        const question = q.toLowerCase();
+  const question = q.toLowerCase();
 
-        if (question.includes("animal")) {
-          showChatbotState("animal");
-        } else if (question.includes("food")) {
-          showChatbotState("food");
-        } else if (question.includes("color") || question.includes("colour")) {
-          showChatbotState("color");
-        } else if (question.includes("skill")) {
-          showChatbotState("skills");
-        } else {
-          showChatbotState("secret");
-        }
-      }
+  //  resume-related keywords
+  if (
+    question.includes("resume") ||
+    question.includes("cv") ||
+    question.includes("work") ||
+    question.includes("experience") ||
+    question.includes("job")
+  ) {
+    showChatbotState("resume");   // show the resume illustration
+    return;
+  }
+
+  if (question.includes("animal")) {
+    showChatbotState("animal");
+  } else if (question.includes("food")) {
+    showChatbotState("food");
+  } else if (question.includes("color") || question.includes("colour")) {
+    showChatbotState("color");
+  } else if (question.includes("skill")) {
+    showChatbotState("skills");
+  } else {
+    showChatbotState("secret");
+  }
+}
+
+//  Make the resume illustration clickable → open Fiona's resume
+chatbotAvatar.addEventListener("click", () => {
+  if (currentChatbotState === "resume") {
+    window.open("https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob"); 
+  }
+});
+
+      
 
       if (chatbotInput) {
         chatbotInput.addEventListener("keydown", function (e) {
