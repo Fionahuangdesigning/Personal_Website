@@ -320,7 +320,7 @@ a {
   text-decoration: none;
 }
 
-/* 🔓 CHATBOT UNLOCK ZONE (matches chatbot area) */
+/*  CHATBOT UNLOCK ZONE (matches chatbot area) */
 #chatbot-unlock-zone {
   position: fixed;
   bottom: 40px;
@@ -337,7 +337,7 @@ a {
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 0;   /* behind the illustration on top*/
+  z-index: 20;   /* behind the illustration on top needs to change to 0*/
   display: flex;
   flex-direction: column;
   align-items: flex-start;
