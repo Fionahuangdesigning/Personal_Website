@@ -168,6 +168,24 @@
       <div class="tooltip" id="tooltip"></div>
     </div>
 
+    <!-- ***** CHATBOT (above the illustration) *****-->
+<div id="chatbot">
+  <img
+    id="chatbot-avatar"
+    src="./img/chatbot_idle.gif"
+    alt="Chatbot illustration"
+  />
+  <div id="chatbot-input-wrap">
+    <input
+      id="chatbot-input"
+      type="text"
+      placeholder="Ask her a question…"
+      autocomplete="off"
+    />
+    <button id="chatbot-send" type="button">Send</button>
+  </div>
+</div>
+    
     <!-- Canvas 用于绘制图片和擦除 -->
     <canvas id="canvas"></canvas>
     <div id="contact" onclick="openContact()">Reach Me!</div>
@@ -182,7 +200,7 @@
     <!-- 📏 Invisible zone that must be erased to unlock chatbot -->
     <div id="chatbot-unlock-zone"></div>
 
-    <!-- 🗨️ CHATBOT (bottom-left, image-only) -->
+     <!-- ***** CHATBOT (bottom-left, image-only)******
     <div id="chatbot">
       <img
         id="chatbot-avatar"
@@ -198,7 +216,7 @@
         />
         <button id="chatbot-send" type="button">Send</button>
       </div>
-    </div>
+    </div> -->
 
     <script>
       setTimeout(() => {
