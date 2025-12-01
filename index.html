@@ -669,21 +669,23 @@
       if (chatbotInput) chatbotInput.disabled = true;
       if (chatbotSend) chatbotSend.disabled = true;
 
-      function showChatbotState(type) {
-        if (!chatbotAvatar) return;
-        const src = chatbotImages[type] || chatbotImages.idle;
-        chatbotAvatar.src = src;
+      //resume link problems go here
+  function showChatbotState(type) {
+  if (!chatbotAvatar) return;
 
-        // after any non-idle answer, go back to idle in 5s
-        if (type !== "idle") {
-          if (chatbotResetTimer) {
-            clearTimeout(chatbotResetTimer);
-          }
-          chatbotResetTimer = setTimeout(() => {
-            showChatbotState("idle");
-          }, 5000);
-        }
-      }
+  currentChatbotState = type;   //  FIX: update the state!
+
+  const src = chatbotImages[type] || chatbotImages.idle;
+  chatbotAvatar.src = src;
+
+  if (type !== "idle") {
+    if (chatbotResetTimer) clearTimeout(chatbotResetTimer);
+    chatbotResetTimer = setTimeout(() => {
+      showChatbotState("idle");
+    }, 5000);
+  }
+}
+
 
       function handleChatbotQuestion() {
         if (!chatbotInput) return;
