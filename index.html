@@ -58,7 +58,7 @@
             <div>Love traveling</div>
             <div>Love giving</div>
             <div>Love chocolate</div>
-            <div>Love R&amp;B</div>
+            <div>Love R&B</div>
             <div>Love sharing</div>
           </div>
 
@@ -158,6 +158,7 @@
       </div>
 
       <div class="page-foot">
+        <!-- <div class="title">Site designed & coded by me</div>  -->
         <div class="mt30">Always open to chat online not in-person</div>
         <div>♬♫♪◖(◕ ‿ ◕)◗♪♫♬</div>
         <div>You know where to find me</div>
@@ -167,7 +168,7 @@
       <div class="tooltip" id="tooltip"></div>
     </div>
 
-    <!-- ***** CHATBOT (bottom-left, image-only) *****-->
+    <!-- ***** CHATBOT (always on top of illustration) *****-->
     <div id="chatbot">
       <img
         id="chatbot-avatar"
@@ -185,7 +186,7 @@
       </div>
     </div>
 
-    <!-- Canvas 用于绘制图片和擦除 -->
+    <!-- Canvas 用于绘制图片和擦除（全屏可擦除插画） -->
     <canvas id="canvas"></canvas>
     <div id="contact" onclick="openContact()">Reach Me!</div>
     <img
@@ -200,24 +201,27 @@
       setTimeout(() => {
         window.scrollTo({
           top: 0,
-          behavior: "smooth",
+          behavior: "smooth", // 平滑滚动
         });
       }, 100);
 
       let eraseCount = 0;
+      // 动画状态
       let isJumping = true;
       let jumpTimer, removeTimer, addTimer, carTimer;
       let animationFrame;
+      // 鼠标擦除功能
       let isDrawing = false;
-
+      // 屏幕宽高
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
       const canvas = document.getElementById("canvas");
 
+      // 文字的宽高（用于避免文字超出屏幕）
       let textWidth, textHeight;
 
-      const tooltipList = [
+      let tooltipList = [
         { title: "People I Hate", subTitle: "graphic design / poster" },
         { title: "Turkish March", subTitle: "zine / installation" },
         {
@@ -251,7 +255,9 @@
           contact.style.left = `${newX}px`;
           contact.style.top = `${newY}px`;
 
-          if (jumpTimer) clearTimeout(jumpTimer);
+          if (jumpTimer) {
+            clearTimeout(jumpTimer);
+          }
           jumpTimer = setTimeout(() => {
             animationFrame = requestAnimationFrame(jump);
           }, 600);
@@ -284,10 +290,10 @@
         const text = textContainer.textContent.trim();
 
         textContainer.innerHTML = "";
-        text.split(" ").forEach((word) => {
+        text.split(" ").forEach((char) => {
           const span = document.createElement("span");
           span.className = "char";
-          span.textContent = word;
+          span.textContent = char;
           textContainer.appendChild(span);
         });
 
@@ -303,7 +309,9 @@
 
         textContainer.addEventListener("mouseenter", (event) => {
           event.stopPropagation();
-          if (addTimer) clearTimeout(addTimer);
+          if (addTimer) {
+            clearTimeout(addTimer);
+          }
 
           addTimer = setTimeout(() => {
             chars.forEach((char) => {
@@ -315,8 +323,10 @@
 
         textContainer.addEventListener("mouseleave", (event) => {
           event.stopPropagation();
-          if (removeTimer) clearTimeout(removeTimer);
 
+          if (removeTimer) {
+            clearTimeout(removeTimer);
+          }
           removeTimer = setTimeout(() => {
             chars.forEach((char) => {
               char.classList.remove("explode");
@@ -332,7 +342,7 @@
         canvas.height = windowHeight;
 
         const img = new Image();
-        img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png";
+        img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png"; // 你的全屏插画
         img.onload = () => {
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         };
@@ -375,7 +385,7 @@
       function scrollText() {
         const container = document.getElementById("scrollContainer");
         let position = 0;
-        const speed = 3;
+        let speed = 3;
         let animationFrameId;
 
         function scroll() {
@@ -385,7 +395,7 @@
           const firstText = container.querySelector(".scroll-text");
           const textWidth =
             firstText.offsetWidth +
-            parseInt(getComputedStyle(firstText).marginRight, 10);
+            parseInt(getComputedStyle(firstText).marginRight);
 
           if (Math.abs(position) >= textWidth) {
             position += textWidth;
@@ -407,9 +417,8 @@
       }
 
       function tooltip() {
-        const projectList = document.querySelectorAll(".project-item");
-        const tooltip = document.getElementById("tooltip");
-
+        let projectList = document.querySelectorAll(".project-item");
+        let tooltip = document.getElementById("tooltip");
         projectList.forEach((project, index) => {
           project.addEventListener("mouseenter", (event) => {
             tooltip.style.left = event.clientX + 10 + "px";
@@ -422,12 +431,10 @@
               <div class="tooltip-sub-title gray">${tooltipList[index].subTitle}</div>
             `;
           });
-
           project.addEventListener("mousemove", (event) => {
             tooltip.style.left = event.clientX + 10 + "px";
             tooltip.style.top = event.clientY + 20 + "px";
           });
-
           project.addEventListener("mouseleave", () => {
             tooltip.style.opacity = "0";
             tooltip.style.transform = "scale(0.8)";
@@ -438,7 +445,7 @@
       function birdGif() {
         const birdEl = document.querySelector(".moving-bird-img");
         const maxHeight = (window.innerHeight - 300) * 0.3;
-        const randomTop = Math.floor(Math.random() * maxHeight);
+        let randomTop = Math.floor(Math.random() * maxHeight);
 
         birdEl.style.top = `${randomTop}px`;
         birdEl.style.display = "block";
@@ -488,8 +495,8 @@
       function mouseTrailEffect(event) {
         const body = document.body;
 
-        const trails = [];
-        const imgEl = document.createElement("img");
+        let trails = [];
+        let imgEl = document.createElement("img");
         imgEl.src = "./img/cursor.png";
 
         imgEl.className = "trail";
@@ -500,7 +507,7 @@
         trails.push(imgEl);
 
         if (trails.length > 20) {
-          const oldDot = trails.shift();
+          let oldDot = trails.shift();
           oldDot.remove();
         }
 
@@ -511,7 +518,7 @@
 
         setTimeout(() => {
           imgEl.remove();
-          const index = trails.indexOf(imgEl);
+          let index = trails.indexOf(imgEl);
           if (index > -1) {
             trails.splice(index, 1);
           }
@@ -528,8 +535,10 @@
 
             JumpText();
             birdGif();
-            if (carTimer) clearInterval(carTimer);
-            carTimer = setInterval(birdGif, 5000);
+            if (carTimer) {
+              clearInterval(carTimer);
+            }
+            carTimer = setInterval(birdGif, 5 * 1000);
           }
         },
         {
@@ -576,6 +585,7 @@
       let chatbotResetTimer = null;
       let currentChatbotState = "idle";
 
+      // chatbot is ALWAYS active (no unlock / disabled)
       function showChatbotState(type) {
         if (!chatbotAvatar) return;
 
@@ -600,7 +610,7 @@
 
         const question = q.toLowerCase();
 
-        // greetings
+        // 1) greetings
         if (
           question === "hi" ||
           question === "hello" ||
@@ -611,7 +621,7 @@
         ) {
           showChatbotState("greet");
 
-          // what is she doing now?
+          // 2) what is she doing now?
         } else if (
           question.includes("what is she doing now") ||
           question.includes("what's she doing") ||
@@ -619,7 +629,7 @@
         ) {
           showChatbotState("doing");
 
-          // why should I hire her?
+          // 3) why should I hire her?
         } else if (
           question.includes("hire her") ||
           question.includes("why should i hire her") ||
@@ -627,7 +637,7 @@
         ) {
           showChatbotState("hire");
 
-          // tell me about Fiona
+          // 4) tell me about Fiona
         } else if (
           question.includes("tell me about fiona") ||
           question.includes("about fiona") ||
@@ -635,7 +645,7 @@
         ) {
           showChatbotState("about");
 
-          // resume-related
+          // 5) resume-related
         } else if (
           question.includes("resume") ||
           question.includes("cv") ||
@@ -645,7 +655,7 @@
         ) {
           showChatbotState("resume");
 
-          // original favorites
+          // 6) original favorites
         } else if (question.includes("animal")) {
           showChatbotState("animal");
         } else if (question.includes("food")) {
@@ -655,15 +665,40 @@
         } else if (question.includes("skill")) {
           showChatbotState("skills");
 
-          // everything else
+          // 7) everything else
         } else {
           showChatbotState("secret");
         }
       }
 
-      // Resume illustration clickable → open Fiona's resume
       if (chatbotAvatar) {
         chatbotAvatar.addEventListener("click", () => {
           if (currentChatbotState === "resume") {
             window.open(
-              "https://drive.google.com/drive/
+              "https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob"
+            );
+          }
+        });
+      }
+
+      if (chatbotInput) {
+        chatbotInput.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            handleChatbotQuestion();
+          }
+        });
+      }
+
+      if (chatbotSend) {
+        chatbotSend.addEventListener("click", handleChatbotQuestion);
+      }
+
+      // 🔚 after everything is defined, start the animations
+      explodingText();
+      JumpText();
+      drawImage();
+      scrollText();
+      tooltip();
+    </script>
+  </body>
+</html>
