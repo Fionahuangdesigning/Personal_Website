@@ -337,7 +337,7 @@ a {
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 20;   /* behind the illustration on top needs to change to 0*/
+  z-index: 0;   /* behind the illustration/canvas */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -397,18 +397,4 @@ a {
 
 #chatbot-send:hover {
   background: #f0f0f0;
-}
-
-/* 🔒 disabled look before illustration is erased 
-#chatbot input,
-#chatbot button {
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-/* 🔓 active once unlocked 
-#chatbot.active input,
-#chatbot.active button {
-  opacity: 1;
-  pointer-events: auto; */
 }
