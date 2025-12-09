@@ -646,46 +646,53 @@
         }
       });
 
-      // ================== CHATBOT LOGIC (image-only) ==================
+            // ================== CHATBOT LOGIC (image-only) ==================
       const chatbotAvatar = document.getElementById("chatbot-avatar");
       const chatbotInput = document.getElementById("chatbot-input");
       const chatbotSend = document.getElementById("chatbot-send");
 
       const chatbotImages = {
         idle: "./img/chatbot_idle.gif", // default
+
+        // original favorites
         animal: "./img/chatbot_animal.png", // favorite animal
-        food: "./img/chatbot_food.png", // favorite food
-        color: "./img/chatbot_color.png", // favorite color
+        food: "./img/chatbot_food.png",     // favorite food
+        color: "./img/chatbot_color.png",   // favorite color
         skills: "./img/chatbot_skills.png", // skills
         secret: "./img/chatbot_secret.png", // "it's her secret"
-        resume: "./img/chatbot_resume.png", //resume, linked url
+
+        // extra questions
+        doing: "./img/chatbot_doing.png",   // What is she doing now?
+        hire: "./img/chatbot_hire.png",     // Why should I hire her?
+        about: "./img/chatbot_about.png",   // Tell me about Fiona
+        greet: "./img/chatbot_greet.png",   // hi / hello / what's up
+
+        // resume (clickable)
+        resume: "./img/chatbot_resume.png", // resume, linked url
       };
 
       let chatbotResetTimer = null;
       let currentChatbotState = "idle";
 
-
       // start disabled until unlocked by erasing
       if (chatbotInput) chatbotInput.disabled = true;
       if (chatbotSend) chatbotSend.disabled = true;
 
-      //resume link problems go here
-  function showChatbotState(type) {
-  if (!chatbotAvatar) return;
+      function showChatbotState(type) {
+        if (!chatbotAvatar) return;
 
-  currentChatbotState = type;   //  FIX: update the state!
+        currentChatbotState = type;
 
-  const src = chatbotImages[type] || chatbotImages.idle;
-  chatbotAvatar.src = src;
+        const src = chatbotImages[type] || chatbotImages.idle;
+        chatbotAvatar.src = src;
 
-  if (type !== "idle") {
-    if (chatbotResetTimer) clearTimeout(chatbotResetTimer);
-    chatbotResetTimer = setTimeout(() => {
-      showChatbotState("idle");
-    }, 5000);
-  }
-}
-
+        if (type !== "idle") {
+          if (chatbotResetTimer) clearTimeout(chatbotResetTimer);
+          chatbotResetTimer = setTimeout(() => {
+            showChatbotState("idle");
+          }, 5000);
+        }
+      }
 
       function handleChatbotQuestion() {
         if (!chatbotInput) return;
@@ -695,19 +702,53 @@
 
         const question = q.toLowerCase();
 
-        //  resume-related keywords
+        // 1) greetings
         if (
+          question === "hi" ||
+          question === "hello" ||
+          question === "hey" ||
+          question === "yo" ||
+          question.includes("what's up") ||
+          question.includes("whats up")
+        ) {
+          showChatbotState("greet");
+
+        // 2) what is she doing now?
+        } else if (
+          question.includes("what is she doing now") ||
+          question.includes("what's she doing") ||
+          question.includes("doing now")
+        ) {
+          showChatbotState("doing");
+
+        // 3) why should I hire her?
+        } else if (
+          question.includes("hire her") ||
+          question.includes("why should i hire her") ||
+          question.includes("why hire her")
+        ) {
+          showChatbotState("hire");
+
+        // 4) tell me about Fiona
+        } else if (
+          question.includes("tell me about fiona") ||
+          question.includes("about fiona") ||
+          question.includes("who is fiona")
+        ) {
+          showChatbotState("about");
+
+        // 5) resume-related
+        } else if (
           question.includes("resume") ||
           question.includes("cv") ||
           question.includes("work") ||
           question.includes("experience") ||
           question.includes("job")
         ) {
-          showChatbotState("resume");   // show the resume illustration
-          return;
-        }
+          showChatbotState("resume");
 
-        if (question.includes("animal")) {
+        // 6) original favorites
+        } else if (question.includes("animal")) {
           showChatbotState("animal");
         } else if (question.includes("food")) {
           showChatbotState("food");
@@ -715,19 +756,23 @@
           showChatbotState("color");
         } else if (question.includes("skill")) {
           showChatbotState("skills");
+
+        // 7) everything else
         } else {
           showChatbotState("secret");
         }
       }
 
-      //  Make the resume illustration clickable → open Fiona's resume
-      chatbotAvatar.addEventListener("click", () => {
-        if (currentChatbotState === "resume") {
-          window.open("https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob"); 
-        }
-      });
-
-      
+      // Make the resume illustration clickable → open Fiona's resume
+      if (chatbotAvatar) {
+        chatbotAvatar.addEventListener("click", () => {
+          if (currentChatbotState === "resume") {
+            window.open(
+              "https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob"
+            );
+          }
+        });
+      }
 
       if (chatbotInput) {
         chatbotInput.addEventListener("keydown", function (e) {
@@ -747,6 +792,7 @@
       drawImage();
       scrollText();
       tooltip();
+
     </script>
   </body>
 </html>
