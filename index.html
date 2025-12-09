@@ -682,16 +682,16 @@
       let currentChatbotState = "idle";
 
       // sound reminder state
-      let hasChatted = false;
-      let reminderTimer = null;
+     // let hasChatted = false;
+     // let reminderTimer = null;
 
-      function playReminder() {
-        if (!chatbotReminder) return;
-        try {
-          chatbotReminder.currentTime = 0;
-          chatbotReminder.play();
-        } catch (e) {
-          console.log("Reminder playback blocked:", e);
+     // function playReminder() {
+      //  if (!chatbotReminder) return;
+      //  try {
+      //    chatbotReminder.currentTime = 0;
+      //    chatbotReminder.play();
+     //   } catch (e) {
+     //     console.log("Reminder playback blocked:", e);
         }
       }
 
@@ -722,11 +722,11 @@
         chatbotInput.value = "";
 
         // user has interacted at least once → stop reminders forever
-        hasChatted = true;
-        if (reminderTimer) {
-          clearInterval(reminderTimer);
-          reminderTimer = null;
-        }
+        //hasChatted = true;
+        //if (reminderTimer) {
+        //  clearInterval(reminderTimer);
+        //  reminderTimer = null;
+       // }
 
         const question = q.toLowerCase();
 
@@ -782,7 +782,7 @@
           showChatbotState("food");
         } else if (question.includes("color") || question.includes("colour")) {
           showChatbotState("color");
-        } else if (question.includes("skill")) || question.includes("do")) {
+        } else if (question.includes("skill")) {
           showChatbotState("skills");
 
         // 7) everything else
@@ -815,14 +815,14 @@
       }
 
       //  every 10 seconds, play "ask me about Fiona" until user chats once
-      reminderTimer = setInterval(() => {
-        if (!hasChatted) {
-          playReminder();
-        } else {
-          clearInterval(reminderTimer);
-          reminderTimer = null;
-        }
-      }, 10000);
+    //  reminderTimer = setInterval(() => {
+    //    if (!hasChatted) {
+      //    playReminder();
+      //  } else {
+       //   clearInterval(reminderTimer);
+       //   reminderTimer = null;
+      //  }
+     // }, 10000);
       
       //  after everything is defined, start the animations
       explodingText();
