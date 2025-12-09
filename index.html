@@ -167,7 +167,7 @@
       <div class="tooltip" id="tooltip"></div>
     </div>
 
-    <!-- ***** CHATBOT (bottom-left, on top) *****-->
+    <!-- ***** CHATBOT (bottom-left, always active, on top) *****-->
     <div id="chatbot">
       <img
         id="chatbot-avatar"
@@ -196,7 +196,7 @@
     />
     <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
-    <!-- Invisible zone (no longer used for locking, safe to keep) -->
+    <!-- Invisible zone (no longer used, but safe to keep) -->
     <div id="chatbot-unlock-zone"></div>
 
     <script>
@@ -208,7 +208,6 @@
       }, 100);
 
       let eraseCount = 0;
-      // 动画状态
       let isJumping = true;
       let jumpTimer, removeTimer, addTimer, carTimer;
       let animationFrame;
@@ -218,11 +217,10 @@
       const windowHeight = window.innerHeight;
 
       const canvas = document.getElementById("canvas");
-      const unlockZone = document.getElementById("chatbot-unlock-zone");
 
       let textWidth, textHeight;
 
-      let tooltipList = [
+      const tooltipList = [
         { title: "People I Hate", subTitle: "graphic design / poster" },
         { title: "Turkish March", subTitle: "zine / installation" },
         {
@@ -259,12 +257,13 @@
           if (jumpTimer) {
             clearTimeout(jumpTimer);
           }
+
           jumpTimer = setTimeout(() => {
             animationFrame = requestAnimationFrame(jump);
           }, 600);
         }
 
-        contact.addEventListener("mouseenter", (event) => {
+        contact.addEventListener("mouseenter", () => {
           isJumping = false;
           cancelAnimationFrame(animationFrame);
         });
@@ -324,7 +323,6 @@
 
         textContainer.addEventListener("mouseleave", (event) => {
           event.stopPropagation();
-
           if (removeTimer) {
             clearTimeout(removeTimer);
           }
@@ -374,8 +372,6 @@
               document.getElementById("text").style.zIndex = 5;
             }
           }
-
-          // checkChatbotErase(ctx); // now harmless / not needed, can be left out
         }
 
         window.addEventListener("resize", () => {
@@ -388,7 +384,7 @@
       function scrollText() {
         const container = document.getElementById("scrollContainer");
         let position = 0;
-        let speed = 3;
+        const speed = 3;
         let animationFrameId;
 
         function scroll() {
@@ -420,8 +416,8 @@
       }
 
       function tooltip() {
-        let projectList = document.querySelectorAll(".project-item");
-        let tooltip = document.getElementById("tooltip");
+        const projectList = document.querySelectorAll(".project-item");
+        const tooltip = document.getElementById("tooltip");
         projectList.forEach((project, index) => {
           project.addEventListener("mouseenter", (event) => {
             tooltip.style.left = event.clientX + 10 + "px";
@@ -448,7 +444,7 @@
       function birdGif() {
         const birdEl = document.querySelector(".moving-bird-img");
         const maxHeight = (window.innerHeight - 300) * 0.3;
-        let randomTop = Math.floor(Math.random() * maxHeight);
+        const randomTop = Math.floor(Math.random() * maxHeight);
 
         birdEl.style.top = `${randomTop}px`;
         birdEl.style.display = "block";
@@ -498,8 +494,8 @@
       function mouseTrailEffect(event) {
         const body = document.body;
 
-        let trails = [];
-        let imgEl = document.createElement("img");
+        const trails = [];
+        const imgEl = document.createElement("img");
         imgEl.src = "./img/cursor.png";
 
         imgEl.className = "trail";
@@ -510,7 +506,7 @@
         trails.push(imgEl);
 
         if (trails.length > 20) {
-          let oldDot = trails.shift();
+          const oldDot = trails.shift();
           oldDot.remove();
         }
 
@@ -521,7 +517,7 @@
 
         setTimeout(() => {
           imgEl.remove();
-          let index = trails.indexOf(imgEl);
+          const index = trails.indexOf(imgEl);
           if (index > -1) {
             trails.splice(index, 1);
           }
@@ -673,7 +669,7 @@
         }
       }
 
-      // Resume illustration clickable
+      // Make the resume illustration clickable → open Fiona's resume
       if (chatbotAvatar) {
         chatbotAvatar.addEventListener("click", () => {
           if (currentChatbotState === "resume") {
@@ -685,7 +681,7 @@
       }
 
       if (chatbotInput) {
-        chatbotInput.addEventListener("keydown", function (e) {
+        chatbotInput.addEventListener("keydown", (e) => {
           if (e.key === "Enter") {
             handleChatbotQuestion();
           }
@@ -696,7 +692,7 @@
         chatbotSend.addEventListener("click", handleChatbotQuestion);
       }
 
-      // 🔚 start all effects
+      // start effects
       explodingText();
       JumpText();
       drawImage();
