@@ -58,7 +58,7 @@
             <div>Love traveling</div>
             <div>Love giving</div>
             <div>Love chocolate</div>
-            <div>Love R&B</div>
+            <div>Love R&amp;B</div>
             <div>Love sharing</div>
           </div>
 
@@ -167,7 +167,7 @@
       <div class="tooltip" id="tooltip"></div>
     </div>
 
-    <!-- ***** CHATBOT (bottom-left, always active, on top) *****-->
+    <!-- ***** CHATBOT (bottom-left, image-only) *****-->
     <div id="chatbot">
       <img
         id="chatbot-avatar"
@@ -196,9 +196,6 @@
     />
     <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
-    <!-- Invisible zone (no longer used, but safe to keep) -->
-    <div id="chatbot-unlock-zone"></div>
-
     <script>
       setTimeout(() => {
         window.scrollTo({
@@ -211,8 +208,8 @@
       let isJumping = true;
       let jumpTimer, removeTimer, addTimer, carTimer;
       let animationFrame;
-
       let isDrawing = false;
+
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
 
@@ -254,10 +251,7 @@
           contact.style.left = `${newX}px`;
           contact.style.top = `${newY}px`;
 
-          if (jumpTimer) {
-            clearTimeout(jumpTimer);
-          }
-
+          if (jumpTimer) clearTimeout(jumpTimer);
           jumpTimer = setTimeout(() => {
             animationFrame = requestAnimationFrame(jump);
           }, 600);
@@ -290,10 +284,10 @@
         const text = textContainer.textContent.trim();
 
         textContainer.innerHTML = "";
-        text.split(" ").forEach((char) => {
+        text.split(" ").forEach((word) => {
           const span = document.createElement("span");
           span.className = "char";
-          span.textContent = char;
+          span.textContent = word;
           textContainer.appendChild(span);
         });
 
@@ -309,9 +303,7 @@
 
         textContainer.addEventListener("mouseenter", (event) => {
           event.stopPropagation();
-          if (addTimer) {
-            clearTimeout(addTimer);
-          }
+          if (addTimer) clearTimeout(addTimer);
 
           addTimer = setTimeout(() => {
             chars.forEach((char) => {
@@ -323,9 +315,8 @@
 
         textContainer.addEventListener("mouseleave", (event) => {
           event.stopPropagation();
-          if (removeTimer) {
-            clearTimeout(removeTimer);
-          }
+          if (removeTimer) clearTimeout(removeTimer);
+
           removeTimer = setTimeout(() => {
             chars.forEach((char) => {
               char.classList.remove("explode");
@@ -394,7 +385,7 @@
           const firstText = container.querySelector(".scroll-text");
           const textWidth =
             firstText.offsetWidth +
-            parseInt(getComputedStyle(firstText).marginRight);
+            parseInt(getComputedStyle(firstText).marginRight, 10);
 
           if (Math.abs(position) >= textWidth) {
             position += textWidth;
@@ -418,6 +409,7 @@
       function tooltip() {
         const projectList = document.querySelectorAll(".project-item");
         const tooltip = document.getElementById("tooltip");
+
         projectList.forEach((project, index) => {
           project.addEventListener("mouseenter", (event) => {
             tooltip.style.left = event.clientX + 10 + "px";
@@ -430,10 +422,12 @@
               <div class="tooltip-sub-title gray">${tooltipList[index].subTitle}</div>
             `;
           });
+
           project.addEventListener("mousemove", (event) => {
             tooltip.style.left = event.clientX + 10 + "px";
             tooltip.style.top = event.clientY + 20 + "px";
           });
+
           project.addEventListener("mouseleave", () => {
             tooltip.style.opacity = "0";
             tooltip.style.transform = "scale(0.8)";
@@ -534,10 +528,8 @@
 
             JumpText();
             birdGif();
-            if (carTimer) {
-              clearInterval(carTimer);
-            }
-            carTimer = setInterval(birdGif, 5 * 1000);
+            if (carTimer) clearInterval(carTimer);
+            carTimer = setInterval(birdGif, 5000);
           }
         },
         {
@@ -566,16 +558,16 @@
 
         // original favorites
         animal: "./img/chatbot_animal.png", // favorite animal
-        food: "./img/chatbot_food.png",     // favorite food
-        color: "./img/chatbot_color.png",   // favorite color
+        food: "./img/chatbot_food.png", // favorite food
+        color: "./img/chatbot_color.png", // favorite color
         skills: "./img/chatbot_skills.png", // skills
         secret: "./img/chatbot_secret.png", // "it's her secret"
 
         // extra questions
-        doing: "./img/chatbot_doing.png",   // What is she doing now?
-        hire: "./img/chatbot_hire.png",     // Why should I hire her?
-        about: "./img/chatbot_about.png",   // Tell me about Fiona
-        greet: "./img/chatbot_greet.png",   // hi / hello / what's up
+        doing: "./img/chatbot_doing.png", // What is she doing now?
+        hire: "./img/chatbot_hire.png", // Why should I hire her?
+        about: "./img/chatbot_about.png", // Tell me about Fiona
+        greet: "./img/chatbot_greet.png", // hi / hello / what's up
 
         // resume (clickable)
         resume: "./img/chatbot_resume.png", // resume, linked url
@@ -608,7 +600,7 @@
 
         const question = q.toLowerCase();
 
-        // 1) greetings
+        // greetings
         if (
           question === "hi" ||
           question === "hello" ||
@@ -619,7 +611,7 @@
         ) {
           showChatbotState("greet");
 
-        // 2) what is she doing now?
+          // what is she doing now?
         } else if (
           question.includes("what is she doing now") ||
           question.includes("what's she doing") ||
@@ -627,7 +619,7 @@
         ) {
           showChatbotState("doing");
 
-        // 3) why should I hire her?
+          // why should I hire her?
         } else if (
           question.includes("hire her") ||
           question.includes("why should i hire her") ||
@@ -635,7 +627,7 @@
         ) {
           showChatbotState("hire");
 
-        // 4) tell me about Fiona
+          // tell me about Fiona
         } else if (
           question.includes("tell me about fiona") ||
           question.includes("about fiona") ||
@@ -643,7 +635,7 @@
         ) {
           showChatbotState("about");
 
-        // 5) resume-related
+          // resume-related
         } else if (
           question.includes("resume") ||
           question.includes("cv") ||
@@ -653,7 +645,7 @@
         ) {
           showChatbotState("resume");
 
-        // 6) original favorites
+          // original favorites
         } else if (question.includes("animal")) {
           showChatbotState("animal");
         } else if (question.includes("food")) {
@@ -663,41 +655,15 @@
         } else if (question.includes("skill")) {
           showChatbotState("skills");
 
-        // 7) everything else
+          // everything else
         } else {
           showChatbotState("secret");
         }
       }
 
-      // Make the resume illustration clickable → open Fiona's resume
+      // Resume illustration clickable → open Fiona's resume
       if (chatbotAvatar) {
         chatbotAvatar.addEventListener("click", () => {
           if (currentChatbotState === "resume") {
             window.open(
-              "https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob"
-            );
-          }
-        });
-      }
-
-      if (chatbotInput) {
-        chatbotInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            handleChatbotQuestion();
-          }
-        });
-      }
-
-      if (chatbotSend) {
-        chatbotSend.addEventListener("click", handleChatbotQuestion);
-      }
-
-      // start effects
-      explodingText();
-      JumpText();
-      drawImage();
-      scrollText();
-      tooltip();
-    </script>
-  </body>
-</html>
+              "https://drive.google.com/drive/
