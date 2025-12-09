@@ -122,7 +122,7 @@ html {
   top: 0;
   left: 0;
   transition: all 0.5s ease;
-  z-index: 1;
+  z-index: 1; /* illustration on top of page but under chatbot */
 }
 
 .hidden {
@@ -319,24 +319,13 @@ a {
   text-decoration: none;
 }
 
-/* CHATBOT UNLOCK ZONE (no longer used, harmless to keep) */
-#chatbot-unlock-zone {
-  position: fixed;
-  bottom: 40px;
-  left: 40px;
-  width: 260px;
-  height: 200px;
-  pointer-events: none;
-  z-index: 2;
-}
-
 /* ================== CHATBOT ================== */
 #chatbot {
   position: fixed;
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 20; /* on top of the illustration */
+  z-index: 10000; /* ABOVE the canvas/illustration */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
