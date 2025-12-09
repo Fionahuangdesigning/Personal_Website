@@ -185,6 +185,13 @@
         <button id="chatbot-send" type="button">Send</button>
       </div>
     </div>
+
+    <!-- Chatbot reminder sound: "ask me about Fiona" -->
+    <audio
+      id="chatbot-reminder"
+      src="./audio/ask_me_about_fiona.mp3"
+      preload="auto"
+    ></audio>
     
     <!-- Canvas 用于绘制图片和擦除 -->
     <canvas id="canvas"></canvas>
@@ -674,6 +681,20 @@
       let chatbotResetTimer = null;
       let currentChatbotState = "idle";
 
+      // sound reminder state
+      let hasChatted = false;
+      let reminderTimer = null;
+
+      function playReminder() {
+        if (!chatbotReminder) return;
+        try {
+          chatbotReminder.currentTime = 0;
+          chatbotReminder.play();
+        } catch (e) {
+          console.log("Reminder playback blocked:", e);
+        }
+      }
+
       // start disabled until unlocked by erasing
      // if (chatbotInput) chatbotInput.disabled = true;
      // if (chatbotSend) chatbotSend.disabled = true;
@@ -699,6 +720,13 @@
         const q = chatbotInput.value.trim();
         if (!q) return;
         chatbotInput.value = "";
+
+        // user has interacted at least once → stop reminders forever
+        hasChatted = true;
+        if (reminderTimer) {
+          clearInterval(reminderTimer);
+          reminderTimer = null;
+        }
 
         const question = q.toLowerCase();
 
@@ -786,7 +814,17 @@
         chatbotSend.addEventListener("click", handleChatbotQuestion);
       }
 
-      // 🔚 after everything is defined, start the animations
+      //  every 10 seconds, play "ask me about Fiona" until user chats once
+      reminderTimer = setInterval(() => {
+        if (!hasChatted) {
+          playReminder();
+        } else {
+          clearInterval(reminderTimer);
+          reminderTimer = null;
+        }
+      }, 10000);
+      
+      //  after everything is defined, start the animations
       explodingText();
       JumpText();
       drawImage();
