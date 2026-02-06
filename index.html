@@ -167,11 +167,11 @@
           <img loading="lazy" src="./img/project/project7/project7_4.png" alt="" class="bg-img" />
 
           <div class="video-wrap">
-            <video loading="lazy" loop controls src="./img/project/project7/project4_left.mov" alt=""
+            <video loading="lazy" muted autoplay loop controls src="./img/project/project7/project4_left.mov" alt=""
               class="project4-video w-1-2">
             </video>
 
-            <video loading="lazy" loop controls src="./img/project/project7/project4_right.mp4" alt=""
+            <video loading="lazy" muted autoplay loop controls src="./img/project/project7/project4_right.mp4" alt=""
               class="project4-video w-1-2">
             </video>
           </div>
@@ -185,7 +185,7 @@
         <img loading="lazy" src="./img/project/project7/project7_7.png" alt="" />
         <div class="project-wrap">
           <img loading="lazy" src="./img/project/project7/project7_8.png" alt="" class="bg-img" />
-          <video loading="lazy" loop controls src="./img/project/project7/project7_8_video.mp4" alt=""
+          <video loading="lazy" muted autoplay loop controls src="./img/project/project7/project7_8_video.mp4" alt=""
             class="project-video" />
         </div>
         <img loading="lazy" src="./img/project/project7/project7_9.png" alt="" />
@@ -234,6 +234,7 @@
     let animationFrame;
     // 鼠标擦除功能
     let isDrawing = false;
+    let isAnimationEnd = false;
     // 屏幕宽高
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
@@ -463,6 +464,9 @@
     }
 
     function birdGif() {
+      // 先隐藏汽车图片
+      document.querySelector(".moving-car-img").style.display = "none";
+
       const birdEl = document.querySelector(".moving-bird-img");
       const maxHeight = (window.innerHeight - 300) * 0.3;
       let randomTop = Math.floor(Math.random() * maxHeight);
@@ -477,6 +481,24 @@
       void birdEl.offsetWidth;
       birdEl.style.animation = "moveLeft 5s linear forwards";
       document.body.appendChild(birdEl);
+
+
+
+      birdEl.addEventListener('animationend', async () => {
+        await new Promise((resolve) => setTimeout(resolve, 6 * 1000));
+
+        // 6秒后显示汽车图片
+        const carEL = document.querySelector(".moving-car-img")
+        carEL.style.display = "block";
+        carEL.addEventListener('animationend', async () => {
+          carEL.style.display = "none";
+          await new Promise((resolve) => setTimeout(resolve, 4 * 1000));
+          birdGif()
+        })
+      });
+
+
+
     }
 
     function isMobileOrTablet() {
@@ -491,8 +513,53 @@
     }
 
     if (isMobileOrTablet()) {
-      alert("Please view my site on a desktop <333 ");
-      document.documentElement.style.display = "none";
+      // 创建遮罩层
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      `;
+
+      // 添加提示信息
+      const message = document.createElement('div');
+      message.innerHTML = `
+        <h2>Please rotate your device</h2>
+        <p>This website is best viewed in landscape mode</p>
+        <div style="font-size: 48px; margin: 20px 0;">📱↻</div>
+        <p>For the best experience, please view on a desktop</p>
+      `;
+
+      overlay.appendChild(message);
+      document.body.appendChild(overlay);
+
+      // 检测设备方向变化
+      window.addEventListener("orientationchange", function () {
+        if (window.orientation === 90 || window.orientation === -90) {
+          console.log("现在是横屏模式");
+          // 这里可以执行你的视频播放逻辑
+          // 横屏模式，隐藏遮罩层
+          overlay.style.display = 'none';
+        } else {
+          console.log("现在是竖屏模式");
+          // 竖屏模式，显示遮罩层
+          overlay.style.display = 'flex';
+        }
+      });
+
+
     }
 
     function getRandomY() {
@@ -551,14 +618,17 @@
           canvas.classList.add("hidden");
           document.getElementById("contact").style.zIndex = 5;
           document.getElementById("text").style.zIndex = 5;
-          document.querySelector(".moving-car-img").style.display = "block";
+          // 先显示birdGif 然后延迟执行汽车图片， 
+          birdGif();
 
           JumpText();
-          birdGif();
-          if (carTimer) {
-            clearInterval(carTimer);
-          }
-          carTimer = setInterval(birdGif, 5 * 1000);
+          // setTimeout(() => {
+
+          //   if (carTimer) {
+          //     clearInterval(carTimer);
+          //   }
+          //   carTimer = setInterval(birdGif, 15 * 1000);
+          // }, 5 * 1000); // 500毫秒延迟，可以根据需要调整
         }
       },
       {

@@ -31,19 +31,21 @@ html {
   color: #0000ff;
   text-decoration: underline;
   font-size: 16px;
+  margin-right: 20px;
 }
 
 .aWrap {
-  max-width: 600px;
+  max-width: 625px;
   margin: 0 auto;
 }
+
 .aList {
   margin: 20px 0;
 }
 
 #content {
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -66,11 +68,13 @@ html {
   width: 100%;
   height: 100%;
 }
+
 .project-wrap .bg-img {
   position: relative;
   width: 100%;
   height: 100%;
 }
+
 .project-video {
   position: absolute;
   top: 55%;
@@ -80,41 +84,50 @@ html {
   object-fit: cover;
   transform: translate(-50%, -50%);
 }
+
 .video-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 92%;
   height: 60%;
-  z-index: 2;
+  z-index: 0;
   transform: translate(-50%, -50%);
   display: flex;
   gap: 42px;
 }
+
 .project4-video {
   width: 50%;
   height: 100%;
   object-fit: cover;
   /* position: absolute; */
 }
+
 .full {
   width: 100%;
 }
+
 .w-1-2 {
   width: 50%;
 }
+
 .position-relative {
   position: relative;
 }
+
 .flex {
   display: flex;
 }
+
 .flex-jsb {
   justify-content: space-between;
 }
+
 .flex-ac {
   align-items: center;
 }
+
 .text-wrap {
   position: relative;
   padding: 40px 0;
@@ -151,8 +164,7 @@ html {
 }
 
 .char.explode {
-  transform: translateY(calc(var(--random-y) * -200px))
-    translateX(calc(var(--offset-x) * 100px));
+  transform: translateY(calc(var(--random-y) * -200px)) translateX(calc(var(--offset-x) * 100px));
 }
 
 .fontAR {
@@ -190,7 +202,8 @@ html {
   top: 0;
   left: 0;
   transition: all 0.5s ease;
-  z-index: 1; /* illustration on top of page but under chatbot */
+  z-index: 1;
+  /* illustration on top of page but under chatbot */
 }
 
 .hidden {
@@ -211,16 +224,14 @@ html {
 .rainbow-rectangle {
   width: 100%;
   height: 40px;
-  background: linear-gradient(
-    to right,
-    #ff0000 0%,
-    #ff8800 16%,
-    #eeff00 34%,
-    #09ff00 51%,
-    #0051ff 71%,
-    #2f00ff 87%,
-    #b700ff 100%
-  );
+  background: linear-gradient(to right,
+      #ff0000 0%,
+      #ff8800 16%,
+      #eeff00 34%,
+      #09ff00 51%,
+      #0051ff 71%,
+      #2f00ff 87%,
+      #b700ff 100%);
   position: fixed;
   top: 30px;
   left: 0;
@@ -349,6 +360,7 @@ html {
   0% {
     left: 100vw;
   }
+
   100% {
     left: -200px;
   }
@@ -358,6 +370,7 @@ html {
   0% {
     left: -350px;
   }
+
   100% {
     left: 100vw;
   }
@@ -371,7 +384,7 @@ html {
   display: none;
   z-index: 10;
   cursor: pointer;
-  animation: moveRight 10s linear infinite;
+  animation: moveRight 10s linear;
 }
 
 .hand-img {
@@ -393,7 +406,8 @@ a {
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 10000; /* ABOVE the canvas/illustration */
+  z-index: 10000;
+  /* ABOVE the canvas/illustration */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
