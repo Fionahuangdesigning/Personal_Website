@@ -30,7 +30,7 @@ html {
 
 #content {
   width: 100%;
-  height: 100vh;
+  height: 95vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@ html {
   -webkit-transform-origin: top center;
 
   /* move down */
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 .project-wrap {
@@ -116,7 +116,7 @@ html {
 .text-wrap {
   position: relative;
   padding: 40px 0;
-  margin: 40px 0;
+  /* margin: 40px 0; */
   font-family: "Ace-Regular";
 }
 
@@ -462,6 +462,10 @@ a {
   /* margin-bottom: 10px; */
   display: inline-block;
   transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+
+  transform-origin: top center;
+  -webkit-transform-origin: top center;
 }
 
 .aWrap {
@@ -476,7 +480,7 @@ a {
   position: absolute;
   z-index: 15;
   width: 625px;
-  top: 100%;
+  top: 86%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
