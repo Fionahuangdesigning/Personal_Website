@@ -29,7 +29,8 @@
       <span class="scroll-text">Always Creating</span>
     </div>
   </div>
-
+  <!-- Canvas 用于绘制图片和擦除（全屏可擦除插画） -->
+  <canvas id="canvas"></canvas>
   <!-- 网站内容 -->
   <div class="content-wrap">
     <div id="content">
@@ -68,23 +69,23 @@
           </div>-->
 
         <div class="mg20">Explore more by scrolling</div>
-        <div class="aWrap">
-          <div>Or let me bring you to:</div>
-          <div class="aList">
-            <a href="#project1">Prople I Hate 1.0</a>
-            <a href="#project2">Turkish March</a>
-            <a href="#project2_1">Taste of Asia</a>
-            <a href="#project3">Heartbreaking Books Collection</a>
-            <a href="#project4">Alpha 10K</a>
-            <a href="#project5">PETA</a>
-            <a href="#project6">I'll Always Love You</a>
-            <a href="#project7">The Farting Book</a>
-          </div>
-        </div>
-
       </div>
-    </div>
 
+      <div class="aWrap">
+        <div>Or let me bring you to:</div>
+      </div>
+
+    </div>
+    <div class="aList">
+      <a href="#project1">Prople I Hate 1.0</a>
+      <a href="#project2">Turkish March</a>
+      <a href="#project2_1">Taste of Asia</a>
+      <a href="#project3">Heartbreaking Books Collection</a>
+      <a href="#project4">Alpha 10K</a>
+      <a href="#project5">PETA</a>
+      <a href="#project6">I'll Always Love You</a>
+      <a href="#project7">The Farting Book</a>
+    </div>
     <div class="show-wrap">
       <div class="project-item project1" id="project1">
         <img loading="lazy" src="./img/project/project1/project1_1.png" alt="" class="project1_1" />
@@ -213,8 +214,7 @@
     </div>
   </div>
 
-  <!-- Canvas 用于绘制图片和擦除（全屏可擦除插画） -->
-  <canvas id="canvas"></canvas>
+
   <div id="contact" onclick="openContact()">Reach Me!</div>
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
