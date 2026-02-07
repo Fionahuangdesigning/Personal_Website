@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,11 +29,9 @@
       <span class="scroll-text">Always Creating</span>
     </div>
   </div>
-
   <!-- Canvas 用于绘制图片和擦除（全屏可擦除插画） -->
   <canvas id="canvas"></canvas>
-
-  <!-- 网站内容（HERO） -->
+  <!-- 网站内容 -->
   <div id="content">
     <div class="title">Fiona Huang</div>
 
@@ -60,31 +59,33 @@
         <div>Love traveling</div>
         <div>Love giving</div>
         <div>Love chocolate</div>
-        <div>Love R&amp;B</div>
+        <div>Love R&B</div>
       </div>
+
+      <!--<div class="mg20">
+          <div>Her design is fun,</div>
+          <div>so is her life</div>
+        </div>-->
 
       <div class="mg20">Explore more by scrolling</div>
     </div>
 
-    <!-- ✅ FIX: aList MUST live under this label (inside #content / inside aWrap) -->
     <div class="aWrap">
       <div class="font20">Or let me bring you to:</div>
-
-      <div class="aList">
-        <a href="#project1">People I Hate 1.0</a>
-        <a href="#project2">Turkish March</a>
-        <a href="#project2_1">Taste of Asia</a>
-        <a href="#project3">Heartbreaking Books Collection</a>
-        <a href="#project4">Alpha 10K</a>
-        <a href="#project5">PETA</a>
-        <a href="#project6">I'll Always Love You</a>
-        <a href="#project7">The Farting Book</a>
-      </div>
     </div>
-  </div>
 
-  <!-- 项目内容 -->
+  </div>
   <div class="content-wrap">
+    <div class="aList">
+      <a href="#project1">Prople I Hate 1.0</a>
+      <a href="#project2">Turkish March</a>
+      <a href="#project2_1">Taste of Asia</a>
+      <a href="#project3">Heartbreaking Books Collection</a>
+      <a href="#project4">Alpha 10K</a>
+      <a href="#project5">PETA</a>
+      <a href="#project6">I'll Always Love You</a>
+      <a href="#project7">The Farting Book</a>
+    </div>
     <div class="show-wrap">
       <div class="project-item project1" id="project1">
         <img loading="lazy" src="./img/project/project1/project1_1.png" alt="" class="project1_1" />
@@ -95,6 +96,7 @@
           <img loading="lazy" src="./img/project/project1/project1_2_3.png" alt="" />
         </div>
         <img loading="lazy" src="./img/project/project1/project1_3.png" alt="" />
+        <!-- <img loading="lazy" src="./img/project/project1/project1_4.png" alt="" /> -->
         <img loading="lazy" src="./img/project/project1/project1_5.png" alt="" />
       </div>
 
@@ -146,6 +148,8 @@
         <img loading="lazy" src="./img/project/project5/project5_3.png" alt="" />
         <img loading="lazy" src="./img/project/project5/project5_4.png" alt="" />
         <img loading="lazy" src="./img/project/project5/project5_5.png" alt="" />
+
+
       </div>
 
       <div class="project-item project6" id="project6">
@@ -160,39 +164,42 @@
         <img loading="lazy" src="./img/project/project7/project7_1.png" alt="" />
         <img loading="lazy" src="./img/project/project7/project7_2.png" alt="" />
         <img loading="lazy" src="./img/project/project7/project7_3.png" alt="" />
-
         <div class="flex flex-jsb project-wrap full">
           <img loading="lazy" src="./img/project/project7/project7_4.png" alt="" class="bg-img" />
-          <div class="video-wrap">
-            <video loading="lazy" muted autoplay loop controls
-                   src="./img/project/project7/project4_left.mov"
-                   class="project4-video w-1-2"></video>
-            <video loading="lazy" muted autoplay loop controls
-                   src="./img/project/project7/project4_right.mp4"
-                   class="project4-video w-1-2"></video>
-          </div>
-        </div>
 
+          <div class="video-wrap">
+            <video loading="lazy" muted autoplay loop controls src="./img/project/project7/project4_left.mov" alt=""
+              class="project4-video w-1-2">
+            </video>
+
+            <video loading="lazy" muted autoplay loop controls src="./img/project/project7/project4_right.mp4" alt=""
+              class="project4-video w-1-2">
+            </video>
+          </div>
+          <!-- <div class="w-1-2 position-relative">
+          </div>
+          <div class="w-1-2 position-relative">
+          </div> -->
+        </div>
         <img loading="lazy" src="./img/project/project7/project7_5.png" alt="" />
         <img loading="lazy" src="./img/project/project7/project7_6.png" alt="" />
         <img loading="lazy" src="./img/project/project7/project7_7.png" alt="" />
-
         <div class="project-wrap">
           <img loading="lazy" src="./img/project/project7/project7_8.png" alt="" class="bg-img" />
-          <video loading="lazy" muted autoplay loop controls
-                 src="./img/project/project7/project7_8_video.mp4"
-                 class="project-video"></video>
+          <video loading="lazy" muted autoplay loop controls src="./img/project/project7/project7_8_video.mp4" alt=""
+            class="project-video" />
         </div>
-
         <img loading="lazy" src="./img/project/project7/project7_9.png" alt="" />
         <img loading="lazy" src="./img/project/project7/project7_10.png" alt="" />
       </div>
     </div>
 
     <div class="page-foot">
+      <!-- <div class="title">Site designed & coded by me</div>  -->
       <div class="mt30">Always open to chat online not in-person</div>
       <div>♬♫♪◖(◕ ‿ ◕)◗♪♫♬</div>
       <div>You know where to find me</div>
+      <!-- <img class="hand-img" src="./img/hand.gif" alt="moving" /> -->
     </div>
 
     <div class="tooltip" id="tooltip"></div>
@@ -207,37 +214,45 @@
     </div>
   </div>
 
+
   <div id="contact" onclick="openContact()">Reach Me!</div>
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
   <script>
     setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // 平滑滚动
+      });
     }, 100);
 
     let eraseCount = 0;
+    // 动画状态
     let isJumping = true;
     let jumpTimer, removeTimer, addTimer, carTimer;
     let animationFrame;
+    // 鼠标擦除功能
     let isDrawing = false;
     let isAnimationEnd = false;
-
+    // 屏幕宽高
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
+
     const canvas = document.getElementById("canvas");
 
+    // 文字的宽高（用于避免文字超出屏幕）
     let textWidth, textHeight;
 
     let tooltipList = [
       { title: "People I Hate 1.0", subTitle: "design direction / experiment" },
       { title: "Turkish March", subTitle: "zine / installation" },
       { title: "Taste of Asia", subTitle: "client work / branding" },
-      { title: "Heartbreaking Books Collection", subTitle: "book cover / graphic design" },
+      { title: "Heartbreaking Books Collection", subTitle: "book cover / graphic design", },
       { title: "Alpha 10K", subTitle: "book cover" },
       { title: "PETA", subTitle: "design direction / posters" },
       { title: "I'll Always Love You", subTitle: "vinyl / experiment" },
-      { title: "The Farting Book", subTitle: "interactive book" }
+      { title: "The Farting Book", subTitle: "interactive book" },
     ];
 
     function JumpText() {
@@ -261,7 +276,9 @@
         contact.style.left = `${newX}px`;
         contact.style.top = `${newY}px`;
 
-        if (jumpTimer) clearTimeout(jumpTimer);
+        if (jumpTimer) {
+          clearTimeout(jumpTimer);
+        }
         jumpTimer = setTimeout(() => {
           animationFrame = requestAnimationFrame(jump);
         }, 600);
@@ -277,7 +294,10 @@
         jump();
       });
 
-      window.addEventListener("resize", () => updateTextSize());
+      window.addEventListener("resize", () => {
+        updateTextSize();
+      });
+
       jump();
     }
 
@@ -301,13 +321,18 @@
       const chars = document.querySelectorAll(".char");
 
       function setRandomProperties(char) {
-        char.style.setProperty("--offset-x", (Math.random() * 2 - 1) * 1.5);
+        char.style.setProperty(
+          "--offset-x",
+          (Math.random() * 2 - 1) * 1.5
+        );
         char.style.setProperty("--random-y", getRandomY());
       }
 
       textContainer.addEventListener("mouseenter", (event) => {
         event.stopPropagation();
-        if (addTimer) clearTimeout(addTimer);
+        if (addTimer) {
+          clearTimeout(addTimer);
+        }
 
         addTimer = setTimeout(() => {
           chars.forEach((char) => {
@@ -319,10 +344,14 @@
 
       textContainer.addEventListener("mouseleave", (event) => {
         event.stopPropagation();
-        if (removeTimer) clearTimeout(removeTimer);
 
+        if (removeTimer) {
+          clearTimeout(removeTimer);
+        }
         removeTimer = setTimeout(() => {
-          chars.forEach((char) => char.classList.remove("explode"));
+          chars.forEach((char) => {
+            char.classList.remove("explode");
+          });
         }, 200);
       });
     }
@@ -334,12 +363,15 @@
       canvas.height = windowHeight;
 
       const img = new Image();
-      img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png";
+      img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png"; // 你的全屏插画
       img.onload = () => {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       };
 
-      canvas.addEventListener("mouseleave", () => { isDrawing = false; });
+      canvas.addEventListener("mouseleave", () => {
+        isDrawing = false;
+      });
+
       canvas.addEventListener("mousemove", moveEvent);
 
       function moveEvent(event) {
@@ -382,7 +414,9 @@
         container.style.transform = `translateX(${position}px)`;
 
         const firstText = container.querySelector(".scroll-text");
-        const textWidth = firstText.offsetWidth + parseInt(getComputedStyle(firstText).marginRight);
+        const textWidth =
+          firstText.offsetWidth +
+          parseInt(getComputedStyle(firstText).marginRight);
 
         if (Math.abs(position) >= textWidth) {
           position += textWidth;
@@ -394,14 +428,18 @@
 
       scroll();
 
-      container.addEventListener("mouseenter", () => cancelAnimationFrame(animationFrameId));
-      container.addEventListener("mouseleave", () => scroll());
+      container.addEventListener("mouseenter", () => {
+        cancelAnimationFrame(animationFrameId);
+      });
+
+      container.addEventListener("mouseleave", () => {
+        scroll();
+      });
     }
 
     function tooltip() {
       let projectList = document.querySelectorAll(".project-item");
       let tooltip = document.getElementById("tooltip");
-
       projectList.forEach((project, index) => {
         project.addEventListener("mouseenter", (event) => {
           tooltip.style.left = event.clientX + 10 + "px";
@@ -410,16 +448,14 @@
           tooltip.style.transform = "scale(1)";
           tooltip.style.zIndex = "10";
           tooltip.innerHTML = `
-            <div class="tooltip-title black">${tooltipList[index].title}</div>
-            <div class="tooltip-sub-title gray">${tooltipList[index].subTitle}</div>
-          `;
+              <div class="tooltip-title black">${tooltipList[index].title}</div>
+              <div class="tooltip-sub-title gray">${tooltipList[index].subTitle}</div>
+            `;
         });
-
         project.addEventListener("mousemove", (event) => {
           tooltip.style.left = event.clientX + 10 + "px";
           tooltip.style.top = event.clientY + 20 + "px";
         });
-
         project.addEventListener("mouseleave", () => {
           tooltip.style.opacity = "0";
           tooltip.style.transform = "scale(0.8)";
@@ -428,6 +464,7 @@
     }
 
     function birdGif() {
+      // 先隐藏汽车图片
       document.querySelector(".moving-car-img").style.display = "none";
 
       const birdEl = document.querySelector(".moving-bird-img");
@@ -445,28 +482,38 @@
       birdEl.style.animation = "moveLeft 5s linear forwards";
       document.body.appendChild(birdEl);
 
-      birdEl.addEventListener("animationend", async () => {
+
+
+      birdEl.addEventListener('animationend', async () => {
         await new Promise((resolve) => setTimeout(resolve, 6 * 1000));
 
-        const carEL = document.querySelector(".moving-car-img");
+        // 6秒后显示汽车图片
+        const carEL = document.querySelector(".moving-car-img")
         carEL.style.display = "block";
-        carEL.addEventListener("animationend", async () => {
+        carEL.addEventListener('animationend', async () => {
           carEL.style.display = "none";
           await new Promise((resolve) => setTimeout(resolve, 4 * 1000));
-          birdGif();
-        });
+          birdGif()
+        })
       });
+
+
+
     }
 
     function isMobileOrTablet() {
       const ua = navigator.userAgent.toLowerCase();
-      const isIpad = /ipad/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+      const isIpad =
+        /ipad/.test(ua) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
       const isIphoneOrAndroid = /iphone|ipod|android.*mobile/.test(ua);
+
       return isIpad || isIphoneOrAndroid;
     }
 
-    /* ✅ If you want to DISABLE the mobile overlay, keep this block commented out.
     if (isMobileOrTablet()) {
+      // 创建遮罩层
       const overlay = document.createElement('div');
       overlay.style.cssText = `
         position: fixed;
@@ -486,6 +533,7 @@
         padding: 20px;
       `;
 
+      // 添加提示信息
       const message = document.createElement('div');
       message.innerHTML = `
         <h2>Please rotate your device</h2>
@@ -497,20 +545,30 @@
       overlay.appendChild(message);
       document.body.appendChild(overlay);
 
+      // 检测设备方向变化
       window.addEventListener("orientationchange", function () {
         if (window.orientation === 90 || window.orientation === -90) {
+          console.log("现在是横屏模式");
+          // 这里可以执行你的视频播放逻辑
+          // 横屏模式，隐藏遮罩层
           overlay.style.display = 'none';
         } else {
+          console.log("现在是竖屏模式");
+          // 竖屏模式，显示遮罩层
           overlay.style.display = 'flex';
         }
       });
+
+
     }
-    */
 
     function getRandomY() {
       let value;
-      if (Math.random() < 0.5) value = Math.random() * 0.25;
-      else value = Math.random() * 0.3 + 0.7;
+      if (Math.random() < 0.5) {
+        value = Math.random() * 0.25;
+      } else {
+        value = Math.random() * 0.3 + 0.7;
+      }
       return value;
     }
 
@@ -548,7 +606,9 @@
       setTimeout(() => {
         imgEl.remove();
         let index = trails.indexOf(imgEl);
-        if (index > -1) trails.splice(index, 1);
+        if (index > -1) {
+          trails.splice(index, 1);
+        }
       }, 600);
     }
 
@@ -558,16 +618,26 @@
           canvas.classList.add("hidden");
           document.getElementById("contact").style.zIndex = 5;
           document.getElementById("text").style.zIndex = 5;
+          // 先显示birdGif 然后延迟执行汽车图片， 
           birdGif();
+
           JumpText();
+          // setTimeout(() => {
+
+          //   if (carTimer) {
+          //     clearInterval(carTimer);
+          //   }
+          //   carTimer = setInterval(birdGif, 15 * 1000);
+          // }, 5 * 1000); // 500毫秒延迟，可以根据需要调整
         }
       },
-      { threshold: 0.5 }
+      {
+        threshold: 0.5,
+      }
     );
 
     const target = document.querySelector(".project1_1");
     observer.observe(target);
-
     window.addEventListener("mousemove", mouseTrailEffect);
     window.addEventListener("scroll", () => {
       if (window.scrollY < 500) {
@@ -583,32 +653,42 @@
     const chatbotSend = document.getElementById("chatbot-send");
 
     const chatbotImages = {
-      idle: "./img/chatbot_idle.gif",
-      animal: "./img/chatbot_animal.png",
-      food: "./img/chatbot_food.png",
-      color: "./img/chatbot_color.png",
-      skills: "./img/chatbot_skills.png",
-      secret: "./img/chatbot_secret.png",
-      doing: "./img/chatbot_doing.png",
-      hire: "./img/chatbot_hire.png",
-      about: "./img/chatbot_about.png",
-      greet: "./img/chatbot_greet.png",
-      resume: "./img/chatbot_resume.png"
+      idle: "./img/chatbot_idle.gif", // default
+
+      // original favorites
+      animal: "./img/chatbot_animal.png", // favorite animal
+      food: "./img/chatbot_food.png", // favorite food
+      color: "./img/chatbot_color.png", // favorite color
+      skills: "./img/chatbot_skills.png", // skills
+      secret: "./img/chatbot_secret.png", // "it's her secret"
+
+      // extra questions
+      doing: "./img/chatbot_doing.png", // What is she doing now?
+      hire: "./img/chatbot_hire.png", // Why should I hire her?
+      about: "./img/chatbot_about.png", // Tell me about Fiona
+      greet: "./img/chatbot_greet.png", // hi / hello / what's up
+
+      // resume (clickable)
+      resume: "./img/chatbot_resume.png", // resume, linked url
     };
 
     let chatbotResetTimer = null;
     let currentChatbotState = "idle";
 
+    // chatbot is ALWAYS active (no unlock / disabled)
     function showChatbotState(type) {
       if (!chatbotAvatar) return;
 
       currentChatbotState = type;
+
       const src = chatbotImages[type] || chatbotImages.idle;
       chatbotAvatar.src = src;
 
       if (type !== "idle") {
         if (chatbotResetTimer) clearTimeout(chatbotResetTimer);
-        chatbotResetTimer = setTimeout(() => showChatbotState("idle"), 5000);
+        chatbotResetTimer = setTimeout(() => {
+          showChatbotState("idle");
+        }, 5000);
       }
     }
 
@@ -620,6 +700,7 @@
 
       const question = q.toLowerCase();
 
+      // 1) greetings
       if (
         question === "hi" ||
         question === "hello" ||
@@ -629,24 +710,32 @@
         question.includes("whats up")
       ) {
         showChatbotState("greet");
+
+        // 2) what is she doing now?
       } else if (
         question.includes("what is she doing now") ||
         question.includes("what's she doing") ||
         question.includes("doing now")
       ) {
         showChatbotState("doing");
+
+        // 3) why should I hire her?
       } else if (
         question.includes("hire her") ||
         question.includes("why should i hire her") ||
         question.includes("why hire her")
       ) {
         showChatbotState("hire");
+
+        // 4) tell me about Fiona
       } else if (
         question.includes("tell me about fiona") ||
         question.includes("about fiona") ||
         question.includes("who is fiona")
       ) {
         showChatbotState("about");
+
+        // 5) resume-related
       } else if (
         question.includes("resume") ||
         question.includes("cv") ||
@@ -655,6 +744,8 @@
         question.includes("job")
       ) {
         showChatbotState("resume");
+
+        // 6) original favorites
       } else if (question.includes("animal")) {
         showChatbotState("animal");
       } else if (question.includes("food")) {
@@ -663,6 +754,8 @@
         showChatbotState("color");
       } else if (question.includes("skill")) {
         showChatbotState("skills");
+
+        // 7) everything else
       } else {
         showChatbotState("secret");
       }
@@ -671,14 +764,18 @@
     if (chatbotAvatar) {
       chatbotAvatar.addEventListener("click", () => {
         if (currentChatbotState === "resume") {
-          window.open("https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob");
+          window.open(
+            "https://drive.google.com/drive/u/2/folders/1v-HosAuX-uFuqEHzPuNixsTxzIlgfjob"
+          );
         }
       });
     }
 
     if (chatbotInput) {
       chatbotInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") handleChatbotQuestion();
+        if (e.key === "Enter") {
+          handleChatbotQuestion();
+        }
       });
     }
 
@@ -686,6 +783,7 @@
       chatbotSend.addEventListener("click", handleChatbotQuestion);
     }
 
+    // 🔚 after everything is defined, start the animations
     explodingText();
     JumpText();
     drawImage();
@@ -693,4 +791,5 @@
     tooltip();
   </script>
 </body>
+
 </html>
