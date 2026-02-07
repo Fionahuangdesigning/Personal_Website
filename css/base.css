@@ -27,21 +27,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#content a {
-  color: #0000ff;
-  text-decoration: underline;
-  font-size: 16px;
-  margin-right: 20px;
-}
-
-.aWrap {
-  max-width: 625px;
-  margin: 0 auto;
-}
-
-.aList {
-  margin: 20px 0;
-}
 
 #content {
   width: 100%;
@@ -202,7 +187,7 @@ html {
   top: 0;
   left: 0;
   transition: all 0.5s ease;
-  z-index: 1;
+  z-index: 3;
   /* illustration on top of page but under chatbot */
 }
 
@@ -406,7 +391,7 @@ a {
   bottom: 40px;
   left: 40px;
   width: 260px;
-  z-index: 10000;
+  z-index: 0;
   /* ABOVE the canvas/illustration */
   display: flex;
   flex-direction: column;
@@ -467,4 +452,32 @@ a {
 
 #chatbot-send:hover {
   background: #f0f0f0;
+}
+
+.aList a {
+  color: #0000ff;
+  text-decoration: underline;
+  font-size: 16px;
+  /* margin-right: 20px; */
+  /* margin-bottom: 10px; */
+  display: inline-block;
+  transform: scale(0.8);
+}
+
+.aWrap {
+  max-width: 625px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.aList {
+  margin: 20px 0;
+  position: absolute;
+  z-index: 15;
+  width: 625px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
