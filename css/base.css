@@ -35,16 +35,17 @@ html {
   flex-direction: column;
   justify-content: center;
   padding-top: 40px;
+  /* move down */
+  margin-top: 30px;
+}
 
+.content-container {
   /* shrink */
   transform: scale(0.8);
   -webkit-transform: scale(0.8);
 
   transform-origin: top center;
   -webkit-transform-origin: top center;
-
-  /* move down */
-  margin-top: 60px;
 }
 
 .project-wrap {
@@ -148,8 +149,7 @@ html {
 }
 
 .char.explode {
-  transform: translateY(calc(var(--random-y) * -200px))
-    translateX(calc(var(--offset-x) * 100px));
+  transform: translateY(calc(var(--random-y) * -200px)) translateX(calc(var(--offset-x) * 100px));
 }
 
 .fontAR {
@@ -209,16 +209,14 @@ html {
 .rainbow-rectangle {
   width: 100%;
   height: 40px;
-  background: linear-gradient(
-    to right,
-    #ff0000 0%,
-    #ff8800 16%,
-    #eeff00 34%,
-    #09ff00 51%,
-    #0051ff 71%,
-    #2f00ff 87%,
-    #b700ff 100%
-  );
+  background: linear-gradient(to right,
+      #ff0000 0%,
+      #ff8800 16%,
+      #eeff00 34%,
+      #09ff00 51%,
+      #0051ff 71%,
+      #2f00ff 87%,
+      #b700ff 100%);
   position: fixed;
   top: 30px;
   left: 0;
@@ -470,19 +468,19 @@ a {
   -webkit-transform-origin: top center;
 }
 
-.aWrap {
+/* .aWrap {
   max-width: 625px;
   margin: 0 auto;
   position: relative;
   z-index: 10;
-}
+} */
 
 .aList {
-  margin: 20px 0;
+  /* margin: 20px 0; */
   position: absolute;
   z-index: 15;
   width: 625px;
-  top: 86%;
+  top: 83%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -495,7 +493,8 @@ a {
   background: #ffffff;
   color: #000000;
   z-index: 9999999;
-  display: none; /* turned on via JS */
+  display: none;
+  /* turned on via JS */
   align-items: center;
   justify-content: center;
   padding: 24px;
