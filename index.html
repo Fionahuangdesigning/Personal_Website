@@ -82,6 +82,7 @@
       <a href="#project7">The Farting Book</a>
     </div>
   </div>
+
   <div class="content-wrap">
     <!-- <div class="aList">
       <a href="#project1">Prople I Hate 1.0</a>
@@ -632,6 +633,26 @@
       }, 600);
     }
 
+    // NEW: Rainbow banner only on landing page
+    function toggleRainbowOnScroll() {
+      const rainbow = document.querySelector(".rainbow-rectangle");
+      const landing = document.getElementById("content");
+      if (!rainbow || !landing) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            rainbow.classList.remove("is-hidden");
+          } else {
+            rainbow.classList.add("is-hidden");
+          }
+        },
+        { threshold: 0.15 }
+      );
+
+      observer.observe(landing);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -784,6 +805,7 @@
     drawImage();
     scrollText();
     tooltip();
+    toggleRainbowOnScroll(); // NEW
   </script>
 </body>
 
