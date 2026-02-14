@@ -16,6 +16,15 @@
     url("../font/ace_regular/Ace-Regular.otf") format("otf");
 }
 
+/* ================= NEW: ABC Monument Grotesk Variable ================= */
+@font-face {
+  font-family: "ABCMonumentGroteskVariable";
+  src: url("../font/ABCMonumentGroteskVariable.woff2") format("woff2"),
+    url("../font/ABCMonumentGroteskVariable.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 body,
 html {
   margin: 0;
@@ -25,6 +34,18 @@ html {
   font-family: Ace-Regular;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ================= NEW: make hero lines Ace-Bold ================= */
+.hero-bold,
+.hero-bold * {
+  font-family: "Ace-Bold" !important;
+}
+
+/* ================= NEW: Monument utility class ================= */
+.monument {
+  font-family: "ABCMonumentGroteskVariable", sans-serif;
+  font-weight: 400;
 }
 
 #content {
@@ -466,18 +487,20 @@ a {
   background: #f0f0f0;
 }
 
+/* UPDATED: project links on landing use Monument */
 .aList a {
   color: #0000ff;
   text-decoration: underline;
   font-size: 16px;
-  /* margin-right: 20px; */
-  /* margin-bottom: 10px; */
   display: inline-block;
   transform: scale(0.8);
   -webkit-transform: scale(0.8);
 
   transform-origin: top center;
   -webkit-transform-origin: top center;
+
+  font-family: "ABCMonumentGroteskVariable", sans-serif;
+  font-weight: 400;
 }
 
 /* .aWrap {
