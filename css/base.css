@@ -149,7 +149,8 @@ html {
 }
 
 .char.explode {
-  transform: translateY(calc(var(--random-y) * -200px)) translateX(calc(var(--offset-x) * 100px));
+  transform: translateY(calc(var(--random-y) * -200px))
+    translateX(calc(var(--offset-x) * 100px));
 }
 
 .fontAR {
@@ -224,6 +225,17 @@ html {
   font-size: 20px;
   font-family: "Ace-Regular";
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+  /* NEW: allow fade-out when leaving landing page */
+  opacity: 1;
+  transition: opacity 0.25s ease;
+  pointer-events: auto;
+}
+
+/* NEW: hidden state */
+.rainbow-rectangle.is-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .scroll-container {
