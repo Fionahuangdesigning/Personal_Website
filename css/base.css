@@ -561,3 +561,75 @@ html.mobile-locked {
   overflow: hidden !important;
   height: 100% !important;
 }
+
+/* ================== MOBILE MODE ================== */
+html.is-mobile,
+body.is-mobile {
+  overflow-x: hidden;
+}
+
+/* 1) NO chatbot on mobile */
+body.is-mobile #chatbot {
+  display: none !important;
+}
+
+/* 3) Make landing fit in one mobile screen */
+body.is-mobile #content {
+  height: 100vh !important;         /* one screen */
+  margin-top: 0 !important;
+  padding-top: 84px !important;     /* room for rainbow bar */
+  padding-bottom: 16px !important;
+}
+
+/* remove the desktop shrink that can make spacing weird on phones */
+body.is-mobile .content-container {
+  transform: none !important;
+  -webkit-transform: none !important;
+  padding: 0 16px !important;
+}
+
+/* scale headline + title to fit */
+body.is-mobile #content .title {
+  font-size: 40px !important;
+  line-height: 1.1 !important;
+}
+
+body.is-mobile .font32 {
+  font-size: 20px !important;
+  line-height: 1.25 !important;
+}
+
+/* keep your Monument block compact */
+body.is-mobile .font20 {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+}
+
+body.is-mobile .text-wrap {
+  padding: 16px 0 !important;
+}
+
+/* keep your Resume/Email/Instagram links visible + compact */
+body.is-mobile .aList {
+  position: static !important;
+  width: auto !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  margin-top: 10px !important;
+  padding: 0 16px !important;
+}
+
+body.is-mobile .aList a {
+  display: inline-block;
+  transform: none !important;
+  -webkit-transform: none !important;
+  font-size: 16px !important;
+  margin: 0 10px !important;
+}
+
+/* optional: rainbow bar tighter on mobile */
+body.is-mobile .rainbow-rectangle {
+  top: 12px !important;
+}
+
