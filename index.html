@@ -1,3 +1,4 @@
+<!-- index.html (FULL UPDATED) -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -76,36 +77,16 @@
       <div class="font20 monument">Or let me bring you to:</div>
     </div>
 
-    <!-- <div class="aList">
-      <a href="#project1">Prople I Hate 1.0</a>
-      <a href="#project2">Turkish March</a>
-      <a href="#project2_1">Taste of Asia</a>
-      <a href="#project3">Heartbreaking Books Collection</a>
-      <a href="#project4">Alpha 10K</a>
-      <a href="#project5">PETA</a>
-      <a href="#project6">I'll Always Love You</a>
-      <a href="#project7">The Farting Book</a>
-    </div> -->
+    <!-- UPDATED: link list (Resume / Email / Instagram) -->
     <div class="aList">
-  <a href="https://drive.google.com/file/d/1ceFpGuDpSedHq-yx9pNP6ebAinV8InZ3/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
-  <a href="mailto:fionahuang1230@gmail.com">Email</a>
-  <a href="https://www.instagram.com/fifionana_aa/" target="_blank" rel="noopener noreferrer">Instagram</a>
-</div>
-
+      <a href="https://drive.google.com/file/d/1ceFpGuDpSedHq-yx9pNP6ebAinV8InZ3/view?usp=sharing" target="_blank"
+        rel="noopener noreferrer">Resume</a>
+      <a href="mailto:fionahuang1230@gmail.com">Email</a>
+      <a href="https://www.instagram.com/fifionana_aa/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
   </div>
 
   <div class="content-wrap">
-    <!-- <div class="aList">
-      <a href="#project1">Prople I Hate 1.0</a>
-      <a href="#project2">Turkish March</a>
-      <a href="#project2_1">Taste of Asia</a>
-      <a href="#project3">Heartbreaking Books Collection</a>
-      <a href="#project4">Alpha 10K</a>
-      <a href="#project5">PETA</a>
-      <a href="#project6">I'll Always Love You</a>
-      <a href="#project7">The Farting Book</a>
-    </div> -->
-
     <div class="show-wrap">
       <div class="project-item project1" id="project1">
         <img loading="lazy" src="./img/project/project1/project1_1.png" alt="" class="project1_1" />
@@ -231,7 +212,7 @@
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
   <script>
-    // ================== MOBILE BLOCKER (RUN FIRST) ==================
+    // ================== MOBILE MODE (RUN FIRST) ==================
     function isMobileOrTablet() {
       const ua = navigator.userAgent.toLowerCase();
 
@@ -244,9 +225,10 @@
 
       return isIpad || isIphoneOrAndroid || isAndroidTablet;
     }
-    //------------------------------------
-    //to not have mobile version
-    /* function enableMobileBlocker() {
+
+    // keep your old mobile blocker commented-out (as you had it)
+    /*
+    function enableMobileBlocker() {
       document.documentElement.classList.add("mobile-locked");
       document.body.classList.add("mobile-locked");
 
@@ -262,39 +244,41 @@
 
     if (isMobileOrTablet()) {
       enableMobileBlocker();
-      // Stop the rest of the script so nothing else runs on mobile.
       throw new Error("Mobile blocked: desktop-only site.");
-    } */
+    }
+    */
+
+    function enableMobileMode() {
+      document.documentElement.classList.add("is-mobile");
+      document.body.classList.add("is-mobile");
+    }
+
+    // Fallback so testing in Chrome responsive mode still triggers mobile styles
+    const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+
+    if (isMobileOrTablet() || isSmallScreen) {
+      enableMobileMode();
+    }
     // ===============================================================
 
-function enableMobileMode() {
-  document.documentElement.classList.add("is-mobile");
-  document.body.classList.add("is-mobile");
-}
-
-if (isMobileOrTablet()) {
-  enableMobileMode();
-  // IMPORTANT: do NOT replace body, do NOT throw error
-}
-
-
-
-    
     setTimeout(() => {
       window.scrollTo({
         top: 0,
-        behavior: "smooth", // 平滑滚动
+        behavior: "smooth",
       });
     }, 100);
 
     let eraseCount = 0;
+
     // 动画状态
     let isJumping = true;
     let jumpTimer, removeTimer, addTimer, carTimer;
     let animationFrame;
+
     // 鼠标擦除功能
     let isDrawing = false;
     let isAnimationEnd = false;
+
     // 屏幕宽高
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
@@ -421,30 +405,32 @@ if (isMobileOrTablet()) {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       };
 
+      // ensure canvas is interactive by default (desktop)
+      canvas.style.pointerEvents = "auto";
+
       canvas.addEventListener("mouseleave", () => {
         isDrawing = false;
       });
 
       canvas.addEventListener("mousemove", moveEvent);
-//mobile uses touch
+
+      // mobile uses touch
       canvas.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  moveEvent(e.touches[0]);
-}, { passive: false });
+        e.preventDefault();
+        moveEvent(e.touches[0]);
+      }, { passive: false });
 
-canvas.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-  moveEvent(e.touches[0]);
-}, { passive: false });
+      canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        moveEvent(e.touches[0]);
+      }, { passive: false });
 
-canvas.addEventListener("touchend", () => {
-  isDrawing = false;
-});
+      canvas.addEventListener("touchend", () => {
+        isDrawing = false;
+      });
 
+      let hasRevealed = false;
 
-
-
-      
       function moveEvent(event) {
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
@@ -453,35 +439,28 @@ canvas.addEventListener("touchend", () => {
 
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
-        //ctx.arc(x, y, 80, 0, Math.PI * 2, false); ->
-        //mobile eraser size bigger 
-        const eraserRadius = document.body.classList.contains("is-mobile") ? 140 : 80;
-      ctx.arc(x, y, eraserRadius, 0, Math.PI * 2, false);
 
-        
+        // mobile eraser size bigger
+        const eraserRadius = document.body.classList.contains("is-mobile") ? 140 : 80;
+        ctx.arc(x, y, eraserRadius, 0, Math.PI * 2, false);
+
         ctx.fill();
         ctx.globalCompositeOperation = "source-over";
 
         const totalPixels = canvas.width * canvas.height;
-        if (isDrawing) {
-          eraseCount += 1000;
-          
-          if (eraseCount > totalPixels * 0.1) {
-            document.getElementById("contact").style.zIndex = 5;
-            document.getElementById("text").style.zIndex = 5; 
+        eraseCount += 1000;
+
+        if (!hasRevealed && eraseCount > totalPixels * 0.1) {
+          hasRevealed = true;
+
+          document.getElementById("contact").style.zIndex = 5;
+          document.getElementById("text").style.zIndex = 5;
+
+          // ✅ MOBILE: after reveal, let the page scroll
+          if (document.body.classList.contains("is-mobile")) {
+            canvas.style.pointerEvents = "none";
           }
-        /*  if (eraseCount > totalPixels * 0.1) {
-  document.getElementById("contact").style.zIndex = 5;
-  document.getElementById("text").style.zIndex = 5;
-
-  // ✅ MOBILE FIX: once revealed, let the page scroll
-  if (document.body.classList.contains("is-mobile")) {
-    canvas.style.pointerEvents = "none"; // stop blocking scroll/taps
-    // optional: hide it visually too
-    // canvas.classList.add("hidden");*/
-  }
-}
-
+        }
       }
 
       window.addEventListener("resize", () => {
@@ -865,7 +844,7 @@ canvas.addEventListener("touchend", () => {
     drawImage();
     scrollText();
     tooltip();
-    toggleRainbowOnScroll(); // NEW
+    toggleRainbowOnScroll();
   </script>
 </body>
 
