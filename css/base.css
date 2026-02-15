@@ -554,9 +554,9 @@ body.is-mobile .content-container {
 
 /* scale headline + title */
 body.is-mobile #content .title {
-  font-size: 34px !important;     /* UPDATED: fit inside guide lines */
+  font-size: 34px !important;
   line-height: 1.1 !important;
-  padding: 0 24px !important;     /* UPDATED: left/right safe margin */
+  padding: 0 24px !important;
   word-break: keep-all !important;
 }
 
@@ -565,7 +565,7 @@ body.is-mobile .font32 {
   line-height: 1.25 !important;
 }
 
-/* NEW: Mobile hero layout control for #text */
+/* Mobile hero layout control for #text */
 body.is-mobile #text {
   display: block !important;
   text-align: center !important;
@@ -605,19 +605,18 @@ body.is-mobile .rainbow-rectangle {
   top: 12px !important;
 }
 
-/* Mobile: rainbow banner text = same size as hero paragraph (font32) */
+/* ✅ Mobile: rainbow banner text matches hero paragraph size (regular) */
 body.is-mobile .rainbow-rectangle {
-  font-size: 20px !important;          /* matches body.is-mobile .font32 */
-  font-family: "Ace-Regular" !important;
-  font-weight: 400 !important;         /* regular */
-}
-
-body.is-mobile .scroll-text {
-  font-size: 20px !important;          /* ensure the spans match too */
+  font-size: 20px !important;
   font-family: "Ace-Regular" !important;
   font-weight: 400 !important;
 }
 
+body.is-mobile .scroll-text {
+  font-size: 20px !important;
+  font-family: "Ace-Regular" !important;
+  font-weight: 400 !important;
+}
 
 /* slightly smaller headline on very narrow screens */
 @media (max-width: 390px) {
