@@ -200,6 +200,11 @@ html {
   margin: 20px 0;
 }
 
+/* Mobile-only line break helper */
+.m-br {
+  display: none;
+}
+
 #canvas {
   position: fixed;
   top: 0;
@@ -227,14 +232,16 @@ html {
 .rainbow-rectangle {
   width: 100%;
   height: 40px;
-  background: linear-gradient(to right,
-      #ff0000 0%,
-      #ff8800 16%,
-      #eeff00 34%,
-      #09ff00 51%,
-      #0051ff 71%,
-      #2f00ff 87%,
-      #b700ff 100%);
+  background: linear-gradient(
+    to right,
+    #ff0000 0%,
+    #ff8800 16%,
+    #eeff00 34%,
+    #09ff00 51%,
+    #0051ff 71%,
+    #2f00ff 87%,
+    #b700ff 100%
+  );
   position: fixed;
   top: 30px;
   left: 0;
@@ -372,7 +379,6 @@ html {
   0% {
     left: 100vw;
   }
-
   100% {
     left: -200px;
   }
@@ -382,7 +388,6 @@ html {
   0% {
     left: -350px;
   }
-
   100% {
     left: 100vw;
   }
@@ -485,10 +490,8 @@ a {
   display: inline-block;
   transform: scale(0.8);
   -webkit-transform: scale(0.8);
-
   transform-origin: top center;
   -webkit-transform-origin: top center;
-
   font-family: "ABCMonumentGroteskVariable", sans-serif;
   font-weight: 400;
 }
@@ -547,7 +550,12 @@ body.is-mobile {
   overflow-x: hidden;
 }
 
-/* Important: allow vertical scroll gestures */
+/* show mobile-only line breaks */
+body.is-mobile .m-br {
+  display: block;
+}
+
+/* allow vertical scroll gestures; we decide erase vs scroll in JS */
 body.is-mobile #canvas {
   touch-action: pan-y;
 }
@@ -557,8 +565,13 @@ body.is-mobile #chatbot {
   display: none !important;
 }
 
-/* 1b) NO Reach Me flying on mobile */
+/* 1b) NO Reach Me on mobile */
 body.is-mobile #contact {
+  display: none !important;
+}
+
+/* 4) MOBILE: remove tooltip “white block” */
+body.is-mobile .tooltip {
   display: none !important;
 }
 
@@ -583,13 +596,13 @@ body.is-mobile #content .title {
   line-height: 1.1 !important;
 }
 
-/* make the whole hero block a bit smaller so it fits */
+/* mobile hero sizing */
 body.is-mobile .font32 {
   font-size: 20px !important;
   line-height: 1.25 !important;
 }
 
-/* MOBILE: make the exploding headline wrap nicely (so the first line is not cut) */
+/* keep exploding headline wrap nice on small screens */
 body.is-mobile #text.text-container {
   flex-wrap: wrap !important;
   max-width: 92vw;
@@ -611,7 +624,7 @@ body.is-mobile .text-wrap {
   padding: 16px 0 !important;
 }
 
-/* keep Resume/Email/Instagram links visible + compact */
+/* links list in normal flow on mobile */
 body.is-mobile .aList {
   position: static !important;
   width: auto !important;
@@ -630,12 +643,12 @@ body.is-mobile .aList a {
   margin: 0 10px !important;
 }
 
-/* optional: rainbow bar tighter on mobile */
+/* rainbow bar tighter on mobile */
 body.is-mobile .rainbow-rectangle {
   top: 12px !important;
 }
 
-/* optional: slightly smaller headline on very narrow screens */
+/* slightly smaller headline on very narrow screens */
 @media (max-width: 390px) {
   body.is-mobile .font32 {
     font-size: 18px !important;
