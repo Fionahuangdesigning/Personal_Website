@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <!-- Canvas 用于绘制图片和擦除（全屏可擦除插画） -->
+  <!-- Canvas (desktop eraser) — hidden on mobile via CSS -->
   <canvas id="canvas"></canvas>
 
   <!-- 网站内容 -->
@@ -43,9 +43,11 @@
 
       <!-- UPDATED: hero is Ace-Bold -->
       <div class="font32 text-wrap hero-bold">
+        <!-- Mobile line breaks work because on MOBILE we will NOT run explodingText() -->
         <div id="text" class="text-container">
           Genius in design <span class="m-br"></span>&amp; graphic experiments.
         </div>
+
         <div>Born in Taiwan. <span class="m-br"></span>Remade in New York.</div>
         <div>The smartest designer of the 21st century.</div>
       </div>
@@ -230,28 +232,6 @@
       return isIpad || isIphoneOrAndroid || isAndroidTablet;
     }
 
-    // keep your old mobile blocker commented-out (as you had it)
-    /*
-    function enableMobileBlocker() {
-      document.documentElement.classList.add("mobile-locked");
-      document.body.classList.add("mobile-locked");
-
-      document.body.innerHTML = `
-        <div id="mobile-blocker" style="display:flex;">
-          <div class="mb-inner">
-            <div class="mb-title">Please view my site on a desktop!!!</div>
-            <div class="mb-sub"> (◍•ᴗ•◍) Love youuuu (◕ᴥ◕) </div>
-          </div>
-        </div>
-      `;
-    }
-
-    if (isMobileOrTablet()) {
-      enableMobileBlocker();
-      throw new Error("Mobile blocked: desktop-only site.");
-    }
-    */
-
     function enableMobileMode() {
       document.documentElement.classList.add("is-mobile");
       document.body.classList.add("is-mobile");
@@ -398,35 +378,19 @@
     }
 
     function drawImage() {
+      // DESKTOP ONLY: eraser illustration
+      if (document.body.classList.contains("is-mobile")) return;
+
       const ctx = canvas.getContext("2d");
 
       canvas.width = windowWidth;
       canvas.height = windowHeight;
 
       const img = new Image();
-      img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png"; // 你的全屏插画
-
-      function drawCover() {
-        const cw = canvas.width;
-        const ch = canvas.height;
-
-        const iw = img.naturalWidth || img.width;
-        const ih = img.naturalHeight || img.height;
-
-        // scale to cover the canvas (crop overflow)
-        const scale = Math.max(cw / iw, ch / ih);
-        const sw = iw * scale;
-        const sh = ih * scale;
-
-        const dx = (cw - sw) / 2;
-        const dy = (ch - sh) / 2;
-
-        ctx.clearRect(0, 0, cw, ch);
-        ctx.drawImage(img, dx, dy, sw, sh);
-      }
+      img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png";
 
       img.onload = () => {
-        drawCover();
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       };
 
       canvas.addEventListener("mouseleave", () => {
@@ -434,57 +398,6 @@
       });
 
       canvas.addEventListener("mousemove", moveEvent);
-
-      // ===== MOBILE TOUCH (erase OR scroll after reveal) =====
-      let touchMode = null; // "erase" | "scroll" | null
-      let startX = 0;
-      let startY = 0;
-
-      canvas.addEventListener("touchstart", (e) => {
-        const t = e.touches[0];
-        startX = t.clientX;
-        startY = t.clientY;
-        touchMode = null;
-
-        // tap should erase
-        e.preventDefault();
-        moveEvent(t);
-      }, { passive: false });
-
-      canvas.addEventListener("touchmove", (e) => {
-        const t = e.touches[0];
-        const dx = t.clientX - startX;
-        const dy = t.clientY - startY;
-
-        const totalPixels = canvas.width * canvas.height;
-        const revealed = (eraseCount > totalPixels * 0.1);
-
-        // Before reveal: always erase
-        if (!revealed) {
-          e.preventDefault();
-          moveEvent(t);
-          return;
-        }
-
-        // After reveal: decide gesture once
-        if (!touchMode) {
-          const mostlyVertical = Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10;
-          touchMode = mostlyVertical ? "scroll" : "erase";
-        }
-
-        if (touchMode === "erase") {
-          e.preventDefault();
-          moveEvent(t);
-        } else {
-          // scroll mode: DO NOT preventDefault, let page scroll
-          isDrawing = false;
-        }
-      }, { passive: false });
-
-      canvas.addEventListener("touchend", () => {
-        isDrawing = false;
-        touchMode = null;
-      });
 
       function moveEvent(event) {
         isDrawing = true;
@@ -494,23 +407,16 @@
 
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
-
-        // mobile eraser bigger
-        const eraserRadius = document.body.classList.contains("is-mobile") ? 140 : 80;
-        ctx.arc(x, y, eraserRadius, 0, Math.PI * 2, false);
-
+        ctx.arc(x, y, 80, 0, Math.PI * 2, false);
         ctx.fill();
         ctx.globalCompositeOperation = "source-over";
 
         const totalPixels = canvas.width * canvas.height;
         if (isDrawing) {
           eraseCount += 1000;
-
           if (eraseCount > totalPixels * 0.1) {
-            const contactEl = document.getElementById("contact");
-            const textEl = document.getElementById("text");
-            if (contactEl) contactEl.style.zIndex = 5;
-            if (textEl) textEl.style.zIndex = 5;
+            document.getElementById("contact").style.zIndex = 5;
+            document.getElementById("text").style.zIndex = 5;
           }
         }
       }
@@ -518,7 +424,7 @@
       window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        if (img.complete) drawCover();
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       });
     }
 
@@ -618,11 +524,8 @@
 
     function getRandomY() {
       let value;
-      if (Math.random() < 0.5) {
-        value = Math.random() * 0.25;
-      } else {
-        value = Math.random() * 0.3 + 0.7;
-      }
+      if (Math.random() < 0.5) value = Math.random() * 0.25;
+      else value = Math.random() * 0.3 + 0.7;
       return value;
     }
 
@@ -660,9 +563,7 @@
       setTimeout(() => {
         imgEl.remove();
         let index = trails.indexOf(imgEl);
-        if (index > -1) {
-          trails.splice(index, 1);
-        }
+        if (index > -1) trails.splice(index, 1);
       }, 600);
     }
 
@@ -674,49 +575,14 @@
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            rainbow.classList.remove("is-hidden");
-          } else {
-            rainbow.classList.add("is-hidden");
-          }
+          if (entry.isIntersecting) rainbow.classList.remove("is-hidden");
+          else rainbow.classList.add("is-hidden");
         },
         { threshold: 0.15 }
       );
 
       observer.observe(landing);
     }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          canvas.classList.add("hidden");
-          document.getElementById("contact").style.zIndex = 5;
-          document.getElementById("text").style.zIndex = 5;
-
-          birdGif();
-
-          // NO Reach Me flying on mobile
-          if (!document.body.classList.contains("is-mobile")) {
-            JumpText();
-          }
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    const target = document.querySelector(".project1_1");
-    observer.observe(target);
-
-    // mouse trail only on desktop (mobile doesn't have mousemove)
-    window.addEventListener("mousemove", mouseTrailEffect);
-
-    window.addEventListener("scroll", () => {
-      if (window.scrollY < 500) {
-        document.querySelector(".moving-car-img").style.display = "none";
-        document.querySelector(".moving-bird-img").style.display = "none";
-        clearInterval(carTimer);
-      }
-    });
 
     // ================== CHATBOT LOGIC (hidden on mobile by CSS) ==================
     const chatbotAvatar = document.getElementById("chatbot-avatar");
@@ -824,9 +690,7 @@
 
     if (chatbotInput) {
       chatbotInput.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          handleChatbotQuestion();
-        }
+        if (e.key === "Enter") handleChatbotQuestion();
       });
     }
 
@@ -834,23 +698,36 @@
       chatbotSend.addEventListener("click", handleChatbotQuestion);
     }
 
-    // 🔚 start the animations
-    explodingText();
+    // ================== START ==================
+    // IMPORTANT: explodingText() destroys your <span class="m-br"> line breaks.
+    // So: Desktop only.
+    if (!document.body.classList.contains("is-mobile")) {
+      explodingText();
+    }
 
-    // No Reach Me flying on mobile
+    // Reach Me flying: desktop only
     if (!document.body.classList.contains("is-mobile")) {
       JumpText();
     }
 
+    // Erasable illustration: desktop only (mobile canvas is removed)
     drawImage();
+
+    // Rainbow marquee always
     scrollText();
 
-    // MOBILE: remove tooltip “white block”
+    // Tooltip: desktop only (mobile wants no white block)
     if (!document.body.classList.contains("is-mobile")) {
       tooltip();
     }
 
     toggleRainbowOnScroll();
+
+    // ✅ NEW: Start the two flying GIFs on the landing page too (desktop + mobile)
+    birdGif();
+
+    // Mouse trail: desktop only (mobile has no mousemove)
+    window.addEventListener("mousemove", mouseTrailEffect);
   </script>
 </body>
 
