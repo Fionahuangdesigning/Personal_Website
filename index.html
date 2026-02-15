@@ -44,9 +44,9 @@
       <!-- UPDATED: hero is Ace-Bold -->
       <div class="font32 text-wrap hero-bold">
         <div id="text" class="text-container">
-          Genius in design & graphic experiments.
+          Genius in design <span class="m-br"></span>&amp; graphic experiments.
         </div>
-        <div>Born in Taiwan. Remade in New York.</div>
+        <div>Born in Taiwan. <span class="m-br"></span>Remade in New York.</div>
         <div>The smartest designer of the 21st century.</div>
       </div>
 
@@ -68,7 +68,7 @@
           <div>Love Edward Hopper</div>
           <div>Love giving</div>
           <div>Love chocolate</div>
-          <div>Love R&B</div>
+          <div>Love R&amp;B</div>
           <div>Hate idiot</div>
         </div>
 
@@ -240,7 +240,7 @@
         <div id="mobile-blocker" style="display:flex;">
           <div class="mb-inner">
             <div class="mb-title">Please view my site on a desktop!!!</div>
-            <div class="mb-sub"> (◍•ᴗ•ᴗ•◍) Love youuuu (◕ᴥ◕) </div>
+            <div class="mb-sub"> (◍•ᴗ•◍) Love youuuu (◕ᴥ◕) </div>
           </div>
         </div>
       `;
@@ -429,31 +429,62 @@
         drawCover();
       };
 
-      // ensure canvas is interactive by default (desktop)
-      canvas.style.pointerEvents = "auto";
-
       canvas.addEventListener("mouseleave", () => {
         isDrawing = false;
       });
 
       canvas.addEventListener("mousemove", moveEvent);
 
-      // mobile uses touch
+      // ===== MOBILE TOUCH (erase OR scroll after reveal) =====
+      let touchMode = null; // "erase" | "scroll" | null
+      let startX = 0;
+      let startY = 0;
+
       canvas.addEventListener("touchstart", (e) => {
+        const t = e.touches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+        touchMode = null;
+
+        // tap should erase
         e.preventDefault();
-        moveEvent(e.touches[0]);
+        moveEvent(t);
       }, { passive: false });
 
       canvas.addEventListener("touchmove", (e) => {
-        e.preventDefault();
-        moveEvent(e.touches[0]);
+        const t = e.touches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        const totalPixels = canvas.width * canvas.height;
+        const revealed = (eraseCount > totalPixels * 0.1);
+
+        // Before reveal: always erase
+        if (!revealed) {
+          e.preventDefault();
+          moveEvent(t);
+          return;
+        }
+
+        // After reveal: decide gesture once
+        if (!touchMode) {
+          const mostlyVertical = Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10;
+          touchMode = mostlyVertical ? "scroll" : "erase";
+        }
+
+        if (touchMode === "erase") {
+          e.preventDefault();
+          moveEvent(t);
+        } else {
+          // scroll mode: DO NOT preventDefault, let page scroll
+          isDrawing = false;
+        }
       }, { passive: false });
 
       canvas.addEventListener("touchend", () => {
         isDrawing = false;
+        touchMode = null;
       });
-
-      let hasRevealed = false;
 
       function moveEvent(event) {
         isDrawing = true;
@@ -464,7 +495,7 @@
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
 
-        // mobile eraser size bigger
+        // mobile eraser bigger
         const eraserRadius = document.body.classList.contains("is-mobile") ? 140 : 80;
         ctx.arc(x, y, eraserRadius, 0, Math.PI * 2, false);
 
@@ -472,18 +503,14 @@
         ctx.globalCompositeOperation = "source-over";
 
         const totalPixels = canvas.width * canvas.height;
-        eraseCount += 1000;
+        if (isDrawing) {
+          eraseCount += 1000;
 
-        if (!hasRevealed && eraseCount > totalPixels * 0.1) {
-          hasRevealed = true;
-
-          // reveal text + contact z-index (contact hidden by CSS on mobile anyway)
-          document.getElementById("contact").style.zIndex = 5;
-          document.getElementById("text").style.zIndex = 5;
-
-          // ✅ MOBILE: after reveal, let the page scroll
-          if (document.body.classList.contains("is-mobile")) {
-            canvas.style.pointerEvents = "none";
+          if (eraseCount > totalPixels * 0.1) {
+            const contactEl = document.getElementById("contact");
+            const textEl = document.getElementById("text");
+            if (contactEl) contactEl.style.zIndex = 5;
+            if (textEl) textEl.style.zIndex = 5;
           }
         }
       }
@@ -639,7 +666,7 @@
       }, 600);
     }
 
-    // NEW: Rainbow banner only on landing page
+    // Rainbow banner only on landing page
     function toggleRainbowOnScroll() {
       const rainbow = document.querySelector(".rainbow-rectangle");
       const landing = document.getElementById("content");
@@ -680,6 +707,7 @@
     const target = document.querySelector(".project1_1");
     observer.observe(target);
 
+    // mouse trail only on desktop (mobile doesn't have mousemove)
     window.addEventListener("mousemove", mouseTrailEffect);
 
     window.addEventListener("scroll", () => {
@@ -690,25 +718,22 @@
       }
     });
 
-    // ================== CHATBOT LOGIC (still exists, but hidden on mobile by CSS) ==================
+    // ================== CHATBOT LOGIC (hidden on mobile by CSS) ==================
     const chatbotAvatar = document.getElementById("chatbot-avatar");
     const chatbotInput = document.getElementById("chatbot-input");
     const chatbotSend = document.getElementById("chatbot-send");
 
     const chatbotImages = {
       idle: "./img/chatbot_idle.gif",
-
       animal: "./img/chatbot_animal.png",
       food: "./img/chatbot_food.png",
       color: "./img/chatbot_color.png",
       skills: "./img/chatbot_skills.png",
       secret: "./img/chatbot_secret.png",
-
       doing: "./img/chatbot_doing.png",
       hire: "./img/chatbot_hire.png",
       about: "./img/chatbot_about.png",
       greet: "./img/chatbot_greet.png",
-
       resume: "./img/chatbot_resume.png",
     };
 
@@ -819,7 +844,12 @@
 
     drawImage();
     scrollText();
-    tooltip();
+
+    // MOBILE: remove tooltip “white block”
+    if (!document.body.classList.contains("is-mobile")) {
+      tooltip();
+    }
+
     toggleRainbowOnScroll();
   </script>
 </body>
