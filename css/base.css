@@ -1,3 +1,4 @@
+/* base.css (FULL UPDATED) */
 @font-face {
   font-family: Ace-Bold;
   src: url("../font/ace_bold/Ace-Bold.woff"),
@@ -57,15 +58,12 @@ html {
   flex-direction: column;
   justify-content: center;
   padding-top: 40px;
-  /* move down */
   margin-top: 30px;
 }
 
 .content-container {
-  /* shrink */
   transform: scale(0.8);
   -webkit-transform: scale(0.8);
-
   transform-origin: top center;
   -webkit-transform-origin: top center;
 }
@@ -108,7 +106,6 @@ html {
   width: 50%;
   height: 100%;
   object-fit: cover;
-  /* position: absolute; */
 }
 
 .full {
@@ -138,7 +135,6 @@ html {
 .text-wrap {
   position: relative;
   padding: 40px 0;
-  /* margin: 40px 0; */
   font-family: "Ace-Regular";
 }
 
@@ -201,10 +197,6 @@ html {
   margin: 20px 0;
 }
 
-.flex {
-  display: flex;
-}
-
 #canvas {
   position: fixed;
   top: 0;
@@ -213,12 +205,6 @@ html {
   z-index: 3;
   /* illustration on top of page but under chatbot */
 }
-
-/* Mobile: allow normal scrolling gestures to pass through once canvas is disabled 
-body.is-mobile #canvas {
-  touch-action: pan-y;
-}*/
-
 
 .hidden {
   display: none;
@@ -254,13 +240,11 @@ body.is-mobile #canvas {
   font-family: "Ace-Regular";
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 
-  /* NEW: allow fade-out when leaving landing page */
   opacity: 1;
   transition: opacity 0.25s ease;
   pointer-events: auto;
 }
 
-/* NEW: hidden state */
 .rainbow-rectangle.is-hidden {
   opacity: 0;
   pointer-events: none;
@@ -432,7 +416,6 @@ a {
   left: 40px;
   width: 260px;
   z-index: 10000;
-  /* ABOVE the canvas/illustration */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -451,14 +434,12 @@ a {
   display: block;
 }
 
-/* input + button in one row */
 #chatbot-input-wrap {
   display: flex;
   width: 130%;
   align-items: stretch;
 }
 
-/* rounded input */
 #chatbot-input {
   flex: 1;
   padding: 6px 10px;
@@ -477,7 +458,6 @@ a {
   border-right: none;
 }
 
-/* send button */
 #chatbot-send {
   height: 38px;
   padding: 0 16px;
@@ -494,7 +474,7 @@ a {
   background: #f0f0f0;
 }
 
-/* UPDATED: project links on landing use Monument */
+/* UPDATED: landing links use Monument */
 .aList a {
   color: #0000ff;
   text-decoration: underline;
@@ -510,15 +490,7 @@ a {
   font-weight: 400;
 }
 
-/* .aWrap {
-  max-width: 625px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 10;
-} */
-
 .aList {
-  /* margin: 20px 0; */
   position: absolute;
   z-index: 15;
   width: 625px;
@@ -536,7 +508,6 @@ a {
   color: #000000;
   z-index: 9999999;
   display: none;
-  /* turned on via JS */
   align-items: center;
   justify-content: center;
   padding: 24px;
@@ -561,7 +532,6 @@ a {
   opacity: 0.8;
 }
 
-/* optional: hard-stop scroll behind it */
 body.mobile-locked,
 html.mobile-locked {
   overflow: hidden !important;
@@ -574,6 +544,11 @@ body.is-mobile {
   overflow-x: hidden;
 }
 
+/* Important: allow vertical scroll gestures */
+body.is-mobile #canvas {
+  touch-action: pan-y;
+}
+
 /* 1) NO chatbot on mobile */
 body.is-mobile #chatbot {
   display: none !important;
@@ -581,20 +556,20 @@ body.is-mobile #chatbot {
 
 /* 3) Make landing fit in one mobile screen */
 body.is-mobile #content {
-  height: 100vh !important;         /* one screen */
+  height: 100vh !important;
   margin-top: 0 !important;
-  padding-top: 84px !important;     /* room for rainbow bar */
+  padding-top: 84px !important;
   padding-bottom: 16px !important;
 }
 
-/* remove the desktop shrink that can make spacing weird on phones */
+/* remove desktop shrink */
 body.is-mobile .content-container {
   transform: none !important;
   -webkit-transform: none !important;
   padding: 0 16px !important;
 }
 
-/* scale headline + title to fit */
+/* scale headline + title */
 body.is-mobile #content .title {
   font-size: 40px !important;
   line-height: 1.1 !important;
@@ -605,7 +580,7 @@ body.is-mobile .font32 {
   line-height: 1.25 !important;
 }
 
-/* keep your Monument block compact */
+/* keep Monument block compact */
 body.is-mobile .font20 {
   font-size: 14px !important;
   line-height: 1.35 !important;
@@ -615,7 +590,7 @@ body.is-mobile .text-wrap {
   padding: 16px 0 !important;
 }
 
-/* keep your Resume/Email/Instagram links visible + compact */
+/* keep Resume/Email/Instagram links visible + compact */
 body.is-mobile .aList {
   position: static !important;
   width: auto !important;
@@ -638,4 +613,3 @@ body.is-mobile .aList a {
 body.is-mobile .rainbow-rectangle {
   top: 12px !important;
 }
-
