@@ -482,7 +482,7 @@ a {
   background: #f0f0f0;
 }
 
-/* UPDATED: landing links use Monument */
+/* landing links use Monument */
 .aList a {
   color: #0000ff;
   text-decoration: underline;
@@ -522,7 +522,7 @@ body.is-mobile #canvas {
   display: none !important;
 }
 
-/* 1) NO chatbot on mobile */
+/* NO chatbot on mobile */
 body.is-mobile #chatbot {
   display: none !important;
 }
@@ -532,7 +532,7 @@ body.is-mobile #contact {
   display: none !important;
 }
 
-/* MOBILE: remove tooltip “white block” */
+/* mobile: remove tooltip white block */
 body.is-mobile .tooltip {
   display: none !important;
 }
@@ -558,13 +558,11 @@ body.is-mobile #content .title {
   line-height: 1.1 !important;
 }
 
-/* mobile hero sizing */
 body.is-mobile .font32 {
   font-size: 20px !important;
   line-height: 1.25 !important;
 }
 
-/* keep Monument block compact */
 body.is-mobile .font20 {
   font-size: 14px !important;
   line-height: 1.35 !important;
