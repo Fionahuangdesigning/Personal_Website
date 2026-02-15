@@ -244,8 +244,9 @@
 
       return isIpad || isIphoneOrAndroid || isAndroidTablet;
     }
-
-    function enableMobileBlocker() {
+    //------------------------------------
+    //to not have mobile version
+    /* function enableMobileBlocker() {
       document.documentElement.classList.add("mobile-locked");
       document.body.classList.add("mobile-locked");
 
@@ -263,9 +264,22 @@
       enableMobileBlocker();
       // Stop the rest of the script so nothing else runs on mobile.
       throw new Error("Mobile blocked: desktop-only site.");
-    }
+    } */
     // ===============================================================
 
+function enableMobileMode() {
+  document.documentElement.classList.add("is-mobile");
+  document.body.classList.add("is-mobile");
+}
+
+if (isMobileOrTablet()) {
+  enableMobileMode();
+  // IMPORTANT: do NOT replace body, do NOT throw error
+}
+
+
+
+    
     setTimeout(() => {
       window.scrollTo({
         top: 0,
@@ -412,7 +426,25 @@
       });
 
       canvas.addEventListener("mousemove", moveEvent);
+//mobile uses touch
+      canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+  moveEvent(e.touches[0]);
+}, { passive: false });
 
+canvas.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+  moveEvent(e.touches[0]);
+}, { passive: false });
+
+canvas.addEventListener("touchend", () => {
+  isDrawing = false;
+});
+
+
+
+
+      
       function moveEvent(event) {
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
@@ -421,7 +453,12 @@
 
         ctx.globalCompositeOperation = "destination-out";
         ctx.beginPath();
-        ctx.arc(x, y, 80, 0, Math.PI * 2, false);
+        //ctx.arc(x, y, 80, 0, Math.PI * 2, false); ->
+        //mobile eraser size bigger 
+        const eraserRadius = document.body.classList.contains("is-mobile") ? 140 : 80;
+      ctx.arc(x, y, eraserRadius, 0, Math.PI * 2, false);
+
+        
         ctx.fill();
         ctx.globalCompositeOperation = "source-over";
 
