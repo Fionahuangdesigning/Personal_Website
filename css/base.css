@@ -554,13 +554,22 @@ body.is-mobile .content-container {
 
 /* scale headline + title */
 body.is-mobile #content .title {
-  font-size: 40px !important;
+  font-size: 34px !important;     /* UPDATED: fit inside guide lines */
   line-height: 1.1 !important;
+  padding: 0 24px !important;     /* UPDATED: left/right safe margin */
+  word-break: keep-all !important;
 }
 
 body.is-mobile .font32 {
   font-size: 20px !important;
   line-height: 1.25 !important;
+}
+
+/* NEW: Mobile hero layout control for #text */
+body.is-mobile #text {
+  display: block !important;
+  text-align: center !important;
+  padding: 0 24px !important;
 }
 
 body.is-mobile .font20 {
