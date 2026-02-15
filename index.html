@@ -304,9 +304,8 @@
         contact.style.left = `${newX}px`;
         contact.style.top = `${newY}px`;
 
-        if (jumpTimer) {
-          clearTimeout(jumpTimer);
-        }
+        if (jumpTimer) clearTimeout(jumpTimer);
+
         jumpTimer = setTimeout(() => {
           animationFrame = requestAnimationFrame(jump);
         }, 600);
@@ -518,8 +517,8 @@
           carEL.style.display = "none";
           await new Promise((resolve) => setTimeout(resolve, 4 * 1000));
           birdGif();
-        });
-      });
+        }, { once: true });
+      }, { once: true });
     }
 
     function getRandomY() {
@@ -699,18 +698,15 @@
     }
 
     // ================== START ==================
-    // IMPORTANT: explodingText() destroys your <span class="m-br"> line breaks.
-    // So: Desktop only.
+    // Desktop only: exploding text (keeps mobile line breaks working)
     if (!document.body.classList.contains("is-mobile")) {
       explodingText();
     }
 
-    // Reach Me flying: desktop only
-    if (!document.body.classList.contains("is-mobile")) {
-      JumpText();
-    }
+    // Desktop only: mouse trail
+    window.addEventListener("mousemove", mouseTrailEffect);
 
-    // Erasable illustration: desktop only (mobile canvas is removed)
+    // Desktop only: erasable illustration
     drawImage();
 
     // Rainbow marquee always
@@ -723,11 +719,30 @@
 
     toggleRainbowOnScroll();
 
-    // ✅ NEW: Start the two flying GIFs on the landing page too (desktop + mobile)
-    birdGif();
+    // ✅ MOBILE: start flying gifs immediately on landing
+    if (document.body.classList.contains("is-mobile")) {
+      birdGif();
+    }
 
-    // Mouse trail: desktop only (mobile has no mousemove)
-    window.addEventListener("mousemove", mouseTrailEffect);
+    // ✅ DESKTOP: start flying gifs ONLY after landing (when projects begin)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!document.body.classList.contains("is-mobile")) {
+            canvas.classList.add("hidden");
+            document.getElementById("contact").style.zIndex = 5;
+            document.getElementById("text").style.zIndex = 5;
+
+            birdGif();   // desktop starts here (projects)
+            JumpText();  // desktop reach-me starts here
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    const target = document.querySelector(".project1_1");
+    if (target) observer.observe(target);
   </script>
 </body>
 
