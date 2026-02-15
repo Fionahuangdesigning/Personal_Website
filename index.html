@@ -1,4 +1,6 @@
-<!-- index.html (FULL UPDATED) -->
+<!-- =========================
+     index.html (FULL UPDATED)
+     ========================= -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 
@@ -198,7 +200,7 @@
     <div class="tooltip" id="tooltip"></div>
   </div>
 
-  <!-- ***** CHATBOT (always on top of illustration) *****-->
+  <!-- ***** CHATBOT (desktop only via CSS) *****-->
   <div id="chatbot">
     <img id="chatbot-avatar" src="./img/chatbot_idle.gif" alt="Chatbot illustration" />
     <div id="chatbot-input-wrap">
@@ -207,7 +209,9 @@
     </div>
   </div>
 
+  <!-- Reach Me (desktop only via CSS + JS guards) -->
   <div id="contact" onclick="openContact()">Reach Me!</div>
+
   <img class="moving-car-img" src="./img/car.gif" alt="car" onclick="sendMail()" />
   <img class="moving-bird-img" src="./img/bird.gif" alt="bird" />
 
@@ -236,7 +240,7 @@
         <div id="mobile-blocker" style="display:flex;">
           <div class="mb-inner">
             <div class="mb-title">Please view my site on a desktop!!!</div>
-            <div class="mb-sub"> (◍•ᴗ•◍) Love youuuu (◕ᴥ◕) </div>
+            <div class="mb-sub"> (◍•ᴗ•ᴗ•◍) Love youuuu (◕ᴥ◕) </div>
           </div>
         </div>
       `;
@@ -401,8 +405,28 @@
 
       const img = new Image();
       img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png"; // 你的全屏插画
+
+      function drawCover() {
+        const cw = canvas.width;
+        const ch = canvas.height;
+
+        const iw = img.naturalWidth || img.width;
+        const ih = img.naturalHeight || img.height;
+
+        // scale to cover the canvas (crop overflow)
+        const scale = Math.max(cw / iw, ch / ih);
+        const sw = iw * scale;
+        const sh = ih * scale;
+
+        const dx = (cw - sw) / 2;
+        const dy = (ch - sh) / 2;
+
+        ctx.clearRect(0, 0, cw, ch);
+        ctx.drawImage(img, dx, dy, sw, sh);
+      }
+
       img.onload = () => {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        drawCover();
       };
 
       // ensure canvas is interactive by default (desktop)
@@ -453,6 +477,7 @@
         if (!hasRevealed && eraseCount > totalPixels * 0.1) {
           hasRevealed = true;
 
+          // reveal text + contact z-index (contact hidden by CSS on mobile anyway)
           document.getElementById("contact").style.zIndex = 5;
           document.getElementById("text").style.zIndex = 5;
 
@@ -466,7 +491,7 @@
       window.addEventListener("resize", () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        if (img.complete) drawCover();
       });
     }
 
@@ -564,64 +589,6 @@
       });
     }
 
-    /* ====== OLD (COMMENTED-OUT) MOBILE BLOCK (KEEP) ======
-    function isMobileOrTablet() {
-      const ua = navigator.userAgent.toLowerCase();
-
-      const isIpad =
-        /ipad/.test(ua) ||
-        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      const isIphoneOrAndroid = /iphone|ipod|android.*mobile/.test(ua);
-
-      return isIpad || isIphoneOrAndroid;
-    }
-
-    if (isMobileOrTablet()) {
-      // 创建遮罩层
-      const overlay = document.createElement('div');
-      overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.9);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 999999;
-        color: white;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 20px;
-      `;
-
-      // 添加提示信息
-      const message = document.createElement('div');
-      message.innerHTML = `
-        <h2>Please rotate your device</h2>
-        <p>This website is best viewed in landscape mode</p>
-        <div style="font-size: 48px; margin: 20px 0;">📱↻</div>
-        <p>For the best experience, please view on a desktop</p>
-      `;
-
-      overlay.appendChild(message);
-      document.body.appendChild(overlay);
-
-      // 检测设备方向变化
-      window.addEventListener("orientationchange", function () {
-        if (window.orientation === 90 || window.orientation === -90) {
-          console.log("现在是横屏模式");
-          overlay.style.display = 'none';
-        } else {
-          console.log("现在是竖屏模式");
-          overlay.style.display = 'flex';
-        }
-      });
-    }
-    ====== END OLD BLOCK ====== */
-
     function getRandomY() {
       let value;
       if (Math.random() < 0.5) {
@@ -700,7 +667,11 @@
           document.getElementById("text").style.zIndex = 5;
 
           birdGif();
-          JumpText();
+
+          // NO Reach Me flying on mobile
+          if (!document.body.classList.contains("is-mobile")) {
+            JumpText();
+          }
         }
       },
       { threshold: 0.5 }
@@ -719,7 +690,7 @@
       }
     });
 
-    // ================== CHATBOT LOGIC (image-only) ==================
+    // ================== CHATBOT LOGIC (still exists, but hidden on mobile by CSS) ==================
     const chatbotAvatar = document.getElementById("chatbot-avatar");
     const chatbotInput = document.getElementById("chatbot-input");
     const chatbotSend = document.getElementById("chatbot-send");
@@ -840,7 +811,12 @@
 
     // 🔚 start the animations
     explodingText();
-    JumpText();
+
+    // No Reach Me flying on mobile
+    if (!document.body.classList.contains("is-mobile")) {
+      JumpText();
+    }
+
     drawImage();
     scrollText();
     tooltip();
