@@ -43,10 +43,9 @@
 
       <!-- UPDATED: hero is Ace-Bold -->
       <div class="font32 text-wrap hero-bold">
-        <!-- UPDATED: mobile layout: 'Genius in design &' same line, next line 'graphic experiments.' -->
+        <!-- ✅ Desktop stays clean (no extra whitespace); Mobile breaks after & via .m-br display:block -->
         <div id="text" class="text-container">
-          Genius in design &amp;<br class="m-br">
-          graphic experiments.
+          Genius in design &amp;<span class="m-br"></span>graphic experiments.
         </div>
 
         <div>Born in Taiwan. <span class="m-br"></span>Remade in New York.</div>
@@ -339,7 +338,8 @@
       const text = textContainer.textContent.trim();
 
       textContainer.innerHTML = "";
-      text.split(" ").forEach((char) => {
+      // ✅ FIX: split on ALL whitespace + remove empties (prevents giant gaps on desktop)
+      text.split(/\s+/).filter(Boolean).forEach((char) => {
         const span = document.createElement("span");
         span.className = "char";
         span.textContent = char;
@@ -491,7 +491,37 @@
       });
     }
 
+    // =======================
+    // ✅ GIFS: Mobile = landing, Desktop = projects only
+    // =======================
+    let desktopGifsActive = false;
+
+    function stopDesktopGifs() {
+      desktopGifsActive = false;
+
+      const birdEl = document.querySelector(".moving-bird-img");
+      const carEl = document.querySelector(".moving-car-img");
+
+      if (birdEl) {
+        birdEl.style.display = "none";
+        birdEl.style.animation = "none";
+      }
+      if (carEl) {
+        carEl.style.display = "none";
+        carEl.style.animation = "none";
+      }
+    }
+
+    function startDesktopGifs() {
+      if (desktopGifsActive) return;
+      desktopGifsActive = true;
+      birdGif();
+    }
+
     function birdGif() {
+      // ✅ Desktop: only run when active
+      if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) return;
+
       document.querySelector(".moving-car-img").style.display = "none";
 
       const birdEl = document.querySelector(".moving-bird-img");
@@ -510,14 +540,39 @@
       document.body.appendChild(birdEl);
 
       birdEl.addEventListener("animationend", async () => {
+        // ✅ if user returned to landing, stop
+        if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) {
+          stopDesktopGifs();
+          return;
+        }
+
         await new Promise((resolve) => setTimeout(resolve, 6 * 1000));
+
+        if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) {
+          stopDesktopGifs();
+          return;
+        }
 
         const carEL = document.querySelector(".moving-car-img");
         carEL.style.display = "block";
+        carEL.style.animation = "moveRight 10s linear";
+
         carEL.addEventListener("animationend", async () => {
           carEL.style.display = "none";
+
+          if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) {
+            stopDesktopGifs();
+            return;
+          }
+
           await new Promise((resolve) => setTimeout(resolve, 4 * 1000));
-          birdGif();
+
+          // loop again only if still allowed
+          if (document.body.classList.contains("is-mobile")) {
+            birdGif();
+          } else if (desktopGifsActive) {
+            birdGif();
+          }
         }, { once: true });
       }, { once: true });
     }
@@ -699,34 +754,42 @@
     }
 
     // ================== START ==================
-    // Desktop only: exploding text (keeps mobile line breaks working)
     if (!document.body.classList.contains("is-mobile")) {
       explodingText();
     }
 
-    // Desktop only: mouse trail
     window.addEventListener("mousemove", mouseTrailEffect);
 
-    // Desktop only: erasable illustration
     drawImage();
 
-    // Rainbow marquee always
     scrollText();
 
-    // Tooltip: desktop only (mobile wants no white block)
     if (!document.body.classList.contains("is-mobile")) {
       tooltip();
     }
 
     toggleRainbowOnScroll();
 
-    // ✅ MOBILE: start flying gifs immediately on landing
+    // ✅ MOBILE: gifs start on landing
     if (document.body.classList.contains("is-mobile")) {
       birdGif();
     }
 
-    // ✅ DESKTOP: start flying gifs ONLY after landing (when projects begin)
-    const observer = new IntersectionObserver(
+    // ✅ DESKTOP: stop gifs whenever landing is visible
+    const landingEl = document.getElementById("content");
+    if (landingEl && !document.body.classList.contains("is-mobile")) {
+      const landingObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) stopDesktopGifs();
+        },
+        { threshold: 0.2 }
+      );
+      landingObserver.observe(landingEl);
+    }
+
+    // ✅ DESKTOP: start gifs only when projects begin
+    const projectStart = document.querySelector(".project1_1");
+    const projectObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           if (!document.body.classList.contains("is-mobile")) {
@@ -734,16 +797,14 @@
             document.getElementById("contact").style.zIndex = 5;
             document.getElementById("text").style.zIndex = 5;
 
-            birdGif();   // desktop starts here (projects)
-            JumpText();  // desktop reach-me starts here
+            startDesktopGifs();
+            JumpText();
           }
         }
       },
       { threshold: 0.5 }
     );
-
-    const target = document.querySelector(".project1_1");
-    if (target) observer.observe(target);
+    if (projectStart) projectObserver.observe(projectStart);
   </script>
 </body>
 
