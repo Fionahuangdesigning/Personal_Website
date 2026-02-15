@@ -506,44 +506,6 @@ a {
   text-align: center;
 }
 
-/* ================== MOBILE BLOCKER (KEEP STYLES) ================== */
-#mobile-blocker {
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  color: #000000;
-  z-index: 9999999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  text-align: center;
-  font-family: "Ace-Regular", Arial, sans-serif;
-}
-
-#mobile-blocker .mb-inner {
-  max-width: 520px;
-}
-
-#mobile-blocker .mb-title {
-  font-family: "Ace-Bold", Arial, sans-serif;
-  font-size: 24px;
-  line-height: 1.2;
-  margin-bottom: 10px;
-}
-
-#mobile-blocker .mb-sub {
-  font-size: 16px;
-  line-height: 1.5;
-  opacity: 0.8;
-}
-
-body.mobile-locked,
-html.mobile-locked {
-  overflow: hidden !important;
-  height: 100% !important;
-}
-
 /* ================== MOBILE MODE ================== */
 html.is-mobile,
 body.is-mobile {
@@ -555,9 +517,9 @@ body.is-mobile .m-br {
   display: block;
 }
 
-/* allow vertical scroll gestures; we decide erase vs scroll in JS */
+/* Mobile: REMOVE the erasable illustration completely */
 body.is-mobile #canvas {
-  touch-action: pan-y;
+  display: none !important;
 }
 
 /* 1) NO chatbot on mobile */
@@ -565,17 +527,17 @@ body.is-mobile #chatbot {
   display: none !important;
 }
 
-/* 1b) NO Reach Me on mobile */
+/* NO Reach Me flying on mobile */
 body.is-mobile #contact {
   display: none !important;
 }
 
-/* 4) MOBILE: remove tooltip “white block” */
+/* MOBILE: remove tooltip “white block” */
 body.is-mobile .tooltip {
   display: none !important;
 }
 
-/* 3) Make landing fit in one mobile screen */
+/* Make landing fit in one mobile screen */
 body.is-mobile #content {
   height: 100vh !important;
   margin-top: 0 !important;
@@ -600,18 +562,6 @@ body.is-mobile #content .title {
 body.is-mobile .font32 {
   font-size: 20px !important;
   line-height: 1.25 !important;
-}
-
-/* keep exploding headline wrap nice on small screens */
-body.is-mobile #text.text-container {
-  flex-wrap: wrap !important;
-  max-width: 92vw;
-  margin: 0 auto;
-  row-gap: 6px;
-}
-
-body.is-mobile .char {
-  margin-right: 6px;
 }
 
 /* keep Monument block compact */
