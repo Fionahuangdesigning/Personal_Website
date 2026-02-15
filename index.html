@@ -490,10 +490,50 @@
       });
     }
 
-    function birdGif() {
-      document.querySelector(".moving-car-img").style.display = "none";
+    // =========================
+    // ✅ DESKTOP GIF CONTROL (NEW)
+    // =========================
+    let desktopGifsActive = false;
+    let desktopGifSleepTimer = null;
+
+    function stopDesktopGifs() {
+      desktopGifsActive = false;
+
+      if (desktopGifSleepTimer) {
+        clearTimeout(desktopGifSleepTimer);
+        desktopGifSleepTimer = null;
+      }
 
       const birdEl = document.querySelector(".moving-bird-img");
+      const carEl = document.querySelector(".moving-car-img");
+
+      if (birdEl) {
+        birdEl.style.display = "none";
+        birdEl.style.animation = "none";
+      }
+      if (carEl) {
+        carEl.style.display = "none";
+        carEl.style.animation = "none";
+      }
+    }
+
+    function startDesktopGifs() {
+      if (desktopGifsActive) return;
+      desktopGifsActive = true;
+      birdGif(); // uses the same loop function, but now it respects desktopGifsActive
+    }
+
+    function birdGif() {
+      // ✅ If we are NOT active (desktop landing), do nothing.
+      if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) return;
+
+      // Always hide car at the start of a bird run
+      const carEL = document.querySelector(".moving-car-img");
+      if (carEL) carEL.style.display = "none";
+
+      const birdEl = document.querySelector(".moving-bird-img");
+      if (!birdEl) return;
+
       const maxHeight = (window.innerHeight - 300) * 0.3;
       let randomTop = Math.floor(Math.random() * maxHeight);
 
@@ -509,14 +549,43 @@
       document.body.appendChild(birdEl);
 
       birdEl.addEventListener("animationend", async () => {
+        // ✅ If user scrolled back to landing and we stopped, exit.
+        if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) {
+          stopDesktopGifs();
+          return;
+        }
+
         await new Promise((resolve) => setTimeout(resolve, 6 * 1000));
 
-        const carEL = document.querySelector(".moving-car-img");
-        carEL.style.display = "block";
-        carEL.addEventListener("animationend", async () => {
-          carEL.style.display = "none";
+        // ✅ Check again before showing car
+        if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) {
+          stopDesktopGifs();
+          return;
+        }
+
+        const carEL2 = document.querySelector(".moving-car-img");
+        if (!carEL2) return;
+
+        carEL2.style.display = "block";
+        carEL2.style.animation = "moveRight 10s linear";
+
+        carEL2.addEventListener("animationend", async () => {
+          carEL2.style.display = "none";
+
+          // ✅ If stopped while car was running, exit.
+          if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) {
+            stopDesktopGifs();
+            return;
+          }
+
           await new Promise((resolve) => setTimeout(resolve, 4 * 1000));
-          birdGif();
+
+          // ✅ Loop ONLY if still active
+          if (document.body.classList.contains("is-mobile")) {
+            birdGif();
+          } else if (desktopGifsActive) {
+            birdGif();
+          }
         }, { once: true });
       }, { once: true });
     }
@@ -724,25 +793,42 @@
       birdGif();
     }
 
-    // ✅ DESKTOP: start flying gifs ONLY after landing (when projects begin)
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (!document.body.classList.contains("is-mobile")) {
-            canvas.classList.add("hidden");
-            document.getElementById("contact").style.zIndex = 5;
-            document.getElementById("text").style.zIndex = 5;
+    // ✅ DESKTOP: start/stop gifs based on landing vs projects
+    const landingEl = document.getElementById("content");
+    const firstProjectEl = document.querySelector(".project1_1");
 
-            birdGif();   // desktop starts here (projects)
-            JumpText();  // desktop reach-me starts here
+    // 1) If landing is visible -> STOP gifs (so they never show on landing)
+    if (landingEl && !document.body.classList.contains("is-mobile")) {
+      const landingObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            stopDesktopGifs();
           }
-        }
-      },
-      { threshold: 0.5 }
-    );
+        },
+        { threshold: 0.2 }
+      );
+      landingObserver.observe(landingEl);
+    }
 
-    const target = document.querySelector(".project1_1");
-    if (target) observer.observe(target);
+    // 2) If projects start -> START gifs
+    if (firstProjectEl) {
+      const projectObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (!document.body.classList.contains("is-mobile")) {
+              canvas.classList.add("hidden");
+              document.getElementById("contact").style.zIndex = 5;
+              document.getElementById("text").style.zIndex = 5;
+
+              startDesktopGifs(); // ✅ only starts in projects
+              JumpText();         // desktop reach-me starts here
+            }
+          }
+        },
+        { threshold: 0.5 }
+      );
+      projectObserver.observe(firstProjectEl);
+    }
   </script>
 </body>
 
