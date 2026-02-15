@@ -214,10 +214,10 @@ html {
   /* illustration on top of page but under chatbot */
 }
 
-/* Mobile: allow normal scrolling gestures to pass through once canvas is disabled */
+/* Mobile: allow normal scrolling gestures to pass through once canvas is disabled 
 body.is-mobile #canvas {
   touch-action: pan-y;
-}
+}*/
 
 
 .hidden {
