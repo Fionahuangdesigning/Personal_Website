@@ -647,7 +647,7 @@ body.is-mobile .scroll-text {
   font-weight: 400 !important;
 }
 
-/* ================== MOBILE: footer match landing title width + size 20 ================== */
+/* ✅ MOBILE: footer matches landing title width + size 20 + prevent weird wraps */
 body.is-mobile .page-foot {
   width: 100% !important;
   box-sizing: border-box !important;
@@ -659,6 +659,8 @@ body.is-mobile .page-foot {
   font-size: 20px !important;
   line-height: 1.25 !important;
   text-align: center !important;
+
+  word-break: keep-all !important;
 }
 
 body.is-mobile .page-foot > div {
