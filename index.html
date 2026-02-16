@@ -196,25 +196,13 @@
       <!-- PROJECT 8 (project7 on desktop) -->
       <div class="project-item project7" id="project7">
 
-        <!-- MOBILE: PNG + 3 overlay videos in red boxes -->
+        <!-- MOBILE: PNG + ONLY the last video below -->
         <div class="mobile-only">
-          <div class="mobile-project-overlay project8-overlay">
-            <img class="mobile-project-base" loading="lazy" src="./img/project_mobile_8.png" alt="" />
+          <img class="mobile-project-img" loading="lazy" src="./img/project_mobile_8.png" alt="" />
 
-            <div class="mobile-video-slot slot-1">
-              <video playsinline muted autoplay loop controls
-                src="./img/project/project7/project4_left.mov"></video>
-            </div>
-
-            <div class="mobile-video-slot slot-2">
-              <video playsinline muted autoplay loop controls
-                src="./img/project/project7/project4_right.mp4"></video>
-            </div>
-
-            <div class="mobile-video-slot slot-3">
-              <video playsinline muted autoplay loop controls
-                src="./img/project/project7/project7_8_video.mp4"></video>
-            </div>
+          <div class="mobile-video-single">
+            <video playsinline muted autoplay loop controls
+              src="./img/project/project7/project7_8_video.mp4"></video>
           </div>
         </div>
 
@@ -393,7 +381,7 @@
       const text = textContainer.textContent.trim();
 
       textContainer.innerHTML = "";
-      // ✅ FIX: split on ALL whitespace + remove empties (prevents giant gaps)
+      // split on all whitespace (prevents weird big gaps)
       text.split(/\s+/).filter(Boolean).forEach((char) => {
         const span = document.createElement("span");
         span.className = "char";
@@ -544,6 +532,25 @@
           tooltip.style.transform = "scale(0.8)";
         });
       });
+    }
+
+    // ✅ Desktop: show canvas on landing, hide canvas when leaving landing
+    function toggleCanvasOnScroll() {
+      if (document.body.classList.contains("is-mobile")) return;
+
+      const landing = document.getElementById("content");
+      const canvasEl = document.getElementById("canvas");
+      if (!landing || !canvasEl) return;
+
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) canvasEl.classList.remove("hidden");
+          else canvasEl.classList.add("hidden");
+        },
+        { threshold: 0.15 }
+      );
+
+      obs.observe(landing);
     }
 
     // =======================
@@ -827,6 +834,7 @@
     }
 
     toggleRainbowOnScroll();
+    toggleCanvasOnScroll(); // ✅ FIX: canvas auto hides/shows based on landing
 
     // ✅ MOBILE: start flying gifs immediately on landing
     if (document.body.classList.contains("is-mobile")) {
@@ -851,6 +859,7 @@
       ([entry]) => {
         if (entry.isIntersecting) {
           if (!document.body.classList.contains("is-mobile")) {
+            // canvas hiding is now handled by toggleCanvasOnScroll(), but keeping this is fine
             canvas.classList.add("hidden");
             document.getElementById("contact").style.zIndex = 5;
             document.getElementById("text").style.zIndex = 5;
