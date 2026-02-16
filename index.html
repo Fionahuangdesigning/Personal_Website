@@ -201,8 +201,7 @@
           <img class="mobile-project-img" loading="lazy" src="./img/project_mobile_8.png" alt="" />
 
           <div class="mobile-video-single">
-            <video playsinline muted autoplay loop controls
-              src="./img/project/project7/project7_8_video.mp4"></video>
+            <video playsinline muted autoplay loop controls src="./img/project/project7/project7_8_video.mp4"></video>
           </div>
         </div>
 
@@ -264,17 +263,22 @@
 
   <script>
     // ================== MOBILE MODE (RUN FIRST) ==================
+    // ✅ More conservative detection so desktop doesn't get "is-mobile" accidentally.
     function isMobileOrTablet() {
       const ua = navigator.userAgent.toLowerCase();
 
-      const isIpad =
-        /ipad/.test(ua) ||
-        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-
-      const isIphoneOrAndroid = /iphone|ipod|android.*mobile/.test(ua);
+      const isIphone = /iphone|ipod/.test(ua);
+      const isAndroidMobile = /android.*mobile/.test(ua);
       const isAndroidTablet = /android(?!.*mobile)/.test(ua);
 
-      return isIpad || isIphoneOrAndroid || isAndroidTablet;
+      // iPadOS reports as Mac sometimes; keep it, but gate by screen size
+      const isIpad =
+        /ipad/.test(ua) ||
+        (navigator.platform === "MacIntel" &&
+          navigator.maxTouchPoints > 1 &&
+          Math.min(screen.width, screen.height) <= 1024);
+
+      return isIpad || isIphone || isAndroidMobile || isAndroidTablet;
     }
 
     function enableMobileMode() {
@@ -306,9 +310,10 @@
     // 鼠标擦除功能
     let isDrawing = false;
 
-    // 屏幕宽高
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    // ✅ NEW: illustration lifecycle (show once per page load)
+    let illustrationClearedForever = false;
+    let canvasCtx = null;
+    let canvasImg = null;
 
     const canvas = document.getElementById("canvas");
 
@@ -338,6 +343,9 @@
         if (!isJumping) return;
 
         updateTextSize();
+
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
 
         const maxX = windowWidth - textWidth;
         const maxY = windowHeight - textHeight;
@@ -420,20 +428,49 @@
       });
     }
 
+    // ✅ NEW: permanently clear illustration (desktop only)
+    function clearIllustrationForever() {
+      if (document.body.classList.contains("is-mobile")) return;
+      if (illustrationClearedForever) return;
+
+      illustrationClearedForever = true;
+
+      if (canvasCtx) {
+        canvasCtx.globalCompositeOperation = "source-over";
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      canvas.classList.add("hidden"); // stays hidden even if you scroll back
+    }
+
     function drawImage() {
       // DESKTOP ONLY: eraser illustration
       if (document.body.classList.contains("is-mobile")) return;
+      if (illustrationClearedForever) return;
 
       const ctx = canvas.getContext("2d");
+      canvasCtx = ctx;
 
-      canvas.width = windowWidth;
-      canvas.height = windowHeight;
+      function sizeCanvasAndDraw() {
+        if (illustrationClearedForever) return;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        if (canvasImg && canvasImg.complete) {
+          ctx.globalCompositeOperation = "source-over";
+          ctx.drawImage(canvasImg, 0, 0, canvas.width, canvas.height);
+        }
+      }
 
       const img = new Image();
+      canvasImg = img;
       img.src = "./img/bbb05a90-2c3b-4148-abf8-dcb13d20cb91.png";
 
       img.onload = () => {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        if (illustrationClearedForever) return;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(img, 0, 0, canvas.width = window.innerWidth, canvas.height = window.innerHeight);
       };
 
       canvas.addEventListener("mouseleave", () => {
@@ -443,6 +480,8 @@
       canvas.addEventListener("mousemove", moveEvent);
 
       function moveEvent(event) {
+        if (illustrationClearedForever) return;
+
         isDrawing = true;
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
@@ -464,11 +503,7 @@
         }
       }
 
-      window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      });
+      window.addEventListener("resize", sizeCanvasAndDraw);
     }
 
     function scrollText() {
@@ -534,7 +569,7 @@
       });
     }
 
-    // ✅ Desktop: show canvas on landing, hide canvas when leaving landing
+    // ✅ Desktop: show canvas on landing ONLY if it hasn't been cleared forever
     function toggleCanvasOnScroll() {
       if (document.body.classList.contains("is-mobile")) return;
 
@@ -544,6 +579,11 @@
 
       const obs = new IntersectionObserver(
         ([entry]) => {
+          if (illustrationClearedForever) {
+            canvasEl.classList.add("hidden");
+            return;
+          }
+
           if (entry.isIntersecting) canvasEl.classList.remove("hidden");
           else canvasEl.classList.add("hidden");
         },
@@ -834,7 +874,7 @@
     }
 
     toggleRainbowOnScroll();
-    toggleCanvasOnScroll(); // ✅ FIX: canvas auto hides/shows based on landing
+    toggleCanvasOnScroll();
 
     // ✅ MOBILE: start flying gifs immediately on landing
     if (document.body.classList.contains("is-mobile")) {
@@ -853,14 +893,16 @@
       landingObserver.observe(landingEl);
     }
 
-    // ✅ DESKTOP: start gifs only when projects begin
+    // ✅ DESKTOP: when projects begin:
+    // 1) permanently clear illustration (it will NOT come back)
+    // 2) start gifs + jumping text
     const projectStart = document.querySelector(".project1_1");
     const projectObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           if (!document.body.classList.contains("is-mobile")) {
-            // canvas hiding is now handled by toggleCanvasOnScroll(), but keeping this is fine
-            canvas.classList.add("hidden");
+            clearIllustrationForever(); // ✅ NEW: auto erase + never return
+
             document.getElementById("contact").style.zIndex = 5;
             document.getElementById("text").style.zIndex = 5;
 
