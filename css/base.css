@@ -425,6 +425,14 @@ a {
   display: block;
 }
 
+/* ✅ HARD LOCK DESKTOP: never show mobile-only on desktop */
+body:not(.is-mobile) .mobile-only {
+  display: none !important;
+}
+body:not(.is-mobile) .desktop-only {
+  display: block !important;
+}
+
 body.is-mobile .mobile-only {
   display: block !important;
 }
