@@ -675,13 +675,36 @@ body.is-mobile .page-foot > div {
     font-size: 18px !important;
     line-height: 1.2 !important;
   }
-   /*  MOBILE: push footer down so it doesn't overlap the last video/image */
+  /* ✅ MOBILE FIX: stop footer overlapping last video/image */
 body.is-mobile .page-foot{
-  margin-top: 50px !important;     /* creates space ABOVE the footer */
-  padding-top: 50px !important;    /* moves the text DOWN inside the black box */
-  background: #000 !important;     /* ensure black background is solid */
+  height: auto !important;                 /* override fixed 200px */
+  padding: 80px 24px 140px !important;     /* push text down + give bottom room */
+  margin-top: 0 !important;
+
+  background: #000 !important;             /* solid black behind text */
   position: relative !important;
-  z-index: 2 !important;
+  z-index: 999 !important;                 /* sit above any media */
+  isolation: isolate !important;           /* new stacking context */
+  overflow: hidden !important;
+
+  font-size: 20px !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
 }
+
+/* Give breathing room after the LAST mobile project block */
+body.is-mobile .project7 .mobile-only{
+  padding-bottom: 60px !important;
+}
+
+/* Ensure mobile media doesn't float above footer */
+body.is-mobile .mobile-project-img,
+body.is-mobile .mobile-video-single,
+body.is-mobile .mobile-video-single video{
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+}
+
 
 }
