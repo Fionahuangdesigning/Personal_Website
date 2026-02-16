@@ -675,4 +675,13 @@ body.is-mobile .page-foot > div {
     font-size: 18px !important;
     line-height: 1.2 !important;
   }
+   /*  MOBILE: push footer down so it doesn't overlap the last video/image */
+body.is-mobile .page-foot{
+  margin-top: 50px !important;     /* creates space ABOVE the footer */
+  padding-top: 50px !important;    /* moves the text DOWN inside the black box */
+  background: #000 !important;     /* ensure black background is solid */
+  position: relative !important;
+  z-index: 2 !important;
+}
+
 }
