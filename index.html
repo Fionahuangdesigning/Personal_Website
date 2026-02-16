@@ -239,10 +239,11 @@
 
     </div>
 
+    <!-- ✅ UPDATED FOOTER LINE BREAK -->
     <div class="page-foot">
       <div class="mt30">Always open to chat online not in-person</div>
       <div>♬♫♪◖(◕ ‿ ◕)◗♪♫♬</div>
-      <div>You know where to find me</div>
+      <div>You know where to<br>find me</div>
     </div>
 
     <div class="tooltip" id="tooltip"></div>
@@ -901,7 +902,7 @@
       ([entry]) => {
         if (entry.isIntersecting) {
           if (!document.body.classList.contains("is-mobile")) {
-            clearIllustrationForever(); // ✅ NEW: auto erase + never return
+            clearIllustrationForever(); // ✅ auto erase + never return
 
             document.getElementById("contact").style.zIndex = 5;
             document.getElementById("text").style.zIndex = 5;
