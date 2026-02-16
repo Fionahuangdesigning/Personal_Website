@@ -42,7 +42,6 @@
       <div class="title">Fiona Huang</div>
 
       <div class="font32 text-wrap hero-bold">
-        <!-- Desktop clean; Mobile breaks after & via .m-br -->
         <div id="text" class="text-container">
           Genius in design &amp;<span class="m-br"></span> graphic experiments.
         </div>
@@ -196,21 +195,30 @@
 
       <!-- PROJECT 8 (project7 on desktop) -->
       <div class="project-item project7" id="project7">
+
+        <!-- MOBILE: PNG + 3 overlay videos in red boxes -->
         <div class="mobile-only">
-          <img class="mobile-project-img" loading="lazy" src="./img/project_mobile_8.png" alt="" />
+          <div class="mobile-project-overlay project8-overlay">
+            <img class="mobile-project-base" loading="lazy" src="./img/project_mobile_8.png" alt="" />
 
-          <div class="mobile-video-stack">
-            <video class="mobile-video" playsinline muted autoplay loop controls
-              src="./img/project/project7/project4_left.mov"></video>
+            <div class="mobile-video-slot slot-1">
+              <video playsinline muted autoplay loop controls
+                src="./img/project/project7/project4_left.mov"></video>
+            </div>
 
-            <video class="mobile-video" playsinline muted autoplay loop controls
-              src="./img/project/project7/project4_right.mp4"></video>
+            <div class="mobile-video-slot slot-2">
+              <video playsinline muted autoplay loop controls
+                src="./img/project/project7/project4_right.mp4"></video>
+            </div>
 
-            <video class="mobile-video" playsinline muted autoplay loop controls
-              src="./img/project/project7/project7_8_video.mp4"></video>
+            <div class="mobile-video-slot slot-3">
+              <video playsinline muted autoplay loop controls
+                src="./img/project/project7/project7_8_video.mp4"></video>
+            </div>
           </div>
         </div>
 
+        <!-- DESKTOP: your original layout unchanged -->
         <div class="desktop-only">
           <img loading="lazy" src="./img/project/project7/project7_1.png" alt="" />
           <img loading="lazy" src="./img/project/project7/project7_2.png" alt="" />
@@ -220,10 +228,10 @@
             <img loading="lazy" src="./img/project/project7/project7_4.png" alt="" class="bg-img" />
 
             <div class="video-wrap">
-              <video loading="lazy" muted autoplay loop controls playsinline src="./img/project/project7/project4_left.mov"
-                class="project4-video w-1-2"></video>
-              <video loading="lazy" muted autoplay loop controls playsinline src="./img/project/project7/project4_right.mp4"
-                class="project4-video w-1-2"></video>
+              <video loading="lazy" muted autoplay loop controls playsinline
+                src="./img/project/project7/project4_left.mov" class="project4-video w-1-2"></video>
+              <video loading="lazy" muted autoplay loop controls playsinline
+                src="./img/project/project7/project4_right.mp4" class="project4-video w-1-2"></video>
             </div>
           </div>
 
@@ -233,8 +241,8 @@
 
           <div class="project-wrap">
             <img loading="lazy" src="./img/project/project7/project7_8.png" alt="" class="bg-img" />
-            <video loading="lazy" muted autoplay loop controls playsinline src="./img/project/project7/project7_8_video.mp4"
-              class="project-video"></video>
+            <video loading="lazy" muted autoplay loop controls playsinline
+              src="./img/project/project7/project7_8_video.mp4" class="project-video"></video>
           </div>
 
           <img loading="lazy" src="./img/project/project7/project7_9.png" alt="" />
@@ -302,17 +310,21 @@
 
     let eraseCount = 0;
 
+    // 动画状态
     let isJumping = true;
     let jumpTimer, removeTimer, addTimer;
     let animationFrame;
 
+    // 鼠标擦除功能
     let isDrawing = false;
 
+    // 屏幕宽高
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
     const canvas = document.getElementById("canvas");
 
+    // 文字的宽高（用于避免文字超出屏幕）
     let textWidth, textHeight;
 
     let tooltipList = [
@@ -381,6 +393,7 @@
       const text = textContainer.textContent.trim();
 
       textContainer.innerHTML = "";
+      // ✅ FIX: split on ALL whitespace + remove empties (prevents giant gaps)
       text.split(/\s+/).filter(Boolean).forEach((char) => {
         const span = document.createElement("span");
         span.className = "char";
@@ -420,6 +433,7 @@
     }
 
     function drawImage() {
+      // DESKTOP ONLY: eraser illustration
       if (document.body.classList.contains("is-mobile")) return;
 
       const ctx = canvas.getContext("2d");
@@ -533,7 +547,7 @@
     }
 
     // =======================
-    // GIFS: Mobile = landing, Desktop = projects only
+    // ✅ GIFS: Mobile = landing, Desktop = projects only
     // =======================
     let desktopGifsActive = false;
 
@@ -560,6 +574,7 @@
     }
 
     function birdGif() {
+      // Desktop: only run when active
       if (!document.body.classList.contains("is-mobile") && !desktopGifsActive) return;
 
       document.querySelector(".moving-car-img").style.display = "none";
@@ -660,6 +675,7 @@
       }, 600);
     }
 
+    // Rainbow banner only on landing page
     function toggleRainbowOnScroll() {
       const rainbow = document.querySelector(".rainbow-rectangle");
       const landing = document.getElementById("content");
@@ -676,7 +692,7 @@
       observer.observe(landing);
     }
 
-    // ================== CHATBOT LOGIC ==================
+    // ================== CHATBOT LOGIC (hidden on mobile by CSS) ==================
     const chatbotAvatar = document.getElementById("chatbot-avatar");
     const chatbotInput = document.getElementById("chatbot-input");
     const chatbotSend = document.getElementById("chatbot-send");
@@ -791,26 +807,33 @@
     }
 
     // ================== START ==================
+    // Desktop only: exploding text
     if (!document.body.classList.contains("is-mobile")) {
       explodingText();
     }
 
+    // Desktop only: mouse trail
     window.addEventListener("mousemove", mouseTrailEffect);
 
+    // Desktop only: erasable illustration
     drawImage();
 
+    // Rainbow marquee always
     scrollText();
 
+    // Tooltip: desktop only
     if (!document.body.classList.contains("is-mobile")) {
       tooltip();
     }
 
     toggleRainbowOnScroll();
 
+    // ✅ MOBILE: start flying gifs immediately on landing
     if (document.body.classList.contains("is-mobile")) {
       birdGif();
     }
 
+    // ✅ DESKTOP: stop gifs whenever landing is visible
     const landingEl = document.getElementById("content");
     if (landingEl && !document.body.classList.contains("is-mobile")) {
       const landingObserver = new IntersectionObserver(
@@ -822,6 +845,7 @@
       landingObserver.observe(landingEl);
     }
 
+    // ✅ DESKTOP: start gifs only when projects begin
     const projectStart = document.querySelector(".project1_1");
     const projectObserver = new IntersectionObserver(
       ([entry]) => {
@@ -838,6 +862,7 @@
       },
       { threshold: 0.5 }
     );
+
     if (projectStart) projectObserver.observe(projectStart);
   </script>
 </body>
