@@ -675,36 +675,50 @@ body.is-mobile .page-foot > div {
     font-size: 18px !important;
     line-height: 1.2 !important;
   }
-  /* ✅ MOBILE FIX: stop footer overlapping last video/image */
+ /* ================== MOBILE HARD FIX: stop footer text overlaying media ================== */
+
+/* 1) Force footer to be its own solid block ABOVE anything fixed/absolute */
 body.is-mobile .page-foot{
-  height: auto !important;                 /* override fixed 200px */
-  padding: 80px 24px 140px !important;     /* push text down + give bottom room */
-  margin-top: 0 !important;
+  height: auto !important;
+  background: #000 !important;
 
-  background: #000 !important;             /* solid black behind text */
+  /* push the text down inside the footer */
+  padding: 90px 24px 160px !important;
+
   position: relative !important;
-  z-index: 999 !important;                 /* sit above any media */
-  isolation: isolate !important;           /* new stacking context */
-  overflow: hidden !important;
-
-  font-size: 20px !important;
-  line-height: 1.25 !important;
-  text-align: center !important;
+  z-index: 999999 !important;       /* above everything */
+  isolation: isolate !important;    /* new stacking context */
 }
 
-/* Give breathing room after the LAST mobile project block */
-body.is-mobile .project7 .mobile-only{
-  padding-bottom: 60px !important;
+/* 2) If ANY desktop absolute video/layout is leaking into mobile, neutralize it */
+body.is-mobile .project-video,
+body.is-mobile .video-wrap,
+body.is-mobile .project4-video{
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  height: auto !important;
 }
 
-/* Ensure mobile media doesn't float above footer */
-body.is-mobile .mobile-project-img,
-body.is-mobile .mobile-video-single,
-body.is-mobile .mobile-video-single video{
+/* 3) Make sure ONLY mobile videos are visible on mobile */
+body.is-mobile .desktop-only,
+body.is-mobile .desktop-only *{
+  display: none !important;
+}
+
+/* 4) Stop the flying GIFs from covering the footer area */
+body.is-mobile .moving-car-img,
+body.is-mobile .moving-bird-img{
+  z-index: 1 !important;            /* put them behind footer */
+}
+
+body.is-mobile .page-foot *{
   position: relative !important;
-  z-index: 1 !important;
-  display: block !important;
+  z-index: 2 !important;
 }
+
 
 
 }
