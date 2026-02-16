@@ -647,6 +647,27 @@ body.is-mobile .scroll-text {
   font-weight: 400 !important;
 }
 
+/* ================== MOBILE: footer match landing title width + size 20 ================== */
+body.is-mobile .page-foot {
+  width: 100% !important;
+  box-sizing: border-box !important;
+
+  /* match landing title’s horizontal padding */
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+
+  font-size: 20px !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+}
+
+body.is-mobile .page-foot > div {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  font-size: 20px !important;
+  line-height: 1.25 !important;
+}
+
 @media (max-width: 390px) {
   body.is-mobile .font32 {
     font-size: 18px !important;
