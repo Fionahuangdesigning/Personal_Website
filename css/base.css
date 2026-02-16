@@ -437,61 +437,16 @@ body.is-mobile .mobile-project-img {
   display: block;
 }
 
-/* ================== MOBILE Project 8: video overlay on PNG ==================
-   You can fine-tune the 3 red-box positions by adjusting the percentages below. */
-body.is-mobile .mobile-project-overlay {
-  position: relative;
+/* Mobile Project 8: PNG + one video below */
+body.is-mobile .mobile-video-single {
   width: 100%;
+  padding: 12px 0;
 }
 
-body.is-mobile .mobile-project-base {
+body.is-mobile .mobile-video-single video {
   width: 100%;
+  height: auto;
   display: block;
-}
-
-/* Each slot is an absolute box over the PNG */
-body.is-mobile .mobile-video-slot {
-  position: absolute;
-  overflow: hidden;          /* hides any crop */
-  z-index: 5;
-  /* Optional: if you want the video edges crisp, keep it square */
-  border-radius: 0;
-}
-
-/* Make video fill the slot */
-body.is-mobile .mobile-video-slot video {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;         /* crop to fit your red box nicely */
-}
-
-/* ---------- DEFAULT POSITIONS (EDIT THESE) ----------
-   These are percentage-based so they scale with the PNG.
-   If any slot is slightly off, tweak top/left/width/height. */
-
-/* Slot 1 (top red box) */
-body.is-mobile .project8-overlay .slot-1 {
-  top: 43%;
-  left: 18%;
-  width: 64%;
-  height: 6%;
-}
-
-/* Slot 2 (middle red box) */
-body.is-mobile .project8-overlay .slot-2 {
-  top: 52.5%;
-  left: 18%;
-  width: 64%;
-  height: 7%;
-}
-
-/* Slot 3 (lower red box) */
-body.is-mobile .project8-overlay .slot-3 {
-  top: 67.5%;
-  left: 9%;
-  width: 82%;
-  height: 9%;
 }
 
 /* ================== CHATBOT ================== */
