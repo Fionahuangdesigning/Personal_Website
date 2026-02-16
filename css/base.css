@@ -417,6 +417,32 @@ a {
   text-decoration: none;
 }
 
+/* ================== Project swap: Desktop vs Mobile ================== */
+.mobile-only { display: none; }
+.desktop-only { display: block; }
+
+body.is-mobile .mobile-only { display: block !important; }
+body.is-mobile .desktop-only { display: none !important; }
+
+body.is-mobile .mobile-project-img {
+  width: 100%;
+  display: block;
+}
+
+body.is-mobile .mobile-video-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+body.is-mobile .mobile-video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ================== CHATBOT ================== */
 #chatbot {
   position: fixed;
@@ -512,32 +538,26 @@ body.is-mobile {
   overflow-x: hidden;
 }
 
-/* show mobile-only line breaks */
 body.is-mobile .m-br {
   display: block;
 }
 
-/* Mobile: REMOVE the erasable illustration completely */
 body.is-mobile #canvas {
   display: none !important;
 }
 
-/* NO chatbot on mobile */
 body.is-mobile #chatbot {
   display: none !important;
 }
 
-/* NO Reach Me flying on mobile */
 body.is-mobile #contact {
   display: none !important;
 }
 
-/* mobile: remove tooltip white block */
 body.is-mobile .tooltip {
   display: none !important;
 }
 
-/* Make landing fit in one mobile screen */
 body.is-mobile #content {
   height: 100vh !important;
   margin-top: 0 !important;
@@ -545,14 +565,12 @@ body.is-mobile #content {
   padding-bottom: 16px !important;
 }
 
-/* remove desktop shrink */
 body.is-mobile .content-container {
   transform: none !important;
   -webkit-transform: none !important;
   padding: 0 16px !important;
 }
 
-/* scale headline + title */
 body.is-mobile #content .title {
   font-size: 34px !important;
   line-height: 1.1 !important;
@@ -565,7 +583,6 @@ body.is-mobile .font32 {
   line-height: 1.25 !important;
 }
 
-/* Mobile hero layout control for #text */
 body.is-mobile #text {
   display: block !important;
   text-align: center !important;
@@ -581,7 +598,6 @@ body.is-mobile .text-wrap {
   padding: 16px 0 !important;
 }
 
-/* links list in normal flow on mobile */
 body.is-mobile .aList {
   position: static !important;
   width: auto !important;
@@ -600,12 +616,11 @@ body.is-mobile .aList a {
   margin: 0 10px !important;
 }
 
-/* rainbow bar tighter on mobile */
 body.is-mobile .rainbow-rectangle {
   top: 12px !important;
 }
 
-/* ✅ Mobile: rainbow banner text matches hero paragraph size (regular) */
+/* Mobile: rainbow banner text matches hero paragraph size (regular) */
 body.is-mobile .rainbow-rectangle {
   font-size: 20px !important;
   font-family: "Ace-Regular" !important;
@@ -618,7 +633,6 @@ body.is-mobile .scroll-text {
   font-weight: 400 !important;
 }
 
-/* slightly smaller headline on very narrow screens */
 @media (max-width: 390px) {
   body.is-mobile .font32 {
     font-size: 18px !important;
