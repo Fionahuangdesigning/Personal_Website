@@ -675,50 +675,48 @@ body.is-mobile .page-foot > div {
     font-size: 18px !important;
     line-height: 1.2 !important;
   }
- /* ================== MOBILE HARD FIX: stop footer text overlaying media ================== */
 
-/* 1) Force footer to be its own solid block ABOVE anything fixed/absolute */
-body.is-mobile .page-foot{
-  height: auto !important;
-  background: #000 !important;
+  /* ================== MOBILE HARD FIX: stop footer text overlaying media ================== */
 
-  /* push the text down inside the footer */
-  padding: 90px 24px 160px !important;
+  /* 1) Force footer to be its own solid block ABOVE anything fixed/absolute */
+  body.is-mobile .page-foot {
+    height: auto !important;
+    background: #000 !important;
 
-  position: relative !important;
-  z-index: 999999 !important;       /* above everything */
-  isolation: isolate !important;    /* new stacking context */
-}
+    /* push the text down inside the footer */
+    padding: 90px 24px 160px !important;
 
-/* 2) If ANY desktop absolute video/layout is leaking into mobile, neutralize it */
-body.is-mobile .project-video,
-body.is-mobile .video-wrap,
-body.is-mobile .project4-video{
-  position: static !important;
-  top: auto !important;
-  left: auto !important;
-  transform: none !important;
-  width: 100% !important;
-  height: auto !important;
-}
+    position: relative !important;
+    z-index: 999999 !important;       /* above everything */
+    isolation: isolate !important;    /* new stacking context */
+  }
 
-/* 3) Make sure ONLY mobile videos are visible on mobile */
-body.is-mobile .desktop-only,
-body.is-mobile .desktop-only *{
-  display: none !important;
-}
+  /* 2) If ANY desktop absolute video/layout is leaking into mobile, neutralize it */
+  body.is-mobile .project-video,
+  body.is-mobile .video-wrap,
+  body.is-mobile .project4-video {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+  }
 
-/* 4) Stop the flying GIFs from covering the footer area */
-body.is-mobile .moving-car-img,
-body.is-mobile .moving-bird-img{
-  z-index: 1 !important;            /* put them behind footer */
-}
+  /* 3) Make sure ONLY mobile videos are visible on mobile */
+  body.is-mobile .desktop-only,
+  body.is-mobile .desktop-only * {
+    display: none !important;
+  }
 
-body.is-mobile .page-foot *{
-  position: relative !important;
-  z-index: 2 !important;
-}
+  /* 4) Stop the flying GIFs from covering the footer area */
+  body.is-mobile .moving-car-img,
+  body.is-mobile .moving-bird-img {
+    z-index: 1 !important;            /* put them behind footer */
+  }
 
-
-
+  body.is-mobile .page-foot * {
+    position: relative !important;
+    z-index: 2 !important;
+  }
 }
